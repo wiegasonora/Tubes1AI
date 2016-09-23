@@ -15,17 +15,19 @@ public class fitnessfunction{
 		 * m = jam mulai (a-z) a:7, b:8, dst
 		 * s = jam selesai (a-z) idem atas
 		 */
-		 
+		
+		//inisisalisasi tabJadwal 
 		String[] tabJadwal = new String [20];
 		for (int i=0; i<20; i++){
 			tabJadwal[i] = "";
 		}
 
+		//pisah string empat empat ke tabJadwal
 		int a = str.length();
 		int j=0;
 		int k=0;
 		String strtemp = "";
-		if ((a % 4)==0) {
+		if ((a % 4)==0) {	//string kelipatan 4
 			for (int i=0; i<a; i++){
 				if (j>3){
 					j=0;
@@ -42,7 +44,7 @@ public class fitnessfunction{
 		return tabJadwal;
 	}
 	
-	public float hitungFitnessFunction(String tabString1){
+	public float hitungFitnessFunction(String str){
 		/* Menghitung fitnessfunction dengan sebelumnya mengecek
 		 * terjadinya bentrok matkul pada hari dan jam yang sama
 		 * yaitu dengan mencatat matkul apa saja yang ada pada hari
@@ -51,54 +53,59 @@ public class fitnessfunction{
 		 * kolom menandakan index matkul pada hari tsb
 		 */
 
-		String[] tabString = pisahstring(tabString1);
+		if ((str.length() % 4) == 0){
+			String[] tabString = pisahstring(str);
 
-		//inisialisasi tabHariSama
-		String[][] tabHariSama = new String [5][5];
-		for (int x=0; x<5; x++){
-			for (int y=0; y<5; y++){
-				tabHariSama[x][y] = "";
-			}
-		}
-		
-		//mengisi tabHariSama
-		String strtemp = "";
-		int idxKolHariSama = 0;
-		int idxBrsHariSama = 0;
-		for (char idxHari='a'; idxHari<='e'; idxHari++){
-			for (int i=0; i< tabString.length; i++){
-				strtemp = tabString[i];
-				if (strtemp.charAt(1) == idxHari){	//mengecek kelas pada hari yg sama
-					tabHariSama[idxBrsHariSama][idxKolHariSama] = strtemp;
-					idxKolHariSama++;
+			//inisialisasi tabHariSama
+			String[][] tabHariSama = new String [5][5];
+			for (int x=0; x<5; x++){
+				for (int y=0; y<5; y++){
+					tabHariSama[x][y] = "";
 				}
 			}
-			idxBrsHariSama++;
-		}
-		
-		//Mengecek terjadinya bentrok berdasar tabHariSama
-		String strtemp1 = "";
-		int countBentrok = 0;
-		for (int idxa=0; idxa<5; idxa++){
-			for(int idxb=0; idxb<5; idxb++){
-				strtemp = tabHariSama[idxa][idxb];
-				
-				for (int idxc=idxb+1; idxc<5; idxc++){
-					strtemp1 = tabHariSama[idxa][idxc];
-					if (((strtemp.charAt(2)==strtemp1.charAt(2)) || (strtemp.charAt(3)==strtemp1.charAt(3)) || 
-						(strtemp.charAt(2)>strtemp1.charAt(2) && strtemp.charAt(2)<strtemp1.charAt(3)) || 
-						(strtemp.charAt(3)>strtemp1.charAt(2) && strtemp.charAt(3)<strtemp1.charAt(3))) && 
-						isSameRoom(strtemp,strtemp1)){
-						countBentrok++;
+			
+			//mengisi tabHariSama
+			String strtemp = "";
+			int idxKolHariSama = 0;
+			int idxBrsHariSama = 0;
+			for (char idxHari='a'; idxHari<='e'; idxHari++){
+				for (int i=0; i< tabString.length; i++){
+					strtemp = tabString[i];
+					if (strtemp.charAt(1) == idxHari){	//mengecek kelas pada hari yg sama
+						tabHariSama[idxBrsHariSama][idxKolHariSama] = strtemp;
+						idxKolHariSama++;
+					}
+				}
+				idxBrsHariSama++;
+			}
+			
+			//Mengecek terjadinya bentrok berdasar tabHariSama
+			String strtemp1 = "";
+			int countBentrok = 0;
+			for (int idxa=0; idxa<5; idxa++){
+				for(int idxb=0; idxb<5; idxb++){
+					strtemp = tabHariSama[idxa][idxb];
+					int idxc=idxb+1;
+					while (idxc<5){
+						strtemp1 = tabHariSama[idxa][idxc];
+						if (((strtemp.charAt(2)==strtemp1.charAt(2)) || (strtemp.charAt(3)==strtemp1.charAt(3)) || 
+							(strtemp.charAt(2)>strtemp1.charAt(2) && strtemp.charAt(2)<strtemp1.charAt(3)) || 
+							(strtemp.charAt(3)>strtemp1.charAt(2) && strtemp.charAt(3)<strtemp1.charAt(3))) && 
+							isSameRoom(strtemp,strtemp1)){
+							countBentrok++;
+						}
+						idxc++;
 					}
 				}
 			}
-		}
-		
-		if (countBentrok==0){
-			return 999;
+			
+			if (countBentrok==0){
+				return 999;
+			} else {
+				return (1/countBentrok);
+			}
 		} else {
-			return (1/countBentrok);
+			return -999; //error string tidak kelipatan 4
 		}
 	}
 	
