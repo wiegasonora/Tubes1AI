@@ -79,7 +79,10 @@ public class fitnessfunction{
 				
 				for (int idxc=idxb+1; idxc<5; idxc++){
 					strtemp1 = tabHariSama[idxa][idxc];
-					if (((strtemp.charAt(2)==strtemp1.charAt(2)) || (strtemp.charAt(3)==strtemp1.charAt(3)) || (strtemp.charAt(2)>strtemp1.charAt(2) && strtemp.charAt(2)<strtemp1.charAt(3)) || (strtemp.charAt(3)>strtemp1.charAt(2) && strtemp.charAt(3)<strtemp1.charAt(3))) && isSameRoom(strtemp,strtemp1)){
+					if (((strtemp.charAt(2)==strtemp1.charAt(2)) || (strtemp.charAt(3)==strtemp1.charAt(3)) || 
+						(strtemp.charAt(2)>strtemp1.charAt(2) && strtemp.charAt(2)<strtemp1.charAt(3)) || 
+						(strtemp.charAt(3)>strtemp1.charAt(2) && strtemp.charAt(3)<strtemp1.charAt(3))) && 
+						isSameRoom(strtemp,strtemp1)){
 						countBentrok++;
 					}
 				}
