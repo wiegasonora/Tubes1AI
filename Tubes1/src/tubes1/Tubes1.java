@@ -5,11 +5,8 @@
  */
 package tubes1;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,21 +92,4 @@ public class Tubes1 {
         //HILL CLIMBING
         
     }
-public static class Ruangan{
-    public String Nama;
-    public String JamMulai;
-    public String JamSelesai;
-    public String Hari;
-}
-public static class Jadwal{
-    String NamaKegiatan;
-    String Ruangan;
-    String JamMulai;
-    String JamSelesai;
-    String Durasi;
-    String Hari;
-
-}
-
-    
 }
