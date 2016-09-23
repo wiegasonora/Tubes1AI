@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
-import com.csvreader.CsvWriter;
-import com.csvreader.CsvReader;
+//import com.csvreader.CsvWriter;
+//import com.csvreader.CsvReader;
 
 /**
  *
