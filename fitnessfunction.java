@@ -4,9 +4,7 @@ import java.util.Scanner;
 import java.io.*;
 
 public class fitnessfunction{
-	public String[] tabJadwal = new String [20];
-	
-	public void pisahstring(String str){
+	public String[] pisahstring(String str){
 		/* Memisahkan string panjang yang berisi daftar kelas beserta
 		 * hari, jam mulai, selesai menjadi array yang berisi string
 		 * dengan format
@@ -18,6 +16,11 @@ public class fitnessfunction{
 		 * s = jam selesai (a-z) idem atas
 		 */
 		 
+		String[] tabJadwal = new String [20];
+		for (int i=0; i<20; i++){
+			tabJadwal[i] = "";
+		}
+
 		int a = str.length();
 		int j=0;
 		int k=0;
@@ -36,9 +39,10 @@ public class fitnessfunction{
 		} else {
 			//string salah, harus kelipatan 4
 		}
+		return tabJadwal;
 	}
 	
-	public float hitungFitnessFunction(String[] tabString){
+	public float hitungFitnessFunction(String tabString1){
 		/* Menghitung fitnessfunction dengan sebelumnya mengecek
 		 * terjadinya bentrok matkul pada hari dan jam yang sama
 		 * yaitu dengan mencatat matkul apa saja yang ada pada hari
@@ -46,7 +50,9 @@ public class fitnessfunction{
 		 * baris menandakan hari
 		 * kolom menandakan index matkul pada hari tsb
 		 */
-		 
+
+		String[] tabString = pisahstring(tabString1);
+
 		//inisialisasi tabHariSama
 		String[][] tabHariSama = new String [5][5];
 		for (int x=0; x<5; x++){
