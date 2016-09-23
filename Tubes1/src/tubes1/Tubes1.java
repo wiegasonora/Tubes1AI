@@ -31,17 +31,6 @@ public class Tubes1 {
         File input;
         int rent = fad.showOpenDialog(fad);  
         input = fad.getSelectedFile();
-        //String of2="Jadwal.csv";
-        //String of1="Ruangan.csv";
-        //CsvWriter csvOutput1 = new CsvWriter(new FileWriter(of1, true),';');
-        //CsvWriter csvOutput2 = new CsvWriter(new FileWriter(of2, true),' ');
-        /*try (BufferedReader br = new BufferedReader(new FileReader(input))) {
-        String line;
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
-               // process the line.
-            }
-        }*/
         
         Scanner in = new Scanner(input);
         String nextLine = in.nextLine();
@@ -55,8 +44,6 @@ public class Tubes1 {
             B.JamSelesai=tes[2];
             B.Hari=tes[3];
             ruang.add(B);
-            //csvOutput1.write(nextLine);
-            //csvOutput1.endRecord();
             nextLine = in.nextLine();
             B = new Ruangan();
         }
@@ -73,23 +60,8 @@ public class Tubes1 {
             A.Hari=tes[5];
             jadwal.add(A);
             A = new Jadwal();
-            //csvOutput2.write(nextLine);
-            //csvOutput2.endRecord();   
         }
         in.close();
-       /* int i=0;
-        while (i<jadwal.size()) {
-            System.out.println(jadwal.get(i).NamaKegiatan);
-            i++;
-        }
-        i=0;
-        System.out.println("Ruang:");
-        while (i<ruang.size()) {
-            System.out.println(ruang.get(i).Hari);
-            i++;
-        }*/ //TESTING ISI LIST
-        
-        //HILL CLIMBING
         
     }
 }
