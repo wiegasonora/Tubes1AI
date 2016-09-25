@@ -216,16 +216,18 @@ public class GeneticAlgorithm {
         char[] out = in.toCharArray();
         int nKelas = matkul.size();
         Random rand = new Random();
-        int mutatedPosition = rand.nextInt(nKelas + nKelas/2);
+        int mutatedPosition = rand.nextInt(nKelas + nKelas/4);
+        System.out.println(mutatedPosition);
         if (mutatedPosition < nKelas) {
-            int idxChange = (mutatedPosition - 1) * 4;
+            int idxChange = (mutatedPosition) * 4;
             String tmp = randomOneKelas(mutatedPosition);
+            System.out.println(tmp);
             for (int i = 0; i<4; i++) {
                 out[idxChange] = tmp.charAt(i);
                 idxChange++;
             }
         }
-        String retVal = out.toString();
+        String retVal = String.valueOf(out);
         return retVal;
     }
 

@@ -66,5 +66,7 @@ public class Tubes1 {
         GeneticAlgorithm g = new GeneticAlgorithm(jadwal, ruang);
         String str = g.generateRandom();
         System.out.println(str);
+        String mutated = g.mutation(str);
+        System.out.println(mutated);
     }
 }
