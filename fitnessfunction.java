@@ -40,6 +40,7 @@ public class fitnessfunction{
 			}
 		} else {
 			//string salah, harus kelipatan 4
+			//tabJadwal kosong
 		}
 		return tabJadwal;
 	}
@@ -66,9 +67,10 @@ public class fitnessfunction{
 			
 			//mengisi tabHariSama
 			String strtemp = "";
-			int idxKolHariSama = 0;
 			int idxBrsHariSama = 0;
+			int idxKolHariSama;
 			for (char idxHari='a'; idxHari<='e'; idxHari++){
+				idxKolHariSama = 0;
 				for (int i=0; i< tabString.length; i++){
 					strtemp = tabString[i];
 					if (strtemp.charAt(1) == idxHari){	//mengecek kelas pada hari yg sama
@@ -82,16 +84,19 @@ public class fitnessfunction{
 			//Mengecek terjadinya bentrok berdasar tabHariSama
 			String strtemp1 = "";
 			int countBentrok = 0;
+			int idxc;
 			for (int idxa=0; idxa<5; idxa++){
 				for(int idxb=0; idxb<5; idxb++){
 					strtemp = tabHariSama[idxa][idxb];
-					int idxc=idxb+1;
+					idxc=idxb+1;
 					while (idxc<5){
 						strtemp1 = tabHariSama[idxa][idxc];
-						if (((strtemp.charAt(2)==strtemp1.charAt(2)) || (strtemp.charAt(3)==strtemp1.charAt(3)) || 
-							(strtemp.charAt(2)>strtemp1.charAt(2) && strtemp.charAt(2)<strtemp1.charAt(3)) || 
-							(strtemp.charAt(3)>strtemp1.charAt(2) && strtemp.charAt(3)<strtemp1.charAt(3))) && 
-							isSameRoom(strtemp,strtemp1)){
+						if ((	(strtemp.charAt(2)==strtemp1.charAt(2)) || 					//kedua kelas mulai pada jam sama
+								(strtemp.charAt(3)==strtemp1.charAt(3)) || 					//kedua kelas selesai pada jam sama
+								(strtemp.charAt(2)>strtemp1.charAt(2) && strtemp.charAt(2)<strtemp1.charAt(3)) || 	//kelas 1 mulai saat kelas 2 berlangsung
+								(strtemp.charAt(3)>strtemp1.charAt(2) && strtemp.charAt(3)<strtemp1.charAt(3))) 	//kelas 2 mulai saat kelas 1 berlangsung
+								&& 
+								isSameRoom(strtemp,strtemp1)) {		//kedua kelas pada ruangan yang sama 
 							countBentrok++;
 						}
 						idxc++;
@@ -99,10 +104,11 @@ public class fitnessfunction{
 				}
 			}
 			
-			if (countBentrok==0){
+			//mengembalikan nilai fitness function yaitu 1/countBentrok
+			if (countBentrok == 0){	//tidak ada yg bentrok, menghindari infinite
 				return 999;
 			} else {
-				return (1/countBentrok);
+				return (1 / countBentrok);
 			}
 		} else {
 			return -999; //error string tidak kelipatan 4
@@ -113,7 +119,7 @@ public class fitnessfunction{
 		/* mengembalikan nilai kebenaran apakah kedua kelas berada
 		 * pada ruangan yang sama
 		 */
-		return (s1.charAt(0)==s2.charAt(0));
+		return (s1.charAt(0) == s2.charAt(0));
 	}
 	
 	public String[] crossOver(String str1, String str2){
@@ -121,8 +127,11 @@ public class fitnessfunction{
 		 * yang  menghasilkan pertukaran jadwal secara parsial
 		 * dengan memecah secara random
 		 */
+		
+		//dua penyimpan sementara hasil crossover
 		String strtemp = "";
 		String strtemp1 = "";
+		
 		//random batas split
 		int nSplit = (int )(Math.random() * (str1.length() - 1));
 		
