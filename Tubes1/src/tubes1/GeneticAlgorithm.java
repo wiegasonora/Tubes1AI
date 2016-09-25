@@ -244,18 +244,35 @@ public class GeneticAlgorithm {
     }
 
     public int selection() {
-        int selected;
+        int selected = 0;
         
         float[] fitnessFunction = new float[nPopulation];
  
         //hitung fitness function buat setiap individu
+        float sum = 0;
         for (int i= 0; i<nPopulation; i++) {
             fitnessFunction[i] = hitungFitnessFunction(population[i]);
+            sum = sum + fitnessFunction[i];
         }
         
+        
         //hitung persentasi setiap individu
+        for (int i= 0; i<nPopulation; i++) {
+            fitnessFunction[i] = fitnessFunction[i]/sum;
+        }
+        sum = 0;
+        for (int i= 0; i<nPopulation; i++) {
+            sum = sum + fitnessFunction[i];
+            fitnessFunction[i] = sum;
+        }
         
         
+        Random rand = new Random();
+        float randomNum = rand.nextFloat() * 100;
+        while (randomNum < fitnessFunction[selected]) {
+            selected++;
+        }
+        selected = selected - 1;
         
         return selected;
     }
