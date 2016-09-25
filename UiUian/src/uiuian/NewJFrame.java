@@ -6,15 +6,20 @@
 package uiuian;
 
 import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
+import com.sun.xml.internal.ws.util.StringUtils;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javafx.scene.input.KeyCode.T;
 import javax.swing.JFileChooser;
 import uiuian.UiUian.Jadwal;
 import uiuian.UiUian.Ruangan;
@@ -265,7 +270,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     benar=1;
                     }
                 } else 
-                    if (semua[Integer.valueOf(random)-1][Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2))-7].contains((jadwal.get(tess).Ruangan)+"-,")) {
+                    if (semua[Integer.valueOf(random)-1][top].contains((jadwal.get(tess).Ruangan)+"-,")) {
                      int tambah=top;
                     while (tambah<(Integer.valueOf(jadwal.get(tess).Durasi)+top)) {
                         if (semua[Integer.valueOf(random)-1][tambah]!=null) {
@@ -399,8 +404,178 @@ public class NewJFrame extends javax.swing.JFrame {
        
         tess=0;
         cobas=0;
-        
-       
+        List<String> yangcon=new ArrayList<String>();
+            List<Integer> hitungyangcon=new ArrayList<Integer>();
+        int temp=0,temp1=0;
+        do {
+             yangcon=new ArrayList<String>();
+            hitungyangcon=new ArrayList<Integer>();
+            while (tess<5){
+            cobas=0;
+            while (cobas<11) {
+                if (semua[tess][cobas]!=null){
+                if (semua[tess][cobas].contains(",")){
+                pisah=semua[tess][cobas].split(",");
+                while (hitung<pisah.length){
+                    if (pisah[hitung].contains("=")){
+                    cekpisah=pisah[hitung].split("=");
+                   if (cekpisah.length!=1){
+                       int hitungcon=cekpisah.length;
+                       int k=1;
+                       int total=0;
+                       String[] gg=cekpisah[0].split("-");
+                       if (!yangcon.contains(gg[1])){
+                        yangcon.add(gg[1]);System.out.println(gg[1]+" WOII! "+cekpisah.length);
+                        hitungyangcon.add(cekpisah.length);
+                       } else {
+                           int fat=0;
+                         while (fat<yangcon.size()){
+                             if (yangcon.get(fat).equals(gg[1])){
+                                 System.out.println(gg[1]+" WOII!! "+cekpisah.length);
+                                 hitungyangcon.set(fat, (hitungyangcon.get(fat)+cekpisah.length));
+                                 fat=yangcon.size();
+                             }
+                             fat++;
+                         }  
+                       }
+                       while(k<hitungcon){
+                           if (!yangcon.contains(cekpisah[k].substring(0, cekpisah[k].length()-1))){
+                               yangcon.add(cekpisah[k].substring(0, cekpisah[k].length()-1));
+                               System.out.println(cekpisah[k].substring(0, cekpisah[k].length()-1)+" WOII!!! "+cekpisah.length);
+                               hitungyangcon.add(cekpisah.length);
+                           } else {
+                               int fat=0;
+                                while (fat<yangcon.size()){
+                                    if (yangcon.get(fat).equals(cekpisah[k].substring(0, cekpisah[k].length()-1))){
+                                        System.out.println(cekpisah[k].substring(0, cekpisah[k].length()-1)+" WOII!!!! "+cekpisah.length);
+                              
+                                        hitungyangcon.set(fat, (hitungyangcon.get(fat)+cekpisah.length));
+                                        fat=yangcon.size();
+                                    }
+                                 fat++;
+                                 } 
+                               
+                           }
+                                                    
+                           total=total+k;
+                           k++;
+                       }
+                    conflict=conflict+total;
+                    
+                   }
+                    cekpisah=null;
+                    } 
+                    hitung++;
+                }
+                hitung=0;
+                } else conflict++;
+                 }
+                cobas++;
+            }
+            pisah=null;
+           
+            tess++;
+        }
+       tess=0;
+        temp1=conflict;
+        int keluar=0;
+       temp=5;
+       int iterasi=0;
+       int simpanget=0;
+       while(keluar<yangcon.size()){
+                iterasi=0;
+                while (iterasi<jadwal.size()){
+                    if (jadwal.get(iterasi).Ruangan.equals(yangcon.get(keluar))){
+                        simpanget=iterasi;
+                        iterasi=1000000;
+                    }
+                    iterasi++;
+                }
+            benar=0;
+            int top,max=10000,max1=10000;
+            String[] simpan=jadwal.get(simpanget).Hari.split(",");
+            int idx = 0;
+              
+                while(idx<simpan.length){
+                    top=Integer.valueOf(jadwal.get(simpanget).JamMulai.substring(0, 2))-7;
+                    String random = (simpan[idx]);
+                            while (top<=((Integer.valueOf(jadwal.get(simpanget).JamSelesai.substring(0, 2))-7))-Integer.valueOf(jadwal.get(simpanget).Durasi)&& semua[Integer.valueOf(random)-1][top]!=null && semua[Integer.valueOf(random)-1][top+Integer.valueOf(jadwal.get(simpanget).Durasi)]!=null) {
+                            if ("-".equals(jadwal.get(simpanget).Ruangan)){
+                                String[] sip=semua[Integer.valueOf(random)-1][top].split(",");
+                                int pindah=0;
+                                ArrayList<Integer> cari=new ArrayList<Integer>();
+                                while(pindah<sip.length){
+                                        cari.add((sip[pindah].length() - sip[pindah].replace("=", "").length())+1);
+                                        pindah++;
+                                    }
+                                pindah=top+1;
+                                while (pindah<(top+Integer.valueOf(jadwal.get(simpanget).Durasi))) {
+                                    String[] sipp=semua[Integer.valueOf(random)-1][top].split(",");
+                                    int pindahh=0;
+                                    while(pindahh<sipp.length){
+                                        cari.set(pindahh, (1+cari.get(pindahh)+(sipp[pindahh].length() - sipp[pindahh].replace("=", "").length())));
+                                       
+                                        pindahh++;
+                                    }
+                                    pindah++;
+                                }
+                                max=cari.indexOf(Collections.min(cari));      
+                            } else 
+                                if (semua[Integer.valueOf(random)-1][top].contains(jadwal.get(simpanget).Ruangan)&&semua[Integer.valueOf(random)-1][top+Integer.valueOf(jadwal.get(simpanget).Durasi)].contains((jadwal.get(simpanget).Ruangan))) {
+                                String[] sip=semua[Integer.valueOf(random)-1][top].split(",");
+                                int pindah=0;
+                                int pas=0;
+                                while(pindah<sip.length){
+                                    if (sip[pindah].contains(jadwal.get(simpanget).Ruangan)){
+                                        pas=pindah;
+                                    }    
+                                    pindah++;
+                                }
+                                pindah=0;
+                                ArrayList<Integer> cari=new ArrayList<Integer>();
+                                cari.add(1+(sip[pas].length() - sip[pas].replace("=", "").length()));
+                                    
+                                pindah=top+1;
+                                while (pindah<(top+Integer.valueOf(jadwal.get(simpanget).Durasi))) {
+                                    
+                                    String[] sipp=semua[Integer.valueOf(random)-1][top].split(",");
+                                    
+                                    cari.set(0, (1+(cari.get(0)+(sipp[pas].length() - sipp[pas].replace("=", "").length()))));
+                                     System.out.println(cari.get(0)+"!!!!!!!!!!!!");  
+                                    pindah++;
+                                }
+                                int teruskan=1;
+                                int temps=0;
+                                max=cari.get(0);
+                                while (teruskan<cari.size()){
+                                   temps=cari.get(teruskan);
+                                   max=Math.min(max,temps);
+                                   System.out.println(max+"???!");
+                                   teruskan++;
+                                }
+                                //max=cari.indexOf(Collections.min(cari)); 
+                                      
+                                System.out.println(max+"???");
+
+                            }
+                            max1=Math.min(max,max1);
+                            System.out.println(max1);
+                            top++;
+                            }
+                    idx++;
+                }
+
+               
+              keluar++;  
+            }
+       temp1=500000000;
+        } while(temp>temp1);
+       int vow=0;
+       while (vow<yangcon.size()){
+           System.out.println(yangcon.get(vow));
+           System.out.println(hitungyangcon.get(vow));
+           vow++;
+       }
         
             
 // TODO add your handling code here:
