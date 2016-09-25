@@ -1,3 +1,5 @@
+//Author = Wiega
+
 import java.util.Scanner;
 import java.io.*;
 
