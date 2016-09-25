@@ -5,6 +5,7 @@
  */
 package tubes1;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.List;
@@ -27,7 +28,7 @@ public class GeneticAlgorithm {
     //generate String random, representasi satu individu
     public String generateRandom() {
         int totalGenerate = matkul.size();
-        System.out.println(totalGenerate);
+//        System.out.println(totalGenerate);
         String str = "";
 
          //format: <idxruang><Hari><mulai><selesai>
@@ -52,21 +53,31 @@ public class GeneticAlgorithm {
 
         //generate idxruang
         idx = rand.nextInt(ruang.size());
-        String[] listruang = matkul.get(idx).Ruangan.split(",");
+        String[] listruang = matkul.get(idxMatkul).Ruangan.split(",");
         
         
 //        System.out.println(listruang.length);
 //        System.out.println("a");
-        while (listruang.length > 0 && Arrays.asList(listruang).contains(ruang.get(idx).Nama)) {
+
+        List<String> listHari = new ArrayList<>();
+        
+        while ((listruang.length > 0 && Arrays.asList(listruang).contains(ruang.get(idx).Nama)) || listHari.size()==0) {
+            listHari.clear();
             idx = rand.nextInt(ruang.size());
-//            System.out.println("looping");
+
+            for (int i = 1; i<6; i++){
+                if (matkul.get(idxMatkul).Hari.contains(Integer.toString(i)) && ruang.get(idx).Hari.contains(Integer.toString(i))) {
+                    listHari.add(Integer.toString(i));
+                }
+            }
         }
 //        System.out.println("b");
         tmp = tmp+iToC(idx);
 
         //generate hari
-        hari = rand.nextInt(5) + 1;
-        tmp = tmp + hari;
+
+        hari = rand.nextInt(listHari.size());
+        tmp = tmp + listHari.get(hari);
         
         int matkulMulai = Integer.parseInt(matkul.get(idxMatkul).JamMulai.substring(0, 2));
         int matkulSelesai = Integer.parseInt(matkul.get(idxMatkul).JamSelesai.substring(0, 2));
@@ -103,8 +114,9 @@ public class GeneticAlgorithm {
          */
 
         //inisisalisasi tabJadwal 
-        String[] tabJadwal = new String [20];
-        for (int i=0; i<20; i++){
+        int max = str.length()/4;
+        String[] tabJadwal = new String [max];
+        for (int i=0; i<max; i++){
                 tabJadwal[i] = "";
         }
 
@@ -121,9 +133,11 @@ public class GeneticAlgorithm {
                                 strtemp = "";
                                 k++;	
                         }
-                        strtemp.concat(Character.toString(str.charAt(i)));
+                        strtemp = strtemp + str.charAt(i);
+//                        strtemp.concat(Character.toString(str.charAt(i)));
                         j++;
                 }
+                tabJadwal[k]=strtemp;
         } else {
                 //string salah, harus kelipatan 4
                 //tabJadwal kosong
@@ -144,6 +158,7 @@ public class GeneticAlgorithm {
                     String[] tabString = pisahstring(str);
 
                     //inisialisasi tabHariSama
+//                   System.out.println(tabString[7]);
                     String[][] tabHariSama = new String [5][5];
                     for (int x=0; x<5; x++){
                         for (int y=0; y<5; y++){
@@ -155,10 +170,12 @@ public class GeneticAlgorithm {
                     String strtemp ;
                     int idxBrsHariSama = 0;
                     int idxKolHariSama;
-                    for (char idxHari='a'; idxHari<='e'; idxHari++){
+                    for (char idxHari='1'; idxHari<='5'; idxHari++){
                         idxKolHariSama = 0;
                         for (int i=0; i< tabString.length; i++){
+                                
                                 strtemp = tabString[i];
+//                                System.out.println(strtemp);
                                 if (strtemp.charAt(1) == idxHari){	//mengecek kelas pada hari yg sama
                                         tabHariSama[idxBrsHariSama][idxKolHariSama] = strtemp;
                                         idxKolHariSama++;
@@ -217,11 +234,11 @@ public class GeneticAlgorithm {
         int nKelas = matkul.size();
         Random rand = new Random();
         int mutatedPosition = rand.nextInt(nKelas + nKelas/4);
-        System.out.println(mutatedPosition);
+//        System.out.println(mutatedPosition);
         if (mutatedPosition < nKelas) {
             int idxChange = (mutatedPosition) * 4;
             String tmp = randomOneKelas(mutatedPosition);
-            System.out.println(tmp);
+//            System.out.println(tmp);
             for (int i = 0; i<4; i++) {
                 out[idxChange] = tmp.charAt(i);
                 idxChange++;
@@ -239,28 +256,35 @@ public class GeneticAlgorithm {
         String strtemp = "";
         String strtemp1 = "";
         //random batas split
-        int nSplit = (int )(Math.random() * (str1.length() - 1));
-
+        int nSplit = (int )(Math.random() * (str1.length()/4 - 1));
+//        System.out.println("len " + str1.length());
+//        System.out.println("nsplit " + nSplit);
         //menghasilkan anak 1
         for (int i=0; i<=((nSplit+1)*4); i++){
-               strtemp.concat(Character.toString(str1.charAt(i)));
+            strtemp = strtemp + str1.charAt(i);
+//               strtemp.concat(Character.toString(str1.charAt(i)));
         }
         for (int i=((nSplit+1)*4)+1; i<str2.length(); i++){
-               strtemp.concat(Character.toString(str2.charAt(i)));
+            strtemp = strtemp + str2.charAt(i);
+//               strtemp.concat(Character.toString(str2.charAt(i)));
         }
 
         //menghasilkan anak 2
         for (int i=0; i<=((nSplit+1)*4); i++){
-               strtemp1.concat(Character.toString(str2.charAt(i)));
+            strtemp1 = strtemp1 + str2.charAt(i);
+//               strtemp1.concat(Character.toString(str2.charAt(i)));
         }
         for (int i=((nSplit+1)*4)+1; i<str1.length(); i++){
-               strtemp1.concat(Character.toString(str1.charAt(i)));
+            strtemp1 = strtemp1 + str1.charAt(i);
+//               strtemp1.concat(Character.toString(str1.charAt(i)));
         }
 
         //menggabungkan kedua anak pada array of string
         String[] tabResult = new String[2];
         tabResult[0] = strtemp;
         tabResult[1] = strtemp1;
+//        System.out.println(tabResult[0]);
+//        System.out.println(tabResult[1]);
         return tabResult;
     }
 
@@ -301,8 +325,13 @@ public class GeneticAlgorithm {
     public void fullProcess(){
         //generate random
         
-        //loop sampe puas
-        
+        //loop sampe puas -> ??????
+            //select generasi baru, loop sebanyak populasi/2
+                //select parent1 & parent2
+                //crossover
+                //mutation
+                //add ke populasi baru
+                //populasi lama mati, populasi baru jadi populasi lama
     }
 
 }

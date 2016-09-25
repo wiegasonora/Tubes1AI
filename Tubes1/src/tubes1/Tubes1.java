@@ -63,10 +63,12 @@ public class Tubes1 {
         }
         in.close();
         
+        long startTime = System.nanoTime(); 
         GeneticAlgorithm g = new GeneticAlgorithm(jadwal, ruang);
-        String str = g.generateRandom();
-        System.out.println(str);
-        String mutated = g.mutation(str);
-        System.out.println(mutated);
+        String str1 = g.generateRandom();
+        System.out.println("fitnessfunct "+g.hitungFitnessFunction(str1));
+            
+        long estimatedTime = System.nanoTime() - startTime;
+        System.out.println(estimatedTime/1000000 + "ms");
     }
 }
