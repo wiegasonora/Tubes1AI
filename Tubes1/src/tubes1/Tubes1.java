@@ -25,12 +25,12 @@ public class Tubes1 {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        List<Ruangan> ruang = new ArrayList<Ruangan>();
-        List<Jadwal> jadwal = new ArrayList<Jadwal>();
+        List<Ruangan> ruang = new ArrayList<>();
+        List<Jadwal> jadwal = new ArrayList<>();
         JFileChooser fad = new JFileChooser();
-        File input;
-        int rent = fad.showOpenDialog(fad);  
-        input = fad.getSelectedFile();
+        File input = new File("/home/rezaramadhan/t1.txt");
+//        int rent = fad.showOpenDialog(fad);  
+//        input = fad.getSelectedFile();
         
         Scanner in = new Scanner(input);
         String nextLine = in.nextLine();
@@ -63,5 +63,8 @@ public class Tubes1 {
         }
         in.close();
         
+        GeneticAlgorithm g = new GeneticAlgorithm(jadwal, ruang);
+        String str = g.generateRandom();
+        System.out.println(str);
     }
 }

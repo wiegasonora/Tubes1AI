@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package tubes1;
+
 import java.util.Arrays;
 import java.util.Random;
 import java.util.List;
@@ -26,6 +27,7 @@ public class GeneticAlgorithm {
     //generate String random, representasi satu individu
     public String generateRandom() {
         int totalGenerate = matkul.size();
+        System.out.println(totalGenerate);
         String str = "";
 
          //format: <idxruang><Hari><mulai><selesai>
@@ -35,38 +37,55 @@ public class GeneticAlgorithm {
         return str;
     }
     
+    public int cToI(char c) {
+        return (int) c - (int) 'a';
+    }
+    
+    public char iToC(int i) {
+        return (char) (i + (int) 'a');
+    }
     public String randomOneKelas(int idxMatkul) {
         String tmp = "";
         int max, min;
         int idx, hari, mulai, selesai;
         Random rand = new Random();
-        
-        
-        
+
         //generate idxruang
         idx = rand.nextInt(ruang.size());
         String[] listruang = matkul.get(idx).Ruangan.split(",");
-
-        while (!Arrays.asList(listruang).contains(ruang.get(idx).Nama)) {
+        
+        
+//        System.out.println(listruang.length);
+//        System.out.println("a");
+        while (listruang.length > 0 && Arrays.asList(listruang).contains(ruang.get(idx).Nama)) {
             idx = rand.nextInt(ruang.size());
+//            System.out.println("looping");
         }
-
-        tmp = tmp+idx;
+//        System.out.println("b");
+        tmp = tmp+iToC(idx);
 
         //generate hari
         hari = rand.nextInt(5) + 1;
         tmp = tmp + hari;
-
-        min = Math.min(Integer.parseInt(matkul.get(idxMatkul).JamMulai), Integer.parseInt(ruang.get(idx).JamMulai));
-        max = Math.max(Integer.parseInt(matkul.get(idxMatkul).JamSelesai), Integer.parseInt(ruang.get(idx).JamSelesai)) - Integer.parseInt(matkul.get(idxMatkul).Durasi);
+        
+        int matkulMulai = Integer.parseInt(matkul.get(idxMatkul).JamMulai.substring(0, 2));
+        int matkulSelesai = Integer.parseInt(matkul.get(idxMatkul).JamSelesai.substring(0, 2));
+        int ruangMulai = Integer.parseInt(ruang.get(idx).JamMulai.substring(0, 2));
+        int ruangSelesai = Integer.parseInt(ruang.get(idx).JamSelesai.substring(0, 2));
+//        System.out.println(matkulMulai);
+//        System.out.println(matkulSelesai);
+//        System.out.println(ruangMulai);
+//        System.out.println(ruangSelesai);
+        min = Math.min(matkulMulai, ruangMulai);
+        max = Math.max(matkulSelesai, ruangSelesai) - Integer.parseInt(matkul.get(idxMatkul).Durasi);
 
         //generate mulai
         mulai = rand.nextInt(max-min + 1) + min;
-        tmp = tmp + mulai;
+        tmp = tmp + iToC(mulai);
 
         //generate selesai
         selesai = mulai + Integer.parseInt(matkul.get(idxMatkul).Durasi);
-        tmp = tmp + selesai;
+        tmp = tmp + iToC(selesai);
         
         return tmp;
     } 
@@ -278,7 +297,10 @@ public class GeneticAlgorithm {
     }
             
     public void fullProcess(){
-
+        //generate random
+        
+        //loop sampe puas
+        
     }
 
 }
