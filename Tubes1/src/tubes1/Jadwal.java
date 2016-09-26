@@ -13,66 +13,66 @@ import java.io.*;
  * @author rezaramadhan
  */
 class Jadwal {
-    String namaKegiatan;
-    String ruangan;
-    String jamMulai;
-    String jamSelesai;
-    String durasi;
-    String hari;
+    String NamaKegiatan;
+    String Ruangan;
+    String JamMulai;
+    String JamSelesai;
+    String Durasi;
+    String Hari;
 
     // Constructs an intial course
     public Jadwal() {
-        this.namaKegiatan = "IFXXXX";
-        this.ruangan = "";
-        this.jamMulai = "0";
-        this.jamSelesai = "0";
-        this.durasi = "0";
-        this.hari = "";
+        this.NamaKegiatan = "IFXXXX";
+        this.Ruangan = "";
+        this.JamMulai = "0";
+        this.JamSelesai = "0";
+        this.Durasi = "0";
+        this.Hari = "";
     }
     
     // Constructs a course with certain of parameters
     public Jadwal(String nm, String rg, String mulai, String selesai, String dur, String hr) {
-        this.namaKegiatan = nm;
-        this.ruangan = rg;
-        this.jamMulai = mulai;
-        this.jamSelesai = selesai;
-        this.durasi = dur;
-        this.hari = hr;
+        this.NamaKegiatan = nm;
+        this.Ruangan = rg;
+        this.JamMulai = mulai;
+        this.JamSelesai = selesai;
+        this.Durasi = dur;
+        this.Hari = hr;
     }
 
     // Constructs a course from another course
     public Jadwal(Jadwal jadwal) {
-        this.namaKegiatan = jadwal.namaKegiatan;
-        this.ruangan = jadwal.ruangan;
-        this.jamMulai = jadwal.jamMulai;
-        this.jamSelesai = jadwal.jamSelesai;
-        this.durasi = jadwal.durasi;
-        this.hari = jadwal.hari;
+        this.NamaKegiatan = jadwal.NamaKegiatan;
+        this.Ruangan = jadwal.Ruangan;
+        this.JamMulai = jadwal.JamMulai;
+        this.JamSelesai = jadwal.JamSelesai;
+        this.Durasi = jadwal.Durasi;
+        this.Hari = jadwal.Hari;
     }
     
     // Gets name of course
     public String getNamaKegiatan() {
-        return this.namaKegiatan;
+        return this.NamaKegiatan;
     }
     
     // Gets course's room
     public String getRuangan() {
-        return this.ruangan;
+        return this.Ruangan;
     }
 
     // Gets course's starting time
     public int getJamMulai() {
-        return Integer.parseInt(this.jamMulai);
+        return Integer.parseInt(this.JamMulai);
     }
 
     // Gets course's ending time
     public int getJamSelesai() {
-        return Integer.parseInt(this.jamSelesai);
+        return Integer.parseInt(this.JamSelesai);
     }
 
     // Gets course's duration
     public int getDurasi() {
-        return Integer.parseInt(this.durasi);
+        return Integer.parseInt(this.Durasi);
     }
 
     // Gets course's day
@@ -83,7 +83,7 @@ class Jadwal {
     		temp[i] = false;
     	}
     	//menghilangkan separator berupa koma (,) dari string
-    	String str = hari.replaceAll(",", "");
+    	String str = Hari.replaceAll(",", "");
     	//konversi string ke nilai boolean
 		for (int i = 0; i < str.length(); i++) {
 			temp[Character.getNumericValue(str.charAt(i)) - 1] = true;
@@ -98,43 +98,43 @@ class Jadwal {
     
     // Sets Nama to nm
     public void setNamaKegiatan(String nm) {
-        this.namaKegiatan = nm;
+        this.NamaKegiatan = nm;
     }
-    // Sets ruangan to rg
+    // Sets Ruangan to rg
     public void setRuangan(String rg) {
-        this.ruangan = rg;
+        this.Ruangan = rg;
     }
-    // Sets jamMulai to aw
+    // Sets JamMulai to aw
     public void setJamMulai(String aw) {
-        this.jamMulai = aw;
+        this.JamMulai = aw;
     }
-    // Sets jamMulai to aw
+    // Sets JamMulai to aw
     public void setJamMulai(int aw) {
-        this.jamMulai = Integer.toString(aw);
+        this.JamMulai = Integer.toString(aw);
     }
-    // Sets jamSelesai to akh
+    // Sets JamSelesai to akh
     public void setJamSelesai(String akh) {
-        this.jamSelesai = akh;
+        this.JamSelesai = akh;
     }
-        // Sets jamSelesai to akh
+        // Sets JamSelesai to akh
     public void setJamSelesai(int akh) {
-        this.jamSelesai = Double.toString(akh);
+        this.JamSelesai = Double.toString(akh);
     }
-    // Sets durasi to dur
+    // Sets Durasi to dur
     public void setDurasi(String dur) {
-        this.durasi = dur;
+        this.Durasi = dur;
     }
-    // Sets durasi to dur
+    // Sets Durasi to dur
     public void setDurasi(int dur) {
-        this.durasi = Integer.toString(dur);
+        this.Durasi = Integer.toString(dur);
     }
-    // Sets hari to hr
+    // Sets Hari to hr
     public void setHari(String hr) {
-        this.hari = hr;
+        this.Hari = hr;
     }
     public void setHariAtIdx(int idx, boolean bool) {
     	if (bool == false) {
-	        hari.replaceAll("idx", "");
+	        Hari.replaceAll("idx", "");
 	    }
     }
 
@@ -143,7 +143,7 @@ class Jadwal {
         Jadwal temp = new Jadwal();
         do {
             int x;
-            // Random hari correct
+            // Random Hari correct
             do {
                 x = rnd.nextInt(5);
             } while (getHariAtIdx(x) == false);
@@ -158,7 +158,7 @@ class Jadwal {
             temp.setJamMulai(x);
             temp.setJamSelesai(x + getDurasi());
             
-            // Random ruangan
+            // Random Ruangan
             if (getRuangan() == "") {
                 x = rnd.nextInt(RoomManager.numberOfRoom());
                 temp.setRuangan(RoomManager.getRoom(x).getRuangan());
