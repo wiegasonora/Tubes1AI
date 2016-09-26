@@ -16,4 +16,6 @@ class Jadwal {
     String JamSelesai;
     String Durasi;
     String Hari;
+    
+    
 }
