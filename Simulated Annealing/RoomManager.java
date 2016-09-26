@@ -14,4 +14,13 @@ public class RoomManager {
 	public static int numberOfRoom() {
 		return listOfRoom.size();
 	}
+
+	public static Room getRoomByRuang(String ruang) {
+		for (int i = 0; i < numberOfRoom(); i++) {
+			if (getRoom(i).getRuang() == ruang) {
+				return getRoom(i);
+			}
+		}
+		return null;	
+	}
 }

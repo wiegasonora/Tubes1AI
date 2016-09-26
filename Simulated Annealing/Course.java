@@ -81,6 +81,10 @@ public class Course {
     public boolean[] getHari(){
         return this.hari;
     }
+
+    public boolean getHariAtIdx(int idx) {
+        return this.hari[idx];
+    }
     
     // Sets Nama to nm
     public void setNama(String nm) {
@@ -109,27 +113,60 @@ public class Course {
         }
     }
 
-    public Course randomCourse() {
-        Random rnd = new Random();
-        for (int i = 0; i < schedule.size(); i++) {
-            Course temp = new Course();
-            temp.setCourseAtIdx(i, getCourse(i));
-            // random ruangan
-
-            // random jam mulai
-            int x = rnd.nextInt(getCourse(i).getAkhir() - getCourse(i).getDurasi()) + getCourse(i).getAwal();
-            temp.setAwal(x);
-            temp.setAkhir(x + getCourse(i).getDurasi());
-            // random hari
-            do {
-                x = rnd.nextInt(5) + 1;
-            }
-            while (getCourse(i).getHari()[x] == false);
-            // masukkan hari terpilih ke course
-            // temp.setHari(x);
-        }
+    public void setHariAtIdx(int idx, boolean bool) {
+        this.hari[idx] = bool;
     }
 
+    public Course randomCourse() {
+        Random rnd = new Random();
+        do {
+            Course temp = new Course();
+            int x;
+            // Random hari correct
+            do {
+                x = rnd.nextInt(5);
+            } while (getCourse(i).getHariAtIdx(x) == false);
+            
+            for (int j = 0; j < 5; j++) {
+                if (j != x) {
+                    temp.setHariAtIdx(j, false);
+                }
+            }
+            // Random jam kuliah correct
+            x = rnd.nextInt(getCourse(i).getAkhir() - getCourse(i).getDurasi() - getCourse(i).getAwal() + 1) + getCourse(i).getAwal();
+            temp.setAwal(x);
+            temp.setAkhir(x + getCourse(i).getDurasi());
+            
+            // Random ruangan
+            if (getRuang() == "") {
+                x = rnd.nextInt(RoomManager.numberOfRoom());
+                temp.setRuang(RoomManager.getRoom(x).getRuang());
+            } else {
+                temp.setRuang(this.getRuang());
+            }
+        } while (isNotInDomain(temp, RoomManager.getRoomByRuang(temp.getRuang())));
+    
+        return temp;
+    }
+
+    public boolean isNotInDomain(Course course, Room room) {
+        int idxHari = 999;
+        for (int i = 0; i < 5; i++) {
+            if (course.getHariAtIdx(i) == true) {
+                idxHari = i;
+            }
+        }
+        boolean isHariIn = false;
+        if (room.getHariAtIdx(idxHari) && course.getHariAtIdx(idxHari)) {
+            isHariIn = true;
+        }
+        boolean isJamIn = false;
+        if ((course.getAwal() >= room.getAwal())&&(course.getAwal() <= (room.getAkhir()-course.getDurasi()))) {
+            isJamIn = true;
+        }
+
+        return (isHariIn && isJamIn);        
+    }
 
     @Override
     public String toString(){
