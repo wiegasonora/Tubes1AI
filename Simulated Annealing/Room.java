@@ -47,6 +47,10 @@ public class Room {
 		return hari;
 	}
 
+	public boolean getHariAtIdx(int idx) {
+        return this.hari[idx];
+    }
+
 	public void setRuang(String ruang) {
 		this.ruang = ruang;
 	}
