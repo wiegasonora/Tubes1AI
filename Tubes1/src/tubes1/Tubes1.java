@@ -67,8 +67,8 @@ public class Tubes1 {
         GeneticAlgorithm g = new GeneticAlgorithm(jadwal, ruang);
         String str1 = g.generateRandom();
         System.out.println(str1);
-        System.out.println("fitnessfunct "+g.hitungFitnessFunction(str1));
-            
+        String format = String.format("%f", g.hitungFitnessFunction(str1));
+        System.out.println("fitnessfunct "+format);
         long estimatedTime = System.nanoTime() - startTime;
         System.out.println(estimatedTime/1000000 + "ms");
     }

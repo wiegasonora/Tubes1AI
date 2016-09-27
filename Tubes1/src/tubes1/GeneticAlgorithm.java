@@ -211,10 +211,11 @@ public class GeneticAlgorithm {
             }
 
             //mengembalikan nilai fitness function yaitu 1/countBentrok
+            
             if (countBentrok == 0){	//tidak ada yg bentrok, menghindari infinite
                 return 999;
             } else {
-                return (1 / countBentrok);
+                return (1 / (float)countBentrok);
             }
         } else {
             return -999; //error string tidak kelipatan 4
