@@ -50,6 +50,9 @@ public class NewJFrame extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,6 +81,29 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Conflict:");
 
+        jButton2.setText("hillclimb");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "07.00", "08.00", "09.00", "10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00"
+            }
+        ));
+        jTable2.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jTable2.setRowHeight(50);
+        jScrollPane2.setViewportView(jTable2);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,28 +112,50 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addGap(24, 24, 24))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 781, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addContainerGap(143, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(114, 114, 114)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton2))
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(10, 10, 10)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(281, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+ List<Ruangan> ruang = new ArrayList<Ruangan>();
+            List<Jadwal> jadwal = new ArrayList<Jadwal>();
+             String[][] semua = new String[5][11];
+             int hitung=0;
+        String[] pisah;
+        String[] cekpisah;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            List<Ruangan> ruang = new ArrayList<Ruangan>();
-            List<Jadwal> jadwal = new ArrayList<Jadwal>();
+           
             JFileChooser fad = new JFileChooser();
             File input;
             int rent = fad.showOpenDialog(fad);
@@ -146,7 +194,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 //csvOutput2.endRecord();
             }
             in.close();
-            String[][] semua = new String[5][11];
+           
         //ArrayList<ArrayList<ArrayList<String>>> listOLists = new ArrayList<ArrayList<ArrayList<String>>>();
         //ArrayList<String> singleList = new ArrayList<String>(); //buat jam
         
@@ -162,7 +210,7 @@ public class NewJFrame extends javax.swing.JFrame {
                          semua[0][jam-7]=ruang.get(tess).Nama+"-,";
                     } else
                         semua[0][jam-7]=semua[0][jam-7]+ruang.get(tess).Nama+"-,";
-                    System.out.println(semua[0][jam-7]);
+                    //System.out.println(semua[0][jam-7]);
                     jam++;
                 }
                 jam=0;
@@ -235,34 +283,38 @@ public class NewJFrame extends javax.swing.JFrame {
             benar=0;
             count=0;
             int top=Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2))-7;
-            System.out.println(jadwal.get(tess).NamaKegiatan);
+            //System.out.println(jadwal.get(tess).NamaKegiatan);
             while (benar==0 && count<30){
                 top=Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2))-7;
                 int idx = new Random().nextInt(simpan.length);
                 String random = (simpan[idx]);
-                System.out.print(Integer.valueOf(random) +"++");
-                System.out.print((Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2))-7)+"====");
+                //System.out.print(Integer.valueOf(random) +"++");
+                //System.out.print((Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2))-7)+"====");
                 while (top<=((Integer.valueOf(jadwal.get(tess).JamSelesai.substring(0, 2))-7))-Integer.valueOf(jadwal.get(tess).Durasi) && semua[Integer.valueOf(random)-1][top+Integer.valueOf(jadwal.get(tess).Durasi)]!=null && benar==0) {
                 if (semua[Integer.valueOf(random)-1][(Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2)))-7]!=null) {
-                System.out.println(semua[Integer.valueOf(random)-1][(Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2)))-7]);
+                //System.out.println(semua[Integer.valueOf(random)-1][(Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2)))-7]);
                 boolean masukan=semua[Integer.valueOf(random)-1][top].contains("-,");
-                 int cek=semua[Integer.valueOf(random)-1][top].lastIndexOf("-,");
-                if (cek!=-1 && ("-".equals(jadwal.get(tess).Ruangan))){
+                int cek=semua[Integer.valueOf(random)-1][top].lastIndexOf("-,");
+                String masuk="";
+                if (cek!=-1) {
+                String ubah=semua[Integer.valueOf(random)-1][top].substring(0, cek);
+                    String[] pas=ubah.split(",");
+                    masuk=pas[pas.length-1];
+                } 
+               if (cek!=-1 && ("-".equals(jadwal.get(tess).Ruangan) && semua[Integer.valueOf(random)-1][top].contains(masuk)&&semua[Integer.valueOf(random)-1][top+Integer.valueOf(jadwal.get(tess).Durasi)].contains(masuk))){
                     int tambah=top;
                     
                    
-                    System.out.println(cek);
-                    String ubah=semua[Integer.valueOf(random)-1][top].substring(0, cek);
-                    String[] pas=ubah.split(",");
-                    String masuk=pas[pas.length-1];
-                    System.out.println("!!!!!"+masuk);
+                    //System.out.println(cek);
+                    
+                    //System.out.println("!!!!!"+masuk);
                     while (tambah<(Integer.valueOf(jadwal.get(tess).Durasi)+top)) {
                         if (semua[Integer.valueOf(random)-1][tambah]!=null) {
                             if (semua[Integer.valueOf(random)-1][tambah].contains("-,")){
                     semua[Integer.valueOf(random)-1][tambah]=semua[Integer.valueOf(random)-1][tambah].replaceFirst(masuk+"-,", (masuk+"-"+jadwal.get(tess).NamaKegiatan+"-=,"));
                             } else semua[Integer.valueOf(random)-1][tambah]=semua[Integer.valueOf(random)-1][tambah].replaceFirst(masuk+"-", (masuk+"-"+jadwal.get(tess).NamaKegiatan+"-="));
                     
-                    System.out.println("INTERUPSI"+semua[Integer.valueOf(random)-1][tambah]);
+                    //System.out.println("INTERUPSI"+semua[Integer.valueOf(random)-1][tambah]);
                         } else semua[Integer.valueOf(random)-1][tambah]=jadwal.get(tess).NamaKegiatan;
                     tambah++;
                     }
@@ -270,7 +322,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     benar=1;
                     }
                 } else 
-                    if (semua[Integer.valueOf(random)-1][top].contains((jadwal.get(tess).Ruangan)+"-,")) {
+                    if (semua[Integer.valueOf(random)-1][top].contains((jadwal.get(tess).Ruangan)+"-,") &&semua[Integer.valueOf(random)-1][top+Integer.valueOf(jadwal.get(tess).Durasi)].contains((jadwal.get(tess).Ruangan)+"-,") ) {
                      int tambah=top;
                     while (tambah<(Integer.valueOf(jadwal.get(tess).Durasi)+top)) {
                         if (semua[Integer.valueOf(random)-1][tambah]!=null) {
@@ -279,7 +331,7 @@ public class NewJFrame extends javax.swing.JFrame {
                             } else  semua[Integer.valueOf(random)-1][tambah]=semua[Integer.valueOf(random)-1][tambah].replaceFirst((jadwal.get(tess).Ruangan+"-"), (jadwal.get(tess).Ruangan+"-"+jadwal.get(tess).NamaKegiatan+"-="));
                     
                    
-                    System.out.println("INTERUPSI1"+semua[Integer.valueOf(random)-1][tambah]);
+                    //System.out.println("INTERUPSI1"+semua[Integer.valueOf(random)-1][tambah]);
                         } else semua[Integer.valueOf(random)][tambah]=jadwal.get(tess).NamaKegiatan;
                     tambah++;
                     }
@@ -294,40 +346,50 @@ public class NewJFrame extends javax.swing.JFrame {
                 count++;
                 
             }
-            System.out.println("GANTI");
+            //System.out.println("GANTI");
             top=Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2))-7;
             if (benar==0){
                 while (benar==0 ){
                     top=Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2))-7;
                 int idx = new Random().nextInt(simpan.length);
                 String random = (simpan[idx]);
-                System.out.println(random);
-                System.out.println(semua[Integer.valueOf(random)-1][Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2))-7]);
-                System.out.println((jadwal.get(tess).Ruangan));
-                System.out.println(jadwal.get(tess).NamaKegiatan);
+                //System.out.println(random);
+                //System.out.println(semua[Integer.valueOf(random)-1][Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2))-7]);
+                //System.out.println((jadwal.get(tess).Ruangan));
+                //System.out.println(jadwal.get(tess).NamaKegiatan);
                 while (top<=((Integer.valueOf(jadwal.get(tess).JamSelesai.substring(0, 2))-7))-Integer.valueOf(jadwal.get(tess).Durasi)&& semua[Integer.valueOf(random)-1][top+Integer.valueOf(jadwal.get(tess).Durasi)]!=null&&benar==0) {
-                if (( "-".equals(jadwal.get(tess).Ruangan))){
+                int cek=semua[Integer.valueOf(random)-1][top].indexOf(",");
+                String masuk="";
+                if (cek!=-1){
+                String ubah=semua[Integer.valueOf(random)-1][top].substring(0, cek);
+                    String[] pas=ubah.split(",");
+                    masuk=pas[pas.length-1];
+                }
+                    if (cek!=1&&( "-".equals(jadwal.get(tess).Ruangan))&&semua[Integer.valueOf(random)-1][top+Integer.valueOf(jadwal.get(tess).Durasi)].contains(masuk)){
+                    
                     int tambah=top;
                     while (tambah<(Integer.valueOf(jadwal.get(tess).Durasi)+top)) {
-                        semua[Integer.valueOf(random)-1][tambah] = semua[Integer.valueOf(random)-1][tambah].replaceFirst(",", ("-="+jadwal.get(tess).NamaKegiatan+","));
+                        semua[Integer.valueOf(random)-1][tambah]=semua[Integer.valueOf(random)-1][tambah].replaceFirst(masuk+"-", (masuk+"-"+jadwal.get(tess).NamaKegiatan+"-="));
+                    
+                       // semua[Integer.valueOf(random)-1][tambah] = semua[Integer.valueOf(random)-1][tambah].replaceFirst(",", ("-="+jadwal.get(tess).NamaKegiatan+","));
                     tambah++;
-                    System.out.println("INTERUPSI1"+semua[Integer.valueOf(random)-1][tambah]);
+                    //System.out.println("INTERUPSI1"+semua[Integer.valueOf(random)-1][tambah]);
                     }
-                    System.out.println("LOOP0");
+                    //System.out.println("LOOP0");
                     
                     benar=1;
                     
-                } else if (semua[Integer.valueOf(random)-1][top].contains(jadwal.get(tess).Ruangan)){
+                } else if (semua[Integer.valueOf(random)-1][top].contains(jadwal.get(tess).Ruangan) && semua[Integer.valueOf(random)-1][top+Integer.valueOf(jadwal.get(tess).Durasi)].contains(jadwal.get(tess).Ruangan)){
                     int tambah=top;
                     
                     while (tambah<(Integer.valueOf(jadwal.get(tess).Durasi)+(top))) {
                     semua[Integer.valueOf(random)-1][tambah]=semua[Integer.valueOf(random)-1][tambah].replaceFirst((jadwal.get(tess).Ruangan+"-"), (jadwal.get(tess).Ruangan+"-"+jadwal.get(tess).NamaKegiatan+"-="));
                     tambah++;
-                    System.out.println("LOOPPPP");
+                    //System.out.println("LOOPPPP");
                     }
                     benar=1;
                 }
-               System.out.println("LOOP1"); 
+               //System.out.println("LOOP1"); 
             top++;
                 }
                 }
@@ -336,9 +398,7 @@ public class NewJFrame extends javax.swing.JFrame {
         }
                 tess=0;
         int conflict=0;
-        int hitung=0;
-        String[] pisah;
-        String[] cekpisah;
+        
         while (tess<5){
             cobas=0;
             while (cobas<11) {
@@ -347,10 +407,10 @@ public class NewJFrame extends javax.swing.JFrame {
                 pisah=semua[tess][cobas].split(",");
                 while (hitung<pisah.length){
                     if (pisah[hitung].contains("=")){
-                    System.out.println(pisah[hitung]);
+                    //System.out.println(pisah[hitung]);
                     
                     cekpisah=pisah[hitung].split("=");
-                    System.out.println(semua[tess][cobas]);
+                    //System.out.println(semua[tess][cobas]);
                    if (cekpisah.length!=1){
                        int hitungcon=cekpisah.length;
                        int k=1;
@@ -372,7 +432,7 @@ public class NewJFrame extends javax.swing.JFrame {
                            total=total+k;
                            k++;
                        }
-                       System.out.println(total);
+                       //System.out.println(total);
                     conflict=conflict+total;
                    } else if (cekpisah.length==1) {
                        if (jTable1.getValueAt(tess, cobas)!=null){
@@ -402,11 +462,24 @@ public class NewJFrame extends javax.swing.JFrame {
         }
         jLabel1.setText("Conflict :"+conflict);
        
-        tess=0;
-        cobas=0;
+
+       
+        
+            
+// TODO add your handling code here:
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int        tess=0;
+        int cobas=0;
         List<String> yangcon=new ArrayList<String>();
-            List<Integer> hitungyangcon=new ArrayList<Integer>();
+        List<Integer> hitungyangcon=new ArrayList<Integer>();
+        List<String> lokasiyangcon=new ArrayList<String>();
         int temp=0,temp1=0;
+        int conflict=0;
         do {
              yangcon=new ArrayList<String>();
             hitungyangcon=new ArrayList<Integer>();
@@ -425,14 +498,16 @@ public class NewJFrame extends javax.swing.JFrame {
                        int total=0;
                        String[] gg=cekpisah[0].split("-");
                        if (!yangcon.contains(gg[1])){
-                        yangcon.add(gg[1]);System.out.println(gg[1]+" WOII! "+cekpisah.length);
+                        yangcon.add(gg[1]);//System.out.println(gg[1]+" WOII! "+cekpisah.length);
+                        lokasiyangcon.add(tess+","+cobas+"=");
                         hitungyangcon.add(cekpisah.length);
                        } else {
                            int fat=0;
                          while (fat<yangcon.size()){
                              if (yangcon.get(fat).equals(gg[1])){
-                                 System.out.println(gg[1]+" WOII!! "+cekpisah.length);
+                                 //System.out.println(gg[1]+" WOII!! "+cekpisah.length);
                                  hitungyangcon.set(fat, (hitungyangcon.get(fat)+cekpisah.length));
+                                 lokasiyangcon.set(fat, (lokasiyangcon.get(fat)+tess+","+cobas+"="));
                                  fat=yangcon.size();
                              }
                              fat++;
@@ -441,15 +516,17 @@ public class NewJFrame extends javax.swing.JFrame {
                        while(k<hitungcon){
                            if (!yangcon.contains(cekpisah[k].substring(0, cekpisah[k].length()-1))){
                                yangcon.add(cekpisah[k].substring(0, cekpisah[k].length()-1));
-                               System.out.println(cekpisah[k].substring(0, cekpisah[k].length()-1)+" WOII!!! "+cekpisah.length);
+                               //System.out.println(cekpisah[k].substring(0, cekpisah[k].length()-1)+" WOII!!! "+cekpisah.length);
                                hitungyangcon.add(cekpisah.length);
+                               lokasiyangcon.add(tess+","+cobas+"=");
                            } else {
                                int fat=0;
                                 while (fat<yangcon.size()){
                                     if (yangcon.get(fat).equals(cekpisah[k].substring(0, cekpisah[k].length()-1))){
-                                        System.out.println(cekpisah[k].substring(0, cekpisah[k].length()-1)+" WOII!!!! "+cekpisah.length);
+                                        //System.out.println(cekpisah[k].substring(0, cekpisah[k].length()-1)+" WOII!!!! "+cekpisah.length);
                               
                                         hitungyangcon.set(fat, (hitungyangcon.get(fat)+cekpisah.length));
+                                        lokasiyangcon.set(fat, (lokasiyangcon.get(fat)+tess+","+cobas+"="));
                                         fat=yangcon.size();
                                     }
                                  fat++;
@@ -482,21 +559,41 @@ public class NewJFrame extends javax.swing.JFrame {
        temp=5;
        int iterasi=0;
        int simpanget=0;
+       String simpanyangdiganti="",simpanyangdiganti1="=",kelasyangkeluar="",kelasyangkeluar1="";
        while(keluar<yangcon.size()){
                 iterasi=0;
                 while (iterasi<jadwal.size()){
-                    if (jadwal.get(iterasi).Ruangan.equals(yangcon.get(keluar))){
+                    //System.out.println("TES");
+                    if (jadwal.get(iterasi).NamaKegiatan.equals(yangcon.get(keluar))){
                         simpanget=iterasi;
                         iterasi=1000000;
                     }
                     iterasi++;
                 }
-            benar=0;
+            int benar=0;
             int top,max=10000,max1=10000;
             String[] simpan=jadwal.get(simpanget).Hari.split(",");
             int idx = 0;
-              
-                while(idx<simpan.length){
+            String[] kelassama=lokasiyangcon.get(keluar).split("=");
+            String testing=lokasiyangcon.get(keluar);
+            ArrayList<Integer> row=new  ArrayList<Integer>(); 
+            ArrayList<Integer> col=new  ArrayList<Integer>(); 
+            int terus=0;
+            //System.out.println("PERHATIKAN"+lokasiyangcon.get(keluar));
+            
+            int filess=testing.length()-testing.replaceAll("=", "").length();
+            //System.out.println(filess);
+            while (terus<filess){
+                //System.out.println(kelassama[terus]);
+                String[] rocol=kelassama[terus].split(",");
+                //System.out.println(rocol[0]+"MBAK");
+                //System.out.println(rocol[1]+"TESNYA");
+                
+                row.add(Integer.valueOf(rocol[0]));
+                col.add(Integer.valueOf(rocol[1]));
+                terus++;
+            }
+            while(idx<simpan.length){
                     top=Integer.valueOf(jadwal.get(simpanget).JamMulai.substring(0, 2))-7;
                     String random = (simpan[idx]);
                             while (top<=((Integer.valueOf(jadwal.get(simpanget).JamSelesai.substring(0, 2))-7))-Integer.valueOf(jadwal.get(simpanget).Durasi)&& semua[Integer.valueOf(random)-1][top]!=null && semua[Integer.valueOf(random)-1][top+Integer.valueOf(jadwal.get(simpanget).Durasi)]!=null) {
@@ -504,24 +601,68 @@ public class NewJFrame extends javax.swing.JFrame {
                                 String[] sip=semua[Integer.valueOf(random)-1][top].split(",");
                                 int pindah=0;
                                 ArrayList<Integer> cari=new ArrayList<Integer>();
+                                ArrayList<String> pindahstring=new ArrayList<String>();
+                                ArrayList<String> kelaskeluar=new ArrayList<String>();
                                 while(pindah<sip.length){
-                                        cari.add((sip[pindah].length() - sip[pindah].replace("=", "").length())+1);
+                                    if (row.contains(Integer.valueOf(random)-1) && col.contains(top)){
+                                       
+                                        cari.add((sip[pindah].length() - sip[pindah].replace("=", "").length()));
+                                        
+                                    }   else 
+                                         if (sip[pindah].contains("=")){
+                                              cari.add((sip[pindah].length() - sip[pindah].replace("=", "").length())+1);
+                                         } else
+                                             cari.add(1);
+                                       
+                                        pindahstring.add((Integer.valueOf(random)-1)+","+top+"=");
+                                        String[] siap=sip[pindah].split("-");
+                                        kelaskeluar.add(siap[0]);
                                         pindah++;
                                     }
                                 pindah=top+1;
                                 while (pindah<(top+Integer.valueOf(jadwal.get(simpanget).Durasi))) {
-                                    String[] sipp=semua[Integer.valueOf(random)-1][top].split(",");
+                                    String[] sipp=semua[Integer.valueOf(random)-1][pindah].split(",");
+                                    
                                     int pindahh=0;
                                     while(pindahh<sipp.length){
-                                        cari.set(pindahh, (1+cari.get(pindahh)+(sipp[pindahh].length() - sipp[pindahh].replace("=", "").length())));
+                                        if (pindahh<cari.size()){
+                                         if (row.contains(Integer.valueOf(random)-1) && col.contains(pindah)){
+                                            cari.set(pindahh, (cari.get(pindahh)+(sipp[pindahh].length() - sipp[pindahh].replace("=", "").length())));
+                                            
+                                         } else
+                                             if (sipp[pindahh].contains("=")){
+                                               cari.set(pindahh, (1+cari.get(pindahh)+(sipp[pindahh].length() - sipp[pindahh].replace("=", "").length())));
+                                         
+                                             } else
+                                        cari.set(pindahh, (1+cari.get(pindahh)));
+                                         pindahstring.set(pindahh, pindahstring.get(pindahh)+(Integer.valueOf(random)-1)+","+pindah+"=");
+                                      String[] siap=sipp[pindahh].split("-");
+                                        kelaskeluar.add(siap[0]);
+                                        }
                                        
                                         pindahh++;
                                     }
                                     pindah++;
                                 }
-                                max=cari.indexOf(Collections.min(cari));      
+                                int teruskan=1;
+                                int temps=0;
+                                max=cari.get(0);
+                                while (teruskan<cari.size()){
+                                   temps=cari.get(teruskan);
+                                   max=Math.min(max,temps);
+                                   //System.out.println(max+"???!");
+                                   teruskan++;
+                                }
+                                int ditentukan=cari.indexOf(max);
+                                simpanyangdiganti=pindahstring.get(ditentukan);
+                                kelasyangkeluar=kelaskeluar.get(ditentukan);
                             } else 
                                 if (semua[Integer.valueOf(random)-1][top].contains(jadwal.get(simpanget).Ruangan)&&semua[Integer.valueOf(random)-1][top+Integer.valueOf(jadwal.get(simpanget).Durasi)].contains((jadwal.get(simpanget).Ruangan))) {
+                                //System.out.println(yangcon.get(keluar)+"LOVEE");
+                                //System.out.println(jadwal.get(simpanget).NamaKegiatan+"LOVE");
+                                //System.out.println("Hari :"+simpan[idx]);
+                                //System.out.println("JAM :"+top);
+                                ArrayList<String> pindahstring=new ArrayList<String>();
                                 String[] sip=semua[Integer.valueOf(random)-1][top].split(",");
                                 int pindah=0;
                                 int pas=0;
@@ -533,15 +674,37 @@ public class NewJFrame extends javax.swing.JFrame {
                                 }
                                 pindah=0;
                                 ArrayList<Integer> cari=new ArrayList<Integer>();
+                                //System.out.println(sip[pas]+"INI KELASNYA");
+                                if (row.contains(Integer.valueOf(random)-1) && col.contains(top)){
+                                cari.add((sip[pas].length() - sip[pas].replace("=", "").length()));
+                                
+                                } else
                                 cari.add(1+(sip[pas].length() - sip[pas].replace("=", "").length()));
-                                    
+                                pindahstring.add((Integer.valueOf(random)-1)+","+top+"=");
+                                //System.out.println(cari.get(0)+"JUMLAH KELAS");
                                 pindah=top+1;
+                                //System.out.println(top+" INI TOP");
                                 while (pindah<(top+Integer.valueOf(jadwal.get(simpanget).Durasi))) {
+                                //System.out.println(pindah+ "INI PINDAH");
+                                //System.out.println(Integer.valueOf(jadwal.get(simpanget).Durasi)+"SAMPAI");
+                                    int pars=0;
                                     
-                                    String[] sipp=semua[Integer.valueOf(random)-1][top].split(",");
+                                    String[] sipp=semua[Integer.valueOf(random)-1][pindah].split(",");
+                                    while(pars<sip.length){
+                                    if (sipp[pars].contains(jadwal.get(simpanget).Ruangan)){
+                                        pas=pars;
+                                    }    
+                                    pars++;
+                                     }
+                                    if (row.contains(Integer.valueOf(random)-1) && col.contains(pindah)){
+                                    cari.set(0, ((cari.get(0)+(sipp[pas].length() - sipp[pas].replace("=", "").length()))));
                                     
+                                    } else
                                     cari.set(0, (1+(cari.get(0)+(sipp[pas].length() - sipp[pas].replace("=", "").length()))));
-                                     System.out.println(cari.get(0)+"!!!!!!!!!!!!");  
+                                    pindahstring.set(0, pindahstring.get(0)+(Integer.valueOf(random)-1)+","+pindah+"=");
+                                      
+                                    //System.out.println(sip[pas]+"INI KELASNYAA");
+                                    //System.out.println(cari.get(0)+"JUMLAH TAMBAH");
                                     pindah++;
                                 }
                                 int teruskan=1;
@@ -550,20 +713,67 @@ public class NewJFrame extends javax.swing.JFrame {
                                 while (teruskan<cari.size()){
                                    temps=cari.get(teruskan);
                                    max=Math.min(max,temps);
-                                   System.out.println(max+"???!");
+                                   //System.out.println(max+"???!");
                                    teruskan++;
                                 }
+                                int ditentukan=cari.indexOf(max);
+                                simpanyangdiganti=pindahstring.get(ditentukan);
                                 //max=cari.indexOf(Collections.min(cari)); 
                                       
-                                System.out.println(max+"???");
+                                //System.out.println(max+"???");
 
                             }
                             max1=Math.min(max,max1);
-                            System.out.println(max1);
+                            if (max1==max){
+                                simpanyangdiganti1=simpanyangdiganti;
+                                kelasyangkeluar1=kelasyangkeluar;
+                            }
+                            //System.out.println(max1);
                             top++;
                             }
                     idx++;
                 }
+            if (hitungyangcon.get(keluar)>max1){
+                //System.out.println("BISA DIPINDAH");
+                System.out.println("BISA DIPINDAH");
+                System.out.println(yangcon.get(keluar));
+                System.out.println(kelasyangkeluar1);
+                terus=0;
+                while (terus<row.size()){
+                    semua[(row.get(terus))][(col.get(terus))]= semua[(row.get(terus))][(col.get(terus))].replaceAll((yangcon.get(keluar)+"-="), "");
+                    terus++;
+                }
+                String[] pindahkelas=simpanyangdiganti1.split("=");
+                ArrayList<Integer> rows=new  ArrayList<Integer>(); 
+                ArrayList<Integer> cols=new  ArrayList<Integer>(); 
+                int teruss=0;
+                System.out.println("PERHATIKAN"+simpanyangdiganti1);
+                ArrayList<String> pindahstrings=new ArrayList<String>();
+                while (teruss<pindahkelas.length){
+                    ////System.out.println(kelassama[terus]);
+                    String[] rocol=pindahkelas[teruss].split(",");
+                    System.out.println(rocol[0]+"MBAK");
+                    System.out.println(rocol[1]+"TESNYA");
+
+                    rows.add(Integer.valueOf(rocol[0]));
+                    cols.add(Integer.valueOf(rocol[1]));
+                    teruss++;
+                }
+                teruss=0;
+                while (teruss<rows.size()){
+                    if ("-".equals(jadwal.get(simpanget).Ruangan)){
+                        semua[rows.get(teruss)][cols.get(teruss)]=semua[rows.get(teruss)][cols.get(teruss)].replaceFirst(kelasyangkeluar1+"-", kelasyangkeluar1+"-"+jadwal.get(simpanget).NamaKegiatan+"-=");
+                        
+                    } else {
+                        semua[rows.get(teruss)][cols.get(teruss)]=semua[rows.get(teruss)][cols.get(teruss)].replaceFirst(jadwal.get(simpanget).Ruangan+"-", jadwal.get(simpanget).Ruangan+"-"+jadwal.get(simpanget).NamaKegiatan+"-=");
+                        
+                    }
+                    teruss++;
+                }
+                
+                //TEMPEL TEMPAT LAIN YANG RUANGANNYA SAMA
+ 
+            }
 
                
               keluar++;  
@@ -572,17 +782,78 @@ public class NewJFrame extends javax.swing.JFrame {
         } while(temp>temp1);
        int vow=0;
        while (vow<yangcon.size()){
-           System.out.println(yangcon.get(vow));
-           System.out.println(hitungyangcon.get(vow));
+           //System.out.println(yangcon.get(vow));
+           //System.out.println(hitungyangcon.get(vow));
+           //System.out.println(lokasiyangcon.get(vow));
            vow++;
        }
-        
-            
-// TODO add your handling code here:
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+       conflict=0;
+       while (tess<5){
+            cobas=0;
+            while (cobas<11) {
+                if (semua[tess][cobas]!=null){
+                if (semua[tess][cobas].contains(",")){
+                pisah=semua[tess][cobas].split(",");
+                while (hitung<pisah.length){
+                    if (pisah[hitung].contains("=")){
+                    //System.out.println(pisah[hitung]);
+                    
+                    cekpisah=pisah[hitung].split("=");
+                    //System.out.println(semua[tess][cobas]);
+                   if (cekpisah.length!=1){
+                       int hitungcon=cekpisah.length;
+                       int k=1;
+                       int total=0;
+                       int v=0;
+                       while (v<hitungcon){
+                           if (jTable2.getValueAt(tess, cobas)!=null){
+                               jTable2.getComponentAt(tess, cobas).setForeground(Color.red);
+                           jTable2.setValueAt((jTable2.getValueAt(tess, cobas)+"/n"+cekpisah[v].substring(0,cekpisah[v].length()-1)), tess, cobas);
+                           } else {
+                               jTable2.getComponentAt(tess, cobas).setForeground(Color.red);
+                               jTable2.setValueAt((cekpisah[v].substring(0,cekpisah[v].length()-1)), tess, cobas);
+                                
+                           
+                           }
+                           v++;
+                       }
+                       while(k<hitungcon){
+                           total=total+k;
+                           k++;
+                       }
+                       //System.out.println(total);
+                    conflict=conflict+total;
+                   } else if (cekpisah.length==1) {
+                       if (jTable2.getValueAt(tess, cobas)!=null){
+                           jTable2.getComponentAt(tess, cobas).setForeground(Color.black);
+                       jTable2.setValueAt((jTable2.getValueAt(tess, cobas)+"/n"+cekpisah[0].substring(0,cekpisah[0].length()-1)), tess, cobas);
+                       
+                       } else {
+                       jTable2.setValueAt((cekpisah[0].substring(0,cekpisah[0].length()-1)), tess, cobas);
+                        //jTable1.getComponentAt(tess, cobas).setForeground(Color.black);
+             
+                       }
+                   }
+                    cekpisah=null;
+                    } else {
+                       // jTable1.setValueAt(pisah[hitung], tess, cobas);
+                    }
+                    hitung++;
+                }
+                hitung=0;
+                } else conflict++;
+                 }
+                cobas++;
+            }
+            pisah=null;
+           
+            tess++;
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        jLabel1.setText("Conflict :"+conflict);
+       
+        
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -621,8 +892,11 @@ public class NewJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }
