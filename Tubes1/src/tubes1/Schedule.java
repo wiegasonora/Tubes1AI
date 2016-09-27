@@ -50,7 +50,7 @@ public class Schedule {
 
 	public void randomAllSchedule() {
 		for (int i = 0; i < scheduleSize(); i++) {
-			setCourseAtIdx(i, getCourse(i).randomJadwal());
+			setCourseAtIdx(i, CourseManager.getCourse(i).randomJadwal());
 		}
 	}
 
@@ -77,7 +77,7 @@ public class Schedule {
 	public String toString() {
 		String out = "";
 		for (int i = 0; i < scheduleSize(); i++) {
-			out += getCourse(i) + "%n"; 
+			out += CourseManager.getCourse(i) + "%n"; 
 		}
 		return out;
 	}

@@ -62,17 +62,21 @@ public class Jadwal {
 
     // Gets course's starting time
     public int getJamMulai() {
-        return Integer.parseInt(this.JamMulai);
+        return Integer.parseInt(this.JamMulai.substring(0, 2));
     }
 
     // Gets course's ending time
     public int getJamSelesai() {
-        return Integer.parseInt(this.JamSelesai);
+        return Integer.parseInt(this.JamSelesai.substring(0, 2));
     }
 
     // Gets course's duration
     public int getDurasi() {
         return Integer.parseInt(this.Durasi);
+    }
+
+    public String getHariAsString() {
+        return this.Hari;
     }
 
     // Gets course's day
@@ -154,7 +158,7 @@ public class Jadwal {
                 }
             }
             // Random jam kuliah correct
-            x = rnd.nextInt(getJamSelesai() - getDurasi() - getJamMulai() + 1) + getJamMulai();
+            x = rnd.nextInt((getJamSelesai() - getDurasi() - getJamMulai() + 1) + getJamMulai());
             temp.setJamMulai(x);
             temp.setJamSelesai(x + getDurasi());
             

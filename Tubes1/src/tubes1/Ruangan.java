@@ -30,15 +30,19 @@ public class Ruangan {
 	}
 
 	public String getNama() {
-		return Nama;
+		return this.Nama;
 	}
 
 	public int getJamMulai() {
-		return Integer.parseInt(JamMulai);
+		return Integer.parseInt(JamMulai.substring(0, 2));
 	}
 
 	public int getJamSelesai() {
-		return Integer.parseInt(JamSelesai);
+		return Integer.parseInt(JamSelesai.substring(0, 2));
+	}
+
+	public String getHariAsString() {
+		return this.Hari;
 	}
 
 	public boolean[] getHari() {

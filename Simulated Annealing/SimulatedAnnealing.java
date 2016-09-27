@@ -1,9 +1,40 @@
 package sa;
 
 public class SimulatedAnnealing {
+	private ArrayList jadwal;
+	private ArrayList ruangan;
+	private double temperature;	// Sets initial temperature
+	private double coolingRate; // Sets cooling rate
+
+
+	public SimulatedAnnealing(List<Jadwal> jadwal, List<Ruangan> ruangan) {
+		this.jadwal = new ArrayList<Jadwal>();
+		this.ruangan = new ArrayList<Ruangan>();
+		this.temperature = 1000;
+		this.coolingRate = 0.003;
+
+		for (int i = 0; i < jadwal.size(); i++) {
+			this.jadwal.get(i).setNamaKegiatan(jadwal.get(i).getNamaKegiatan());
+			this.jadwal.get(i).setRuangan(jadwal.get(i).getRuangan());
+			this.jadwal.get(i).setJamMulai(jadwal.get(i).getJamMulai());
+			this.jadwal.get(i).setJamSelesai(jadwal.get(i).getJamSelesai());
+			this.jadwal.get(i).setDurasi(jadwal.get(i).getDurasi());
+			this.jadwal.get(i).setHari(jadwal.get(i).getHariAsString());
+			CourseManager.addCourse(this.jadwal.get(i));
+		}
+
+		for(int i = 0; i < ruangan.size(); i++) {
+			this.ruangan.get(i).setNama(ruangan.get(i).getNama());
+			this.ruangan.get(i).setJamMulai(ruangan.get(i).getJamMulai());
+			this.ruangan.get(i).setJamSelesai(ruangan.get(i).getJamSelesai());
+			this.ruangan.get(i).setHari(ruangan.get(i).getHariAsString());
+			RoomManager.addRoom(this.ruangan.get(i));
+
+		}
+	}
 
 	// Calculate the acceptance probability
-	public static double acceptancePorbability(int conflict, int newConflict, double temperature) {
+	public double acceptancePorbability(int conflict, int newConflict, double temperature) {
 		// if new solution is better, take it
 		if (newConflict < conflict) {
 			return 1.0;
@@ -12,29 +43,7 @@ public class SimulatedAnnealing {
 		}
 	}
 
-	public static void main(String[] args) {
-		// Create many dumb courses
-		boolean[] hariIF2111 = {true, true, true, true, true};
-		Course if2111 = new Course("IF2111", "7602", 7, 11, 2, hariIF2111);
-		CourseManager.addCourse(if2111);
-		boolean[] hariIF2222 = {true, true, true, false, false};
-		Course if2222 = new Course("IF2222", "7606", 7, 15, 4, hariIF2222);
-		CourseManager.addCourse(if2222);
-		boolean[] hariIF2333 = {false, true, false, true, false};
-		Course if2333 = new Course("IF2333", "7610", 9, 12, 2, hariIF2333);
-		CourseManager.addCourse(if2333);
-		boolean[] hariIF2444 = {true, false, true, false, true};
-		Course if2111 = new Course("IF2444", "Multimedia", 12, 15, 2, hariIF2444);
-		CourseManager.addCourse(if2444);
-		boolean[] hariIF2555 = {false, false, false, false, true};
-		Course if2555 = new Course("IF2555", "Labdas 2", 8, 10, 2, hariIF2555);
-		CourseManager.addCourse(if2555);
-		// Sets initial temperature
-		double temperature = 10000;
-
-		// Sets cooling rate
-		double coolingRate = 0.003;
-
+	public Jadwal execute() {
 		// Initialize initial solution
 		Schedule currentSolution = new Schedule();
 		currentSolution.randomAllSchedule();
@@ -42,18 +51,19 @@ public class SimulatedAnnealing {
 		int currentConflict = currentSolution.getConflict();
 		int neighbourConflict = 0;
 
-		System.out.println("Initial solution : ");
-		for (int i = 0; i < currentSolution.scheduleSize(); i++) {
+		//System.out.println("Initial solution : ");
+		/*for (int i = 0; i < currentSolution.scheduleSize(); i++) {
 			System.out.println(currentSolution.getCourse(i));
-		}
-		System.out.println("Total conflict : " + currentConflict);
-		System.out.println();
+		}*/
+		//System.out.println("Total conflict : " + currentConflict);
+		//System.out.println();
 
 		// Sets to be best solution
 		Schedule bestSchedule = new Schedule(currentSolution.getSchedule(), currentSolution.getConflict());
 		
 		Random random = new Random();
 		int indexToRandom;
+
 		while (temperature > 1) {
 			// Creates new neighbour course
 			Schedule neighbourSolution = new Schedule(currentSolution.getSchedule(), currentSolution.getConflict());
@@ -61,7 +71,7 @@ public class SimulatedAnnealing {
 			// Picks a random course to be rescheduled
 			indexToRandom = random.nextInt(CourseManager.numberOfCourse());
 			// Random course in indexToRandom at courseManager
-			Course tempCourse = new Course(CourseCourseManager.getCourse(indexToRandom).randomCourse());
+			Jadwal tempCourse = new Jadwal(CourseCourseManager.getCourse(indexToRandom).randomJadwal());
 			// Changes/update value of course at index indexToRandom with new tempCourse
 			neighbourSolution.setCourseAtIdx(indexToRandom, tempCourse);
 			// Gets conflict of neighbourSolution
@@ -82,8 +92,10 @@ public class SimulatedAnnealing {
 			// Cooling system
 			temp *= 1 - coolingRate;
 		}
-		System.out.println("Final solution schedule : ");
-		System.out.println(bestSchedule);
-		System.out.println(bestSchedule.getConflict());
+
+		return bestSchedule;
+		//System.out.println("Final solution schedule : ");
+		//System.out.println(bestSchedule);
+		//System.out.println(bestSchedule.getConflict());
 	}
 }
