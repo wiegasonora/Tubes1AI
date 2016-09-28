@@ -778,8 +778,79 @@ public class NewJFrame extends javax.swing.JFrame {
                
               keluar++;  
             }
-       temp1=500000000;
-        } while(temp>temp1);
+       while (tess<5){
+            cobas=0;
+            while (cobas<11) {
+                if (semua[tess][cobas]!=null){
+                if (semua[tess][cobas].contains(",")){
+                pisah=semua[tess][cobas].split(",");
+                while (hitung<pisah.length){
+                    if (pisah[hitung].contains("=")){
+                    cekpisah=pisah[hitung].split("=");
+                   if (cekpisah.length!=1){
+                       int hitungcon=cekpisah.length;
+                       int k=1;
+                       int total=0;
+                       String[] gg=cekpisah[0].split("-");
+                       if (!yangcon.contains(gg[1])){
+                        yangcon.add(gg[1]);//System.out.println(gg[1]+" WOII! "+cekpisah.length);
+                        lokasiyangcon.add(tess+","+cobas+"=");
+                        hitungyangcon.add(cekpisah.length);
+                       } else {
+                           int fat=0;
+                         while (fat<yangcon.size()){
+                             if (yangcon.get(fat).equals(gg[1])){
+                                 //System.out.println(gg[1]+" WOII!! "+cekpisah.length);
+                                 hitungyangcon.set(fat, (hitungyangcon.get(fat)+cekpisah.length));
+                                 lokasiyangcon.set(fat, (lokasiyangcon.get(fat)+tess+","+cobas+"="));
+                                 fat=yangcon.size();
+                             }
+                             fat++;
+                         }  
+                       }
+                       while(k<hitungcon){
+                           if (!yangcon.contains(cekpisah[k].substring(0, cekpisah[k].length()-1))){
+                               yangcon.add(cekpisah[k].substring(0, cekpisah[k].length()-1));
+                               //System.out.println(cekpisah[k].substring(0, cekpisah[k].length()-1)+" WOII!!! "+cekpisah.length);
+                               hitungyangcon.add(cekpisah.length);
+                               lokasiyangcon.add(tess+","+cobas+"=");
+                           } else {
+                               int fat=0;
+                                while (fat<yangcon.size()){
+                                    if (yangcon.get(fat).equals(cekpisah[k].substring(0, cekpisah[k].length()-1))){
+                                        //System.out.println(cekpisah[k].substring(0, cekpisah[k].length()-1)+" WOII!!!! "+cekpisah.length);
+                              
+                                        hitungyangcon.set(fat, (hitungyangcon.get(fat)+cekpisah.length));
+                                        lokasiyangcon.set(fat, (lokasiyangcon.get(fat)+tess+","+cobas+"="));
+                                        fat=yangcon.size();
+                                    }
+                                 fat++;
+                                 } 
+                               
+                           }
+                                                    
+                           total=total+k;
+                           k++;
+                       }
+                    conflict=conflict+total;
+                    
+                   }
+                    cekpisah=null;
+                    } 
+                    hitung++;
+                }
+                hitung=0;
+                } else conflict++;
+                 }
+                cobas++;
+            }
+            pisah=null;
+           
+            tess++;
+        }
+       tess=0;
+        temp=conflict;
+        } while(temp<temp1);
        int vow=0;
        while (vow<yangcon.size()){
            //System.out.println(yangcon.get(vow));
