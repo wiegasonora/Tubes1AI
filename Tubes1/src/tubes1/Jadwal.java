@@ -12,13 +12,13 @@ import java.io.*;
  *
  * @author rezaramadhan
  */
-class Jadwal {
-    String NamaKegiatan;
-    String Ruangan;
-    String JamMulai;
-    String JamSelesai;
-    String Durasi;
-    String Hari;
+public class Jadwal {
+    public String NamaKegiatan;
+    public String Ruangan;
+    public String JamMulai;
+    public String JamSelesai;
+    public String Durasi;
+    public String Hari;
 
     // Constructs an intial course
     public Jadwal() {
@@ -62,17 +62,21 @@ class Jadwal {
 
     // Gets course's starting time
     public int getJamMulai() {
-        return Integer.parseInt(this.JamMulai);
+        return Integer.parseInt(this.JamMulai.substring(0, 2));
     }
 
     // Gets course's ending time
     public int getJamSelesai() {
-        return Integer.parseInt(this.JamSelesai);
+        return Integer.parseInt(this.JamSelesai.substring(0, 2));
     }
 
     // Gets course's duration
     public int getDurasi() {
         return Integer.parseInt(this.Durasi);
+    }
+
+    public String getHariAsString() {
+        return this.Hari;
     }
 
     // Gets course's day
@@ -118,7 +122,7 @@ class Jadwal {
     }
         // Sets JamSelesai to akh
     public void setJamSelesai(int akh) {
-        this.JamSelesai = Double.toString(akh);
+        this.JamSelesai = Integer.toString(akh);
     }
     // Sets Durasi to dur
     public void setDurasi(String dur) {
@@ -154,14 +158,14 @@ class Jadwal {
                 }
             }
             // Random jam kuliah correct
-            x = rnd.nextInt(getJamSelesai() - getDurasi() - getJamMulai() + 1) + getJamMulai();
+            x = rnd.nextInt((getJamSelesai() - getDurasi() - getJamMulai() + 1) + getJamMulai());
             temp.setJamMulai(x);
             temp.setJamSelesai(x + getDurasi());
             
             // Random Ruangan
             if (getRuangan() == "") {
                 x = rnd.nextInt(RoomManager.numberOfRoom());
-                temp.setRuangan(RoomManager.getRoom(x).getRuangan());
+                temp.setRuangan(RoomManager.getRoom(x).getNama());
             } else {
                 temp.setRuangan(this.getRuangan());
             }
@@ -169,7 +173,7 @@ class Jadwal {
         return temp;
     }
 
-    public boolean isNotInDomain(Jadwal course, Room room) {
+    public boolean isNotInDomain(Jadwal course, Ruangan room) {
         int idxHari = 999;
         for (int i = 0; i < 5; i++) {
             if (course.getHariAtIdx(i) == true) {
