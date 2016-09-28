@@ -54,10 +54,6 @@ public class GeneticAlgorithm {
         //generate idxruang
         idx = rand.nextInt(ruang.size());
         
-//        System.out.println("sks" + matkul.get(idxMatkul).Durasi);
-//        System.out.println(listruang.length);
-//        System.out.println("a");
-
         List<String> listHari = new ArrayList<>();
         String daftarRuang = matkul.get(idxMatkul).Ruangan;
         
@@ -84,24 +80,11 @@ public class GeneticAlgorithm {
             ruangSelesai = Integer.parseInt(ruang.get(idx).JamSelesai.substring(0, 2));
             min = Math.max(matkulMulai, ruangMulai);
             max = Math.min(matkulSelesai, ruangSelesai) - Integer.parseInt(matkul.get(idxMatkul).Durasi);
-//            System.out.println("lhari" + listHari.size());
-//            System.out.println("min" +min + " max"+max);
-//            System.out.println("daftarRuang"+daftarRuang);
-//            System.out.println("nama" + ruang.get(idx).Nama+ "\n");
-            //exit = (listruang.length > 0 && Arrays.asList(listruang).contains(ruang.get(idx).Nama)) || listHari.isEmpty() || (min > max);
             exit = !listHari.isEmpty() && min <= max && ("-".equals(daftarRuang) || daftarRuang.contains(ruang.get(idx).Nama));
         }
-//        System.out.println(idx);
-//        System.out.println("mm"+matkulMulai);
-//        System.out.println("ms"+matkulSelesai);
-//        System.out.println("rm"+ruangMulai);
-//        System.out.println("rs"+ruangSelesai);
-        
-//        System.out.println("b");
         tmp = tmp+iToC(idx);
 
         //generate hari
-
         hari = rand.nextInt(listHari.size());
         tmp = tmp + listHari.get(hari);
         
@@ -113,8 +96,7 @@ public class GeneticAlgorithm {
         //generate selesai
         selesai = mulai + Integer.parseInt(matkul.get(idxMatkul).Durasi) - 1;
         tmp = tmp + iToC(selesai);
-//        System.out.println("m"+mulai+" s"+selesai+"\n");
-        
+
         return tmp;
     } 
 
@@ -151,7 +133,6 @@ public class GeneticAlgorithm {
                                 k++;	
                         }
                         strtemp = strtemp + str.charAt(i);
-//                        strtemp.concat(Character.toString(str.charAt(i)));
                         j++;
                 }
                 tabJadwal[k]=strtemp;
@@ -175,7 +156,6 @@ public class GeneticAlgorithm {
             String[] tabString = pisahstring(str);
 
             //inisialisasi tabHariSama
-//                   System.out.println(tabString[7]);
             String[][] tabHariSama = new String [5][tabString.length];
             for (int x=0; x<5; x++){
                 for (int y=0; y<5; y++){
@@ -192,7 +172,6 @@ public class GeneticAlgorithm {
                 for (int i=0; i< tabString.length; i++){
 
                     strtemp = tabString[i];
-//                                System.out.println(strtemp);
                     if (strtemp.charAt(1) == idxHari){	//mengecek kelas pada hari yg sama
                         tabHariSama[idxBrsHariSama][idxKolHariSama] = strtemp;
                         idxKolHariSama++;
@@ -255,11 +234,9 @@ public class GeneticAlgorithm {
         int nKelas = matkul.size();
         Random rand = new Random();
         int mutatedPosition = rand.nextInt(nKelas + nKelas/4);
-//        System.out.println(mutatedPosition);
         if (mutatedPosition < nKelas) {
             int idxChange = (mutatedPosition) * 4;
             String tmp = randomOneKelas(mutatedPosition);
-//            System.out.println(tmp);
             for (int i = 0; i<4; i++) {
                 out[idxChange] = tmp.charAt(i);
                 idxChange++;
@@ -278,34 +255,26 @@ public class GeneticAlgorithm {
         String strtemp1 = "";
         //random batas split
         int nSplit = (int )(Math.random() * (str1.length()/4 - 1));
-//        System.out.println("len " + str1.length());
-//        System.out.println("nsplit " + nSplit);
         //menghasilkan anak 1
         for (int i=0; i<=((nSplit+1)*4); i++){
             strtemp = strtemp + str1.charAt(i);
-//               strtemp.concat(Character.toString(str1.charAt(i)));
         }
         for (int i=((nSplit+1)*4)+1; i<str2.length(); i++){
             strtemp = strtemp + str2.charAt(i);
-//               strtemp.concat(Character.toString(str2.charAt(i)));
         }
 
         //menghasilkan anak 2
         for (int i=0; i<=((nSplit+1)*4); i++){
             strtemp1 = strtemp1 + str2.charAt(i);
-//               strtemp1.concat(Character.toString(str2.charAt(i)));
         }
         for (int i=((nSplit+1)*4)+1; i<str1.length(); i++){
             strtemp1 = strtemp1 + str1.charAt(i);
-//               strtemp1.concat(Character.toString(str1.charAt(i)));
         }
 
         //menggabungkan kedua anak pada array of string
         String[] tabResult = new String[2];
         tabResult[0] = strtemp;
         tabResult[1] = strtemp1;
-//        System.out.println(tabResult[0]);
-//        System.out.println(tabResult[1]);
         return tabResult;
     }
 
@@ -319,34 +288,42 @@ public class GeneticAlgorithm {
         //hitung fitness function buat setiap individu
         float sum = 0;
         int itr;
+//        System.out.println("Fitnessfunction");
         for (itr= 0; itr<nPopulation; itr++) {
             fitnessFunction[itr] = hitungFitnessFunction(population[itr]);
+//            System.out.println(fitnessFunction[itr]);
             if (fitnessFunction[itr] == 999) {
                 end = true;
+                System.out.println("break");
                 break;
             }
             sum = sum + fitnessFunction[itr];
         }
         if (!end) {
-        
             //hitung persentasi setiap individu
+//            System.out.println("Persentasi");
             for (int i= 0; i<nPopulation; i++) {
                 fitnessFunction[i] = fitnessFunction[i]/sum;
+//                System.out.println(fitnessFunction[i]);
             }
             sum = 0;
+//            System.out.println("Adjusted");
             for (int i= 0; i<nPopulation; i++) {
                 sum = sum + fitnessFunction[i];
-                fitnessFunction[i] = sum;
+                fitnessFunction[i] = sum*100;
+//                System.out.println(fitnessFunction[i]);
             }
 
 
             Random rand = new Random();
             float randomNum = rand.nextFloat() * 100;
-            while (randomNum < fitnessFunction[selected]) {
+//            System.out.println("rnd "+randomNum);
+//            System.out.println("psn "+fitnessFunction[selected]);
+            while (randomNum > fitnessFunction[selected]) {
+//                System.out.println("lo");
                 selected++;
             }
-            selected = selected - 1;
-
+//            System.out.println("selected" + selected);
             return population[selected];
         } else {
             String endselected = "=" + itr;
@@ -370,46 +347,34 @@ public class GeneticAlgorithm {
         int countUsed = 0;
         String strtemp = "";
         boolean isKetemu; 
-//        System.out.println("brpruang" + ruang.size());
         for (idxa = 0; idxa < ruang.size(); idxa++){
-//            System.out.println(idxa);
             strtemp = Character.toString(((ruang.get(idxa)).JamMulai).charAt(0)) + Character.toString(((ruang.get(idxa)).JamMulai).charAt(1));
             idxJamMulai = Integer.parseInt(strtemp);
             strtemp = Character.toString(((ruang.get(idxa)).JamSelesai).charAt(0)) + Character.toString(((ruang.get(idxa)).JamSelesai).charAt(1));
             idxJamSelesai = Integer.parseInt(strtemp);
-//            System.out.println("mulai" + idxJam);
-//            System.out.println("selesai"+ idxJamSelesai);
             idxHari = 0;
             sizeHari = (((ruang.get(idxa)).Hari)).length();
-//            System.out.println("size" + sizeHari);
-            while (idxHari < sizeHari){	//iterasi hari
-                
-//            System.out.println("idxhari" + idxHari + " " + ruang.get(idxa).Hari.charAt(idxHari));
-            
+            while (idxHari < sizeHari){	//iterasi hari                
                 valHari = Integer.parseInt(Character.toString(((ruang.get(idxa)).Hari).charAt(idxHari)));
-//                System.out.println(valHari);
+                
                 //iterasi jam mulai - jam selesai
                 idxJam = idxJamMulai;
                 while (idxJam < idxJamSelesai){
-                        isKetemu = false;
-                        idxb = 0;
-                        while (!isKetemu && (idxb < tabJadwal.length)){	//searching pada jadwal
-                                if (	(cToI((tabJadwal[idxb]).charAt(0)) == idxa) && 		//ruangan sama
-                                                (Integer.parseInt(Character.toString(tabJadwal[idxb].charAt(1))) == valHari) && 		//hari sama
-                                                (//(cToI((tabJadwal[idxb]).charAt(2)) == idxJam ) ||	//jam mulai sama
-                                                 //(cToI((tabJadwal[idxb]).charAt(3)) == idxJam + 1) ||	//jam selesai sama
-                                                 ((cToI((tabJadwal[idxb]).charAt(2))) <= idxJam && (cToI((tabJadwal[idxb]).charAt(3))) >= idxJam) 	//jam berada di antara mulai dan selesai sebuah matkul
-                                                )
-                                        ){
-//                                                System.out.println("here");
-                                    
-                                                countUsed++;
-                                                isKetemu = true;
-                                        }
-                                idxb++;
-                        }
-                        countSlot++;
-                        idxJam++;
+                    isKetemu = false;
+                    idxb = 0;
+                    while (!isKetemu && (idxb < tabJadwal.length)){	//searching pada jadwal
+                        if (	(cToI((tabJadwal[idxb]).charAt(0)) == idxa) && 		//ruangan sama
+                                        (Integer.parseInt(Character.toString(tabJadwal[idxb].charAt(1))) == valHari) && 		//hari sama
+                                        (((cToI((tabJadwal[idxb]).charAt(2))) <= idxJam && (cToI((tabJadwal[idxb]).charAt(3))) >= idxJam) 	//jam berada di antara mulai dan selesai sebuah matkul
+                                    )
+                            ){
+                                countUsed++;
+                                isKetemu = true;
+                            }
+                        idxb++;
+                    }
+                    countSlot++;
+                    idxJam++;
                 }
             idxHari = idxHari + 2;
             }
@@ -422,8 +387,6 @@ public class GeneticAlgorithm {
         // 2. iterasi jam available ruangan
         // 3. cocokin ke string apakah ada yang sama?
         // 4. hitung persentasi
-        System.out.println("used"+countUsed);
-        System.out.println("slot"+countSlot);
         return ((float)countUsed/(float)countSlot);
     }
     
@@ -441,13 +404,26 @@ public class GeneticAlgorithm {
         String parent2;
         String[] tempArr = new String[nPopulation];
         String[] crossoverRetval;
+        
+        
+//        parent1 = selection();
+//        return parent1;
         while (itr < maxIteration && end == -1) {
             //select generasi baru, loop sebanyak populasi/2
+//            System.out.println("lo" + itr);
             for (int i = 0; i< nPopulation; i+=2) {
                 //select parent1 & parent2
+//                System.out.println(nPopulation);
+//                for (int j = 0; j<nPopulation; j++) {
+//                    System.out.println(population[j]);
+//                }
                 parent1 = selection();
                 if (parent1.charAt(0) == '=') {
+//                    System.out.println("breakexecution");
+//                    System.out.println(parent1);
                     end = Integer.parseInt(parent1.substring(1));
+//                    System.out.println(end);
+//                    System.out.println(population[end]);
                     break;
                 }
                 parent2 = selection();
@@ -458,13 +434,114 @@ public class GeneticAlgorithm {
                 tempArr[i] = mutation(crossoverRetval[0]);
                 tempArr[i+1] = mutation(crossoverRetval[1]);
                 
-                //populasi lama mati, populasi baru jadi populasi lama
+                
+            }
+            //populasi lama mati, populasi baru jadi populasi lama
+            if (end == -1) {
                 population = tempArr.clone();
+                itr++;
             }
         }
+//        System.out.println(population.length);
+//        System.out.println(population[end]);            
         
         return population[end];
     }
 
+    public void printJadwal(String str){
+        /* 	Prosedur berfungsi untuk mencetak matriks jadwal dengan baris menunjukkan jam dan kolom menunjukkan hari
+                dari tiap Ruangan (1 ruangan 1 matriks)
+                I.S : ruang, matkul, dan str terdefinisi
+                F.S : jadwal untuk tiap ruang tercetak ke layar
+        */
+
+        //kumpulan kamus lokal
+        int idxb;		//buat iterasi tabJadwal
+        int idxHari;	//buat iterasi hari
+        int idxJam;		//buat iterasi jam
+        int idxJamSelesai;	//batas iterasi jam
+        int sizeHari;	//panjang string hari
+        int valHari;	//nilai hari dalam angka
+        String strtemp = "";	//penyimpan sring utk convert jam ruangan
+        int x;	//iterasi baris
+        int y;	//iterasi kolom
+        int i;	//iterasi baris
+        int j;	//iterasi kolom
+
+        //membuat dan menginisialisasi matriks jadwal yang akan dicetak ke layar
+        String[][] matriksjadwal = new String[11][5];
+        for (i = 0; i < 11; i++){
+            for (j = 0; j < 5; j++){
+                matriksjadwal[i][j] = "";
+            }
+        }
+
+        //mengassign string jadwal ke bentuk array of string
+        String[] tabJadwal = pisahstring(str);
+
+        //mengisi dan mencetak matriksjadwal
+        //iterasi ruangan
+        for (int idxruang = 0; idxruang < ruang.size(); idxruang++){	
+            idxHari = 0;
+            sizeHari = ((ruang.get(idxruang)).Hari).length();
+
+            //iterasi hari
+            while (idxHari < sizeHari){		
+                valHari = Integer.parseInt(Character.toString(((ruang.get(idxruang)).Hari).charAt(idxHari)));
+
+                //mengisi idxJam dan idxJamSelesai dari ruang			
+                strtemp = Character.toString(((ruang.get(idxruang)).JamMulai).charAt(0)) + Character.toString(((ruang.get(idxruang)).JamMulai).charAt(1));
+                idxJam = Integer.parseInt(strtemp);
+                strtemp = Character.toString(((ruang.get(idxruang)).JamSelesai).charAt(0)) + Character.toString(((ruang.get(idxruang)).JamSelesai).charAt(1));
+                idxJamSelesai = Integer.parseInt(strtemp);
+
+                //iterasi jam mulai - jam selesai
+                while (idxJam < idxJamSelesai){
+                    matriksjadwal[idxJam-7][idxHari] += "v";	//penanda jika slot tersedia
+                    idxb = 0;
+
+                    //searching digunakannya slot pada tabJadwal
+                    while (idxb < tabJadwal.length){	
+                        if (	(cToI((tabJadwal[idxb]).charAt(0)) == idxruang) && 		//ruangan sama
+                                    (Integer.parseInt(Character.toString((tabJadwal[idxb]).charAt(1))) == valHari) && 		//hari sama
+                                    (	(cToI((tabJadwal[idxb]).charAt(2)) == idxJam ) ||	//jam mulai sama
+                                            (cToI((tabJadwal[idxb]).charAt(3)) == idxJam + 1) ||	//jam selesai sama
+                                            ((cToI((tabJadwal[idxb]).charAt(2))) < idxJam && (cToI((tabJadwal[idxb]).charAt(3))) > idxJam) 	//jam berada di antara mulai dan selesai sebuah matkul
+                                    )
+                            ){
+                                matriksjadwal[idxJam-7][idxHari] += " - " + (matkul.get(idxb)).NamaKegiatan;
+                            }
+                        idxb++;
+                    }
+                    idxJam++;
+                }
+                idxHari = idxHari + 2;
+            }
+
+            //pencetakan ke layar
+            System.out.println("Jadwal Ruangan " + (ruang.get(idxruang)).Nama);
+            System.out.print("|Jam▼ - Hari►|");
+            for (x = 0; x < 5; x++){
+                    System.out.print("    " + x +"    |");
+            }
+            System.out.println();
+            for (x = 0; x < 11; x++){
+                    if ((x+7) < 10){
+                            System.out.print("  0" + (x+7) +".00    |");
+                    } else {
+                            System.out.print("  " + (x+7) +".00    |");
+                    }
+
+                    for (y = 0; y < 5; y++){
+                            System.out.print(" " + matriksjadwal[x][y] + "  ");
+                    }
+                    System.out.println();
+            }
+            System.out.println("Keterangan:  'v' menunjukkan slot tersedia ");
+            System.out.println();
+            System.out.println();
+
+        }
+    }
     
 }

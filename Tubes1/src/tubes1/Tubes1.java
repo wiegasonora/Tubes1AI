@@ -23,13 +23,14 @@ public class Tubes1 {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.FileNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException, IOException {
         List<Ruangan> ruang = new ArrayList<>();
         List<Jadwal> jadwal = new ArrayList<>();
         JFileChooser fad = new JFileChooser();
-        File input = new File("../../Testcase.txt");
-//        File input = new File("/home/rezaramadhan/t1.txt");
+//        File input = new File("../../Testcase.txt");
+        File input = new File("/home/rezaramadhan/t2.txt");
 //        int rent = fad.showOpenDialog(fad);  
 //        input = fad.getSelectedFile();
         
@@ -68,16 +69,19 @@ public class Tubes1 {
         long startTime = System.nanoTime(); 
         GeneticAlgorithm g = new GeneticAlgorithm(jadwal, ruang);
         String str1 = g.execute();
-        System.out.println(str1);
+        System.out.println("Str " + str1);
+        System.out.println("len " + str1.length()/4);
         System.out.println("fitnessfunction " + g.hitungFitnessFunction(str1));
+        g.printJadwal(str1);
+
         long estimatedTime = System.nanoTime() - startTime;
         System.out.println(estimatedTime/1000000 + "ms");
     
    
         //Debugging Simmulated Annealing
-        SimulatedAnnealing sa = new SimulatedAnnealing(jadwal, ruang);
-        sa.execute();
-        System.out.println(sa.showSolution());
+//        SimulatedAnnealing sa = new SimulatedAnnealing(jadwal, ruang);
+//        sa.execute();
+//        System.out.println(sa.showSolution());
 
     }
 }
