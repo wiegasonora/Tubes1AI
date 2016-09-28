@@ -53,15 +53,24 @@ public class GeneticAlgorithm {
 
         //generate idxruang
         idx = rand.nextInt(ruang.size());
-        String[] listruang = matkul.get(idxMatkul).Ruangan.split(",");
         
-        System.out.println("sks" + matkul.get(idxMatkul).Durasi);
+//        System.out.println("sks" + matkul.get(idxMatkul).Durasi);
 //        System.out.println(listruang.length);
 //        System.out.println("a");
 
         List<String> listHari = new ArrayList<>();
+        String daftarRuang = matkul.get(idxMatkul).Ruangan;
         
-        while ((listruang.length > 0 && Arrays.asList(listruang).contains(ruang.get(idx).Nama)) || listHari.size()==0) {
+        int matkulMulai = Integer.parseInt(matkul.get(idxMatkul).JamMulai.substring(0, 2));
+        int matkulSelesai = Integer.parseInt(matkul.get(idxMatkul).JamSelesai.substring(0, 2));
+        int ruangMulai, ruangSelesai;
+        
+        min = 10;
+        max = 1;
+        ruangMulai = 0;
+        ruangSelesai = 0;
+        boolean exit = false;
+        while (!exit) {
             listHari.clear();
             idx = rand.nextInt(ruang.size());
 
@@ -70,7 +79,24 @@ public class GeneticAlgorithm {
                     listHari.add(Integer.toString(i));
                 }
             }
+            
+            ruangMulai = Integer.parseInt(ruang.get(idx).JamMulai.substring(0, 2));
+            ruangSelesai = Integer.parseInt(ruang.get(idx).JamSelesai.substring(0, 2));
+            min = Math.max(matkulMulai, ruangMulai);
+            max = Math.min(matkulSelesai, ruangSelesai) - Integer.parseInt(matkul.get(idxMatkul).Durasi);
+//            System.out.println("lhari" + listHari.size());
+//            System.out.println("min" +min + " max"+max);
+//            System.out.println("daftarRuang"+daftarRuang);
+//            System.out.println("nama" + ruang.get(idx).Nama+ "\n");
+            //exit = (listruang.length > 0 && Arrays.asList(listruang).contains(ruang.get(idx).Nama)) || listHari.isEmpty() || (min > max);
+            exit = !listHari.isEmpty() && min <= max && ("-".equals(daftarRuang) || daftarRuang.contains(ruang.get(idx).Nama));
         }
+//        System.out.println(idx);
+//        System.out.println("mm"+matkulMulai);
+//        System.out.println("ms"+matkulSelesai);
+//        System.out.println("rm"+ruangMulai);
+//        System.out.println("rs"+ruangSelesai);
+        
 //        System.out.println("b");
         tmp = tmp+iToC(idx);
 
@@ -79,16 +105,6 @@ public class GeneticAlgorithm {
         hari = rand.nextInt(listHari.size());
         tmp = tmp + listHari.get(hari);
         
-        int matkulMulai = Integer.parseInt(matkul.get(idxMatkul).JamMulai.substring(0, 2));
-        int matkulSelesai = Integer.parseInt(matkul.get(idxMatkul).JamSelesai.substring(0, 2));
-        int ruangMulai = Integer.parseInt(ruang.get(idx).JamMulai.substring(0, 2));
-        int ruangSelesai = Integer.parseInt(ruang.get(idx).JamSelesai.substring(0, 2));
-        System.out.println("mm"+matkulMulai);
-        System.out.println("ms"+matkulSelesai);
-        System.out.println("rm"+ruangMulai);
-        System.out.println("rs"+ruangSelesai);
-        min = Math.max(matkulMulai, ruangMulai);
-        max = Math.min(matkulSelesai, ruangSelesai) - Integer.parseInt(matkul.get(idxMatkul).Durasi) - 1;
 
         //generate mulai
         mulai = rand.nextInt(max-min + 1) + min;
@@ -97,7 +113,7 @@ public class GeneticAlgorithm {
         //generate selesai
         selesai = mulai + Integer.parseInt(matkul.get(idxMatkul).Durasi) - 1;
         tmp = tmp + iToC(selesai);
-        System.out.println("m"+mulai+"s"+selesai+"\n");
+//        System.out.println("m"+mulai+" s"+selesai+"\n");
         
         return tmp;
     } 
@@ -334,6 +350,7 @@ public class GeneticAlgorithm {
         int idxa;
         int idxb;
         int idxHari;
+        int idxJamMulai;
         int idxJam;
         int idxJamSelesai;
         int sizeHari;
@@ -342,12 +359,15 @@ public class GeneticAlgorithm {
         int countUsed = 0;
         String strtemp = "";
         boolean isKetemu; 
+//        System.out.println("brpruang" + ruang.size());
         for (idxa = 0; idxa < ruang.size(); idxa++){
+//            System.out.println(idxa);
             strtemp = Character.toString(((ruang.get(idxa)).JamMulai).charAt(0)) + Character.toString(((ruang.get(idxa)).JamMulai).charAt(1));
-            idxJam = Integer.parseInt(strtemp);
+            idxJamMulai = Integer.parseInt(strtemp);
             strtemp = Character.toString(((ruang.get(idxa)).JamSelesai).charAt(0)) + Character.toString(((ruang.get(idxa)).JamSelesai).charAt(1));
             idxJamSelesai = Integer.parseInt(strtemp);
-            
+//            System.out.println("mulai" + idxJam);
+//            System.out.println("selesai"+ idxJamSelesai);
             idxHari = 0;
             sizeHari = (((ruang.get(idxa)).Hari)).length();
 //            System.out.println("size" + sizeHari);
@@ -358,6 +378,7 @@ public class GeneticAlgorithm {
                 valHari = Integer.parseInt(Character.toString(((ruang.get(idxa)).Hari).charAt(idxHari)));
 //                System.out.println(valHari);
                 //iterasi jam mulai - jam selesai
+                idxJam = idxJamMulai;
                 while (idxJam < idxJamSelesai){
                         isKetemu = false;
                         idxb = 0;
@@ -366,10 +387,10 @@ public class GeneticAlgorithm {
                                                 (Integer.parseInt(Character.toString(tabJadwal[idxb].charAt(1))) == valHari) && 		//hari sama
                                                 (//(cToI((tabJadwal[idxb]).charAt(2)) == idxJam ) ||	//jam mulai sama
                                                  //(cToI((tabJadwal[idxb]).charAt(3)) == idxJam + 1) ||	//jam selesai sama
-                                                 ((cToI((tabJadwal[idxb]).charAt(2))) <= idxJam && (cToI((tabJadwal[idxb]).charAt(3))) > idxJam) 	//jam berada di antara mulai dan selesai sebuah matkul
+                                                 ((cToI((tabJadwal[idxb]).charAt(2))) <= idxJam && (cToI((tabJadwal[idxb]).charAt(3))) >= idxJam) 	//jam berada di antara mulai dan selesai sebuah matkul
                                                 )
                                         ){
-                                                System.out.println("here");
+//                                                System.out.println("here");
                                     
                                                 countUsed++;
                                                 isKetemu = true;
@@ -390,8 +411,8 @@ public class GeneticAlgorithm {
         // 2. iterasi jam available ruangan
         // 3. cocokin ke string apakah ada yang sama?
         // 4. hitung persentasi
-        System.out.println(countUsed);
-        System.out.println(countSlot);
+        System.out.println("used"+countUsed);
+        System.out.println("slot"+countSlot);
         return ((float)countUsed/(float)countSlot);
     }
     
