@@ -28,7 +28,8 @@ public class Tubes1 {
         List<Ruangan> ruang = new ArrayList<>();
         List<Jadwal> jadwal = new ArrayList<>();
         JFileChooser fad = new JFileChooser();
-        File input = new File("../../Testcase.txt");
+//        File input = new File("../../Testcase.txt");
+        File input = new File("/home/rezaramadhan/t1.txt");
 //        int rent = fad.showOpenDialog(fad);  
 //        input = fad.getSelectedFile();
         
@@ -62,28 +63,24 @@ public class Tubes1 {
             A = new Jadwal();
        }
        in.close();
-    /*
-        for (int i = 0; i < jadwal.size(); i++) {
-            //System.out.println(jadwal.get(i).NamaKegiatan + ";" + jadwal.get(i).Ruangan + ";" + jadwal.get(i).JamMulai + ";" + jadwal.get(i).JamSelesai + ";" + jadwal.get(i).Durasi + ";" + jadwal.get(i).Hari);
-            //System.out.println(jadwal.get(i).JamMulai.substring(0, 2));
-            System.out.println(jadwal.get(i).getJamMulai());
-        }
-        System.exit(0); 
-    */
-    /*  long startTime = System.nanoTime(); 
+    
+    
+        long startTime = System.nanoTime(); 
         GeneticAlgorithm g = new GeneticAlgorithm(jadwal, ruang);
-        String str1 = g.generateRandom();
+        String str1 = g.randomOneKelas(0);
+//        String str1 = "d2kod4nqb1ikb5knc1hjc3hjd4moc2km";
         System.out.println(str1);
-        String format = String.format("%f", g.hitungFitnessFunction(str1));
-        System.out.println("fitnessfunct "+format);
-        long estimatedTime = System.nanoTime() - startTime;
-        System.out.println(estimatedTime/1000000 + "ms");
-    */
+//        String format = String.format("%f", g.hitungPersentasiIsi(str1));
+//        System.out.println("persentasi "+format);
+//        System.out.println("fitnessfunction "+ (float)1/g.hitungFitnessFunction(str1));
+//        long estimatedTime = System.nanoTime() - startTime;
+//        System.out.println(estimatedTime/1000000 + "ms");
+    
    
         //Debugging Simmulated Annealing
-        SimulatedAnnealing sa = new SimulatedAnnealing(jadwal, ruang);
-        sa.execute();
-        System.out.println(sa.showSolution());
+//        SimulatedAnnealing sa = new SimulatedAnnealing(jadwal, ruang);
+//        sa.execute();
+//        System.out.println(sa.showSolution());
 
     }
 }

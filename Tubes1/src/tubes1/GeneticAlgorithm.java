@@ -55,7 +55,7 @@ public class GeneticAlgorithm {
         idx = rand.nextInt(ruang.size());
         String[] listruang = matkul.get(idxMatkul).Ruangan.split(",");
         
-        
+        System.out.println("sks" + matkul.get(idxMatkul).Durasi);
 //        System.out.println(listruang.length);
 //        System.out.println("a");
 
@@ -83,20 +83,21 @@ public class GeneticAlgorithm {
         int matkulSelesai = Integer.parseInt(matkul.get(idxMatkul).JamSelesai.substring(0, 2));
         int ruangMulai = Integer.parseInt(ruang.get(idx).JamMulai.substring(0, 2));
         int ruangSelesai = Integer.parseInt(ruang.get(idx).JamSelesai.substring(0, 2));
-//        System.out.println(matkulMulai);
-//        System.out.println(matkulSelesai);
-//        System.out.println(ruangMulai);
-//        System.out.println(ruangSelesai);
-        min = Math.min(matkulMulai, ruangMulai);
-        max = Math.max(matkulSelesai, ruangSelesai) - Integer.parseInt(matkul.get(idxMatkul).Durasi);
+        System.out.println("mm"+matkulMulai);
+        System.out.println("ms"+matkulSelesai);
+        System.out.println("rm"+ruangMulai);
+        System.out.println("rs"+ruangSelesai);
+        min = Math.max(matkulMulai, ruangMulai);
+        max = Math.min(matkulSelesai, ruangSelesai) - Integer.parseInt(matkul.get(idxMatkul).Durasi) - 1;
 
         //generate mulai
         mulai = rand.nextInt(max-min + 1) + min;
         tmp = tmp + iToC(mulai);
 
         //generate selesai
-        selesai = mulai + Integer.parseInt(matkul.get(idxMatkul).Durasi);
+        selesai = mulai + Integer.parseInt(matkul.get(idxMatkul).Durasi) - 1;
         tmp = tmp + iToC(selesai);
+        System.out.println("m"+mulai+"s"+selesai+"\n");
         
         return tmp;
     } 
@@ -326,7 +327,9 @@ public class GeneticAlgorithm {
         return selected;
     }
     
-    public float hitungPersentasiIsi(List<Ruangan> lRuang,String str){
+    public float hitungPersentasiIsi(String str){
+        
+        
         String[] tabJadwal = pisahstring(str);
         int idxa;
         int idxb;
@@ -339,35 +342,41 @@ public class GeneticAlgorithm {
         int countUsed = 0;
         String strtemp = "";
         boolean isKetemu; 
-        for (idxa = 0; idxa < lRuang.size(); idxa++){
-            strtemp = Character.toString(((lRuang.get(idxa)).JamMulai).charAt(0)) + Character.toString(((lRuang.get(idxa)).JamMulai).charAt(1));
+        for (idxa = 0; idxa < ruang.size(); idxa++){
+            strtemp = Character.toString(((ruang.get(idxa)).JamMulai).charAt(0)) + Character.toString(((ruang.get(idxa)).JamMulai).charAt(1));
             idxJam = Integer.parseInt(strtemp);
-            strtemp = Character.toString(((lRuang.get(idxa)).JamSelesai).charAt(0)) + Character.toString(((lRuang.get(idxa)).JamSelesai).charAt(1));
+            strtemp = Character.toString(((ruang.get(idxa)).JamSelesai).charAt(0)) + Character.toString(((ruang.get(idxa)).JamSelesai).charAt(1));
             idxJamSelesai = Integer.parseInt(strtemp);
-
+            
             idxHari = 0;
-            sizeHari = (Character.toString(((lRuang.get(idxa)).Hari).charAt(0))).length();
+            sizeHari = (((ruang.get(idxa)).Hari)).length();
+//            System.out.println("size" + sizeHari);
             while (idxHari < sizeHari){	//iterasi hari
-                valHari = Integer.parseInt(Character.toString(((lRuang.get(idxa)).Hari).charAt(idxHari)));
-
+                
+//            System.out.println("idxhari" + idxHari + " " + ruang.get(idxa).Hari.charAt(idxHari));
+            
+                valHari = Integer.parseInt(Character.toString(((ruang.get(idxa)).Hari).charAt(idxHari)));
+//                System.out.println(valHari);
                 //iterasi jam mulai - jam selesai
                 while (idxJam < idxJamSelesai){
                         isKetemu = false;
                         idxb = 0;
                         while (!isKetemu && (idxb < tabJadwal.length)){	//searching pada jadwal
                                 if (	(cToI((tabJadwal[idxb]).charAt(0)) == idxa) && 		//ruangan sama
-                                                (((tabJadwal[idxb]).charAt(1)) == valHari) && 		//hari sama
-                                                ((cToI((tabJadwal[idxb]).charAt(2)) + 7 == idxJam ) ||	//jam mulai sama
-                                                (cToI((tabJadwal[idxb]).charAt(3)) + 7 == idxJam + 1) ||	//jam selesai sama
-                                                ((cToI((tabJadwal[idxb]).charAt(2)) + 7) < idxJam && (cToI((tabJadwal[idxb]).charAt(3)) + 7) > idxJam) 	//jam berada di antara mulai dan selesai sebuah matkul
+                                                (Integer.parseInt(Character.toString(tabJadwal[idxb].charAt(1))) == valHari) && 		//hari sama
+                                                (//(cToI((tabJadwal[idxb]).charAt(2)) == idxJam ) ||	//jam mulai sama
+                                                 //(cToI((tabJadwal[idxb]).charAt(3)) == idxJam + 1) ||	//jam selesai sama
+                                                 ((cToI((tabJadwal[idxb]).charAt(2))) <= idxJam && (cToI((tabJadwal[idxb]).charAt(3))) > idxJam) 	//jam berada di antara mulai dan selesai sebuah matkul
                                                 )
                                         ){
+                                                System.out.println("here");
+                                    
                                                 countUsed++;
                                                 isKetemu = true;
                                         }
-                                countSlot++;
                                 idxb++;
                         }
+                        countSlot++;
                         idxJam++;
                 }
             idxHari = idxHari + 2;
@@ -381,8 +390,9 @@ public class GeneticAlgorithm {
         // 2. iterasi jam available ruangan
         // 3. cocokin ke string apakah ada yang sama?
         // 4. hitung persentasi
-
-        return (countUsed/countSlot);
+        System.out.println(countUsed);
+        System.out.println(countSlot);
+        return ((float)countUsed/(float)countSlot);
     }
     
     public void fullProcess(){
