@@ -325,7 +325,66 @@ public class GeneticAlgorithm {
         
         return selected;
     }
-            
+    
+    public float hitungPersentasiIsi(List<Ruangan> lRuang,String str){
+        String[] tabJadwal = pisahstring(str);
+        int idxa;
+        int idxb;
+        int idxHari;
+        int idxJam;
+        int idxJamSelesai;
+        int sizeHari;
+        int valHari;
+        int countSlot = 0;
+        int countUsed = 0;
+        String strtemp = "";
+        boolean isKetemu; 
+        for (idxa = 0; idxa < lRuang.size(); idxa++){
+            strtemp = Character.toString(((lRuang.get(idxa)).JamMulai).charAt(0)) + Character.toString(((lRuang.get(idxa)).JamMulai).charAt(1));
+            idxJam = Integer.parseInt(strtemp);
+            strtemp = Character.toString(((lRuang.get(idxa)).JamSelesai).charAt(0)) + Character.toString(((lRuang.get(idxa)).JamSelesai).charAt(1));
+            idxJamSelesai = Integer.parseInt(strtemp);
+
+            idxHari = 0;
+            sizeHari = (Character.toString(((lRuang.get(idxa)).Hari).charAt(0))).length();
+            while (idxHari < sizeHari){	//iterasi hari
+                valHari = Integer.parseInt(Character.toString(((lRuang.get(idxa)).Hari).charAt(idxHari)));
+
+                //iterasi jam mulai - jam selesai
+                while (idxJam < idxJamSelesai){
+                        isKetemu = false;
+                        idxb = 0;
+                        while (!isKetemu && (idxb < tabJadwal.length)){	//searching pada jadwal
+                                if (	(cToI((tabJadwal[idxb]).charAt(0)) == idxa) && 		//ruangan sama
+                                                (((tabJadwal[idxb]).charAt(1)) == valHari) && 		//hari sama
+                                                ((cToI((tabJadwal[idxb]).charAt(2)) + 7 == idxJam ) ||	//jam mulai sama
+                                                (cToI((tabJadwal[idxb]).charAt(3)) + 7 == idxJam + 1) ||	//jam selesai sama
+                                                ((cToI((tabJadwal[idxb]).charAt(2)) + 7) < idxJam && (cToI((tabJadwal[idxb]).charAt(3)) + 7) > idxJam) 	//jam berada di antara mulai dan selesai sebuah matkul
+                                                )
+                                        ){
+                                                countUsed++;
+                                                isKetemu = true;
+                                        }
+                                countSlot++;
+                                idxb++;
+                        }
+                        idxJam++;
+                }
+            idxHari = idxHari + 2;
+            }
+
+
+        }
+
+        //Jadwal Algorithm
+        // 1. pilih ruangan
+        // 2. iterasi jam available ruangan
+        // 3. cocokin ke string apakah ada yang sama?
+        // 4. hitung persentasi
+
+        return (countUsed/countSlot);
+    }
+    
     public void fullProcess(){
         //generate random
         
@@ -338,4 +397,5 @@ public class GeneticAlgorithm {
                 //populasi lama mati, populasi baru jadi populasi lama
     }
 
+    
 }
