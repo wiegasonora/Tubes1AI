@@ -28,8 +28,8 @@ public class Tubes1 {
         List<Ruangan> ruang = new ArrayList<>();
         List<Jadwal> jadwal = new ArrayList<>();
         JFileChooser fad = new JFileChooser();
-//        File input = new File("../../Testcase.txt");
-        File input = new File("/home/rezaramadhan/t1.txt");
+        File input = new File("../../Testcase.txt");
+//        File input = new File("/home/rezaramadhan/t1.txt");
 //        int rent = fad.showOpenDialog(fad);  
 //        input = fad.getSelectedFile();
         
@@ -67,20 +67,17 @@ public class Tubes1 {
     
         long startTime = System.nanoTime(); 
         GeneticAlgorithm g = new GeneticAlgorithm(jadwal, ruang);
-        String str1 = g.generateRandom();
-//        String str1 = "a3hkb3kmb5klc2jla4hid4kla5hib1jk";
+        String str1 = g.execute();
         System.out.println(str1);
-        String format = String.format("%f", g.hitungPersentasiIsi(str1));
-        System.out.println("persentasi "+format);
-        System.out.println("fitnessfunction "+ (float)1/g.hitungFitnessFunction(str1));
-//        long estimatedTime = System.nanoTime() - startTime;
-//        System.out.println(estimatedTime/1000000 + "ms");
+        System.out.println("fitnessfunction " + g.hitungFitnessFunction(str1));
+        long estimatedTime = System.nanoTime() - startTime;
+        System.out.println(estimatedTime/1000000 + "ms");
     
    
         //Debugging Simmulated Annealing
-//        SimulatedAnnealing sa = new SimulatedAnnealing(jadwal, ruang);
-//        sa.execute();
-//        System.out.println(sa.showSolution());
+        SimulatedAnnealing sa = new SimulatedAnnealing(jadwal, ruang);
+        sa.execute();
+        System.out.println(sa.showSolution());
 
     }
 }

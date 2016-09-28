@@ -6,7 +6,6 @@
 package tubes1;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.List;
 /**
@@ -22,6 +21,7 @@ public class GeneticAlgorithm {
     public GeneticAlgorithm(List<Jadwal> k, List<Ruangan> r) { //konstruktor
             matkul = k;
             ruang = r;
+            nPopulation = 4;
             population = new String[nPopulation];
     }
 
@@ -309,38 +309,49 @@ public class GeneticAlgorithm {
         return tabResult;
     }
 
-    public int selection() {
+    public String selection() {
         int selected = 0;
         
         float[] fitnessFunction = new float[nPopulation];
- 
+        
+        boolean end = false;
+        
         //hitung fitness function buat setiap individu
         float sum = 0;
-        for (int i= 0; i<nPopulation; i++) {
-            fitnessFunction[i] = hitungFitnessFunction(population[i]);
-            sum = sum + fitnessFunction[i];
+        int itr;
+        for (itr= 0; itr<nPopulation; itr++) {
+            fitnessFunction[itr] = hitungFitnessFunction(population[itr]);
+            if (fitnessFunction[itr] == 999) {
+                end = true;
+                break;
+            }
+            sum = sum + fitnessFunction[itr];
         }
+        if (!end) {
         
-        
-        //hitung persentasi setiap individu
-        for (int i= 0; i<nPopulation; i++) {
-            fitnessFunction[i] = fitnessFunction[i]/sum;
+            //hitung persentasi setiap individu
+            for (int i= 0; i<nPopulation; i++) {
+                fitnessFunction[i] = fitnessFunction[i]/sum;
+            }
+            sum = 0;
+            for (int i= 0; i<nPopulation; i++) {
+                sum = sum + fitnessFunction[i];
+                fitnessFunction[i] = sum;
+            }
+
+
+            Random rand = new Random();
+            float randomNum = rand.nextFloat() * 100;
+            while (randomNum < fitnessFunction[selected]) {
+                selected++;
+            }
+            selected = selected - 1;
+
+            return population[selected];
+        } else {
+            String endselected = "=" + itr;
+            return endselected;
         }
-        sum = 0;
-        for (int i= 0; i<nPopulation; i++) {
-            sum = sum + fitnessFunction[i];
-            fitnessFunction[i] = sum;
-        }
-        
-        
-        Random rand = new Random();
-        float randomNum = rand.nextFloat() * 100;
-        while (randomNum < fitnessFunction[selected]) {
-            selected++;
-        }
-        selected = selected - 1;
-        
-        return selected;
     }
     
     public float hitungPersentasiIsi(String str){
@@ -416,16 +427,43 @@ public class GeneticAlgorithm {
         return ((float)countUsed/(float)countSlot);
     }
     
-    public void fullProcess(){
+    public String execute(){
         //generate random
-        
+        for (int i = 0; i<nPopulation; i++) {
+            population[i] = generateRandom();
+        }
         //loop sampe puas -> ??????
+        int itr = 0;
+        int maxIteration = 128;
+        int end = -1;
+        
+        String parent1;
+        String parent2;
+        String[] tempArr = new String[nPopulation];
+        String[] crossoverRetval;
+        while (itr < maxIteration && end == -1) {
             //select generasi baru, loop sebanyak populasi/2
+            for (int i = 0; i< nPopulation; i+=2) {
                 //select parent1 & parent2
+                parent1 = selection();
+                if (parent1.charAt(0) == '=') {
+                    end = Integer.parseInt(parent1.substring(1));
+                    break;
+                }
+                parent2 = selection();
                 //crossover
-                //mutation
-                //add ke populasi baru
+                crossoverRetval = crossover(parent1, parent2);
+                
+                //mutation + add ke populasi baru
+                tempArr[i] = mutation(crossoverRetval[0]);
+                tempArr[i+1] = mutation(crossoverRetval[1]);
+                
                 //populasi lama mati, populasi baru jadi populasi lama
+                population = tempArr.clone();
+            }
+        }
+        
+        return population[end];
     }
 
     
