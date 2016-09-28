@@ -231,4 +231,149 @@ public class fitnessfunction{
 	public boolean isSamaJam(int num, char c){
 		return ((cToI(c)+7) == num);
 	}
+
+	public void printJadwal(List<Ruangan> lRuang, List<Jadwal> lJadwal, String str){
+		/* 	Prosedur berfungsi untuk mencetak matriks jadwal dengan baris menunjukkan jam dan kolom menunjukkan hari
+			dari tiap Ruangan (1 ruangan 1 matriks)
+			I.S : lRuang, lJadwal, dan str terdefinisi
+			F.S : jadwal untuk tiap ruang tercetak ke layar
+		*/
+
+		//kumpulan kamus lokal
+		int idxb;		//buat iterasi tabJadwal
+		int idxHari;	//buat iterasi hari
+		int idxJam;		//buat iterasi jam
+		int idxJamSelesai;	//batas iterasi jam
+		int sizeHari;	//panjang string hari
+		int valHari;	//nilai hari dalam angka
+		String strtemp = "";	//penyimpan sring utk convert jam ruangan
+		int x;	//iterasi baris
+		int y;	//iterasi kolom
+		int i;	//iterasi baris
+		int j;	//iterasi kolom
+
+		//membuat dan menginisialisasi matriks jadwal yang akan dicetak ke layar
+		String[][] matriksjadwal = new String[11][5];
+		for (i = 0; i < 11; i++){
+			for (j = 0; j < 5; j++){
+				matriksjadwal[i][j] = "";
+			}
+		}
+
+		//mengassign string jadwal ke bentuk array of string
+		String[] tabJadwal = pisahstring(str);
+		
+		//mengisi dan mencetak matriksjadwal
+		//iterasi ruangan
+		for (int idxruang = 0; idxruang < lRuang.size(); idxruang++){	
+			idxHari = 0;
+			sizeHari = ((lRuang.get(idxruang)).Hari).length();
+
+			//iterasi hari
+			while (idxHari < sizeHari){		
+				valHari = Integer.parseInt(Character.toString(((lRuang.get(idxruang)).Hari).charAt(idxHari)));
+				
+				//mengisi idxJam dan idxJamSelesai dari lRuang			
+				strtemp = Character.toString(((lRuang.get(idxruang)).JamMulai).charAt(0)) + Character.toString(((lRuang.get(idxruang)).JamMulai).charAt(1));
+	 			idxJam = Integer.parseInt(strtemp);
+	 			strtemp = Character.toString(((lRuang.get(idxruang)).JamSelesai).charAt(0)) + Character.toString(((lRuang.get(idxruang)).JamSelesai).charAt(1));
+				idxJamSelesai = Integer.parseInt(strtemp);
+
+				//iterasi jam mulai - jam selesai
+	 			while (idxJam < idxJamSelesai){
+	 				matriksjadwal[idxJam-7][idxHari] += "v";	//penanda jika slot tersedia
+	 				idxb = 0;
+
+	 				//searching digunakannya slot pada tabJadwal
+	 				while (idxb < tabJadwal.length){	
+	 					if (	(cToI((tabJadwal[idxb]).charAt(0)) == idxruang) && 		//ruangan sama
+	 							(Integer.parseInt(Character.toString((tabJadwal[idxb]).charAt(1))) == valHari) && 		//hari sama
+	 							(	(cToI((tabJadwal[idxb]).charAt(2)) == idxJam ) ||	//jam mulai sama
+	 								(cToI((tabJadwal[idxb]).charAt(3)) == idxJam + 1) ||	//jam selesai sama
+	 								((cToI((tabJadwal[idxb]).charAt(2))) < idxJam && (cToI((tabJadwal[idxb]).charAt(3))) > idxJam) 	//jam berada di antara mulai dan selesai sebuah matkul
+	 							)
+	 						){
+	 							matriksjadwal[idxJam-7][idxHari] += " - " + (lJadwal.get(idxb)).NamaKegiatan;
+	 						}
+	 					idxb++;
+	 				}
+	 				idxJam++;
+	 			}
+				idxHari = idxHari + 2;
+			}
+
+			//pencetakan ke layar
+			System.out.println("Jadwal Ruangan " + (lRuang.get(idxruang)).Nama);
+			System.out.print("|Jam▼ - Hari►|");
+			for (x = 0; x < 5; x++){
+				System.out.print("    " + x +"    |");
+			}
+			System.out.println();
+			for (x = 0; x < 11; x++){
+				if ((x+7) < 10){
+					System.out.print("  0" + (x+7) +".00    |");
+				} else {
+					System.out.print("  " + (x+7) +".00    |");
+				}
+				
+				for (y = 0; y < 5; y++){
+					System.out.print(" " + matriksjadwal[x][y] + "  ");
+				}
+				System.out.println();
+			}
+			System.out.println("Keterangan:  'v' menunjukkan slot tersedia ");
+			System.out.println();
+			System.out.println();
+
+		}
+	}
+
+}
+
+
+//// Biar lolos compile ////
+class Ruangan {
+    public String Nama;
+    public String JamMulai;
+    public String JamSelesai;
+    public String Hari;
+}
+
+class Jadwal {
+    public String NamaKegiatan;
+    public String Ruangan;
+    public String JamMulai;
+    public String JamSelesai;
+    public String Durasi;
+    public String Hari;
+
+    // Constructs an intial course
+    public Jadwal() {
+        this.NamaKegiatan = "IFXXXX";
+        this.Ruangan = "";
+        this.JamMulai = "0";
+        this.JamSelesai = "0";
+        this.Durasi = "0";
+        this.Hari = "";
+    }
+    
+    // Constructs a course with certain of parameters
+    public Jadwal(String nm, String rg, String mulai, String selesai, String dur, String hr) {
+        this.NamaKegiatan = nm;
+        this.Ruangan = rg;
+        this.JamMulai = mulai;
+        this.JamSelesai = selesai;
+        this.Durasi = dur;
+        this.Hari = hr;
+    }
+
+    // Constructs a course from another course
+    public Jadwal(Jadwal jadwal) {
+        this.NamaKegiatan = jadwal.NamaKegiatan;
+        this.Ruangan = jadwal.Ruangan;
+        this.JamMulai = jadwal.JamMulai;
+        this.JamSelesai = jadwal.JamSelesai;
+        this.Durasi = jadwal.Durasi;
+        this.Hari = jadwal.Hari;
+    }
 }
