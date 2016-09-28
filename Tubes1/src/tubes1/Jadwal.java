@@ -62,12 +62,20 @@ public class Jadwal {
 
     // Gets course's starting time
     public int getJamMulai() {
-        return Integer.parseInt(this.JamMulai.substring(0, 2));
+        if (this.JamMulai.length() > 2) {
+            return Integer.parseInt(this.JamMulai.substring(0, 2));
+        } else {
+            return Integer.parseInt(this.JamMulai);
+        }
     }
 
     // Gets course's ending time
     public int getJamSelesai() {
-        return Integer.parseInt(this.JamSelesai.substring(0, 2));
+        if (this.JamSelesai.length() > 2) {
+            return Integer.parseInt(this.JamSelesai.substring(0, 2));
+        } else {
+            return Integer.parseInt(this.JamSelesai);
+        }
     }
 
     // Gets course's duration
@@ -138,25 +146,21 @@ public class Jadwal {
     }
     public void setHariAtIdx(int idx, boolean bool) {
     	if (bool == false) {
-	        Hari.replaceAll("idx", "");
+	        Hari.replaceAll(Integer.toString(idx), "");
 	    }
     }
 
     public Jadwal randomJadwal() {
         Random rnd = new Random();
-        Jadwal temp = new Jadwal();
+        Jadwal temp = new Jadwal(this);
         do {
             int x;
             // Random Hari correct
             do {
                 x = rnd.nextInt(5);
-            } while (getHariAtIdx(x) == false);
-            
-            for (int j = 0; j < 5; j++) {
-                if (j != x) {
-                    temp.setHariAtIdx(j, false);
-                }
-            }
+            } while (temp.getHariAtIdx(x) == false);
+            temp.setHari(Integer.toString(x+1));
+
             // Random jam kuliah correct
             x = rnd.nextInt((getJamSelesai() - getDurasi() - getJamMulai() + 1) + getJamMulai());
             temp.setJamMulai(x);
@@ -169,23 +173,33 @@ public class Jadwal {
             } else {
                 temp.setRuangan(this.getRuangan());
             }
-        } while (isNotInDomain(temp, RoomManager.getRoomByRuang(temp.getRuangan())));
+            System.out.println("Hasil random:");
+            System.out.println(temp.getNamaKegiatan());
+            System.out.println(temp.getJamMulai());
+            System.out.println(temp.getJamSelesai());
+            System.out.println(temp.getRuangan());
+            System.out.println(temp.getHariAsString());
+            System.out.println();
+            Ruangan tempRuangan = RoomManager.getRoomByRuang(temp.getRuangan());
+            System.out.println(tempRuangan.getNama());
+            System.out.println(tempRuangan.getJamMulai());
+            System.out.println(tempRuangan.getJamSelesai());
+            System.out.println(tempRuangan.getHariAsString());
+            System.out.println();
+        } while (!isInDomain(temp, RoomManager.getRoomByRuang(temp.getRuangan())));
         return temp;
     }
 
-    public boolean isNotInDomain(Jadwal course, Ruangan room) {
-        int idxHari = 999;
-        for (int i = 0; i < 5; i++) {
-            if (course.getHariAtIdx(i) == true) {
-                idxHari = i;
-            }
-        }
+    public boolean isInDomain(Jadwal course, Ruangan room) {
+        int idxHari = Integer.parseInt(course.getHariAsString()) - 1;
+        System.out.println("idxHari: " + idxHari);
         boolean isHariIn = false;
+        System.out.println("abcd");
         if (room.getHariAtIdx(idxHari) && course.getHariAtIdx(idxHari)) {
             isHariIn = true;
         }
         boolean isJamIn = false;
-        if ((course.getJamMulai() >= room.getJamMulai())&&(course.getJamMulai() <= (room.getJamSelesai()-course.getDurasi()))) {
+        if ((course.getJamMulai() >= room.getJamMulai()) && (course.getJamMulai() <= (room.getJamSelesai()-course.getDurasi()))) {
             isJamIn = true;
         }
 

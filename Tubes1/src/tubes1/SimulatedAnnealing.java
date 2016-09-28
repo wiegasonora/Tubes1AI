@@ -2,16 +2,15 @@ package tubes1;
 import java.util.*;
 
 public class SimulatedAnnealing {
-	private ArrayList jadwal;
-	private ArrayList ruangan;
+	private CourseManager listOfCourse;
+	private RoomManager listOfRoom;
 	private Schedule solution;
 	private double temperature;	// Sets initial temperature
 	private double coolingRate; // Sets cooling rate
 
-
 	public SimulatedAnnealing(List<Jadwal> jadwal, List<Ruangan> ruangan) {
-		//this.jadwal = new ArrayList<Jadwal>();
-		//this.ruangan = new ArrayList<Ruangan>();
+		this.listOfCourse = new CourseManager();
+		this.listOfRoom = new RoomManager();
 		this.temperature = 1000;
 		this.coolingRate = 0.003;
 
@@ -23,7 +22,7 @@ public class SimulatedAnnealing {
 			tempJadwal.setJamSelesai(jadwal.get(i).getJamSelesai());
 			tempJadwal.setDurasi(jadwal.get(i).getDurasi());
 			tempJadwal.setHari(jadwal.get(i).getHariAsString());
-			CourseManager.addCourse(tempJadwal);
+			listOfCourse.addCourse(tempJadwal);
 		}
 
 		for(int i = 0; i < ruangan.size(); i++) {
@@ -32,9 +31,10 @@ public class SimulatedAnnealing {
 			tempRuangan.setJamMulai(ruangan.get(i).getJamMulai());
 			tempRuangan.setJamSelesai(ruangan.get(i).getJamSelesai());
 			tempRuangan.setHari(ruangan.get(i).getHariAsString());
-			RoomManager.addRoom(tempRuangan);
-
+			listOfRoom.addRoom(tempRuangan);
 		}
+
+		this.solution = new Schedule();
 
 /*		for (int i = 0; i < jadwal.size(); i++) {
 			this.jadwal.get(i).setNamaKegiatan(jadwal.get(i).getNamaKegiatan());
@@ -57,7 +57,7 @@ public class SimulatedAnnealing {
 	}
 
 	// Calculate the acceptance probability
-	public double acceptancePorbability(int conflict, int newConflict, double temperature) {
+	public double acceptanceProbability(int conflict, int newConflict, double temperature) {
 		// if new solution is better, take it
 		if (newConflict < conflict) {
 			return 1.0;
@@ -92,16 +92,16 @@ public class SimulatedAnnealing {
 			Schedule neighbourSolution = new Schedule(currentSolution.getSchedule(), currentSolution.getConflict());
 
 			// Picks a random course to be rescheduled
-			indexToRandom = random.nextInt(CourseManager.numberOfCourse());
+			indexToRandom = random.nextInt(listOfCourse.numberOfCourse());
 			// Random course in indexToRandom at courseManager
-			Jadwal tempCourse = new Jadwal(CourseManager.getCourse(indexToRandom).randomJadwal());
+			Jadwal tempCourse = new Jadwal(listOfCourse.getCourse(indexToRandom).randomJadwal());
 			// Changes/update value of course at index indexToRandom with new tempCourse
 			neighbourSolution.setCourseAtIdx(indexToRandom, tempCourse);
 			// Gets conflict of neighbourSolution
 			neighbourConflict = neighbourSolution.getConflict();
 
 			// Decides if we should accept the neighbour
-			if (acceptancePorbability(currentConflict, neighbourConflict, temperature) > random.nextDouble()) {
+			if (acceptanceProbability(currentConflict, neighbourConflict, temperature) > random.nextDouble()) {
 				currentSolution.setSchedule(neighbourSolution.getSchedule());
 				currentSolution.setConflict(neighbourSolution.getConflict());
 			}

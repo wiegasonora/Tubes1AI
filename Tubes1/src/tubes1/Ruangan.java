@@ -34,11 +34,19 @@ public class Ruangan {
 	}
 
 	public int getJamMulai() {
-		return Integer.parseInt(JamMulai.substring(0, 2));
+		if (this.JamMulai.length() > 2) {
+            return Integer.parseInt(this.JamMulai.substring(0, 2));
+        } else {
+            return Integer.parseInt(this.JamMulai);
+        }
 	}
 
 	public int getJamSelesai() {
-		return Integer.parseInt(JamSelesai.substring(0, 2));
+		if (this.JamSelesai.length() > 2) {
+            return Integer.parseInt(this.JamSelesai.substring(0, 2));
+        } else {
+            return Integer.parseInt(this.JamSelesai);
+        }
 	}
 
 	public String getHariAsString() {
