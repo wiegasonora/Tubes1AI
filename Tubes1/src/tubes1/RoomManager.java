@@ -19,10 +19,10 @@ public class RoomManager {
 
 	public static Ruangan getRoomByRuang(String ruang) {
 		for (int i = 0; i < numberOfRoom(); i++) {
-			if (getRoom(i).getNama() == ruang) {
+			if (getRoom(i).getNama().equals(ruang)) {
 				return getRoom(i);
 			}
 		}
-		return null;	
+		return null;
 	}
 }

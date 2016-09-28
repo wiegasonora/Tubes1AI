@@ -21,6 +21,10 @@ public class Schedule {
 		return schedule;
 	}
 
+	public Jadwal getScheduleAtIdx(int idx) {
+		return schedule.get(idx);
+	}
+
 	public int getConflict() {
 		for (int i = 0; i < scheduleSize(); i++) {
 			for (int j = i+1; j < scheduleSize(); j++) {
@@ -77,7 +81,7 @@ public class Schedule {
 	public String toString() {
 		String out = "";
 		for (int i = 0; i < scheduleSize(); i++) {
-			out += CourseManager.getCourse(i) + "%n"; 
+			out += this.getScheduleAtIdx(i) + "\n"; 
 		}
 		return out;
 	}

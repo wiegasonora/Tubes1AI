@@ -162,39 +162,37 @@ public class Jadwal {
             temp.setHari(Integer.toString(x+1));
 
             // Random jam kuliah correct
-            x = rnd.nextInt((getJamSelesai() - getDurasi() - getJamMulai() + 1) + getJamMulai());
+            x = rnd.nextInt(getJamSelesai() - getDurasi() - getJamMulai() + 1) + getJamMulai();
             temp.setJamMulai(x);
             temp.setJamSelesai(x + getDurasi());
             
             // Random Ruangan
-            if (getRuangan() == "") {
+            if (getRuangan().equals("-")) {
                 x = rnd.nextInt(RoomManager.numberOfRoom());
                 temp.setRuangan(RoomManager.getRoom(x).getNama());
             } else {
                 temp.setRuangan(this.getRuangan());
             }
-            System.out.println("Hasil random:");
+/*            System.out.println("Hasil random:");
             System.out.println(temp.getNamaKegiatan());
             System.out.println(temp.getJamMulai());
             System.out.println(temp.getJamSelesai());
             System.out.println(temp.getRuangan());
             System.out.println(temp.getHariAsString());
-            System.out.println();
             Ruangan tempRuangan = RoomManager.getRoomByRuang(temp.getRuangan());
+            System.out.println("Info ttg ruangan hasil random:");
             System.out.println(tempRuangan.getNama());
             System.out.println(tempRuangan.getJamMulai());
             System.out.println(tempRuangan.getJamSelesai());
             System.out.println(tempRuangan.getHariAsString());
-            System.out.println();
+            System.out.println(); */
         } while (!isInDomain(temp, RoomManager.getRoomByRuang(temp.getRuangan())));
         return temp;
     }
 
     public boolean isInDomain(Jadwal course, Ruangan room) {
         int idxHari = Integer.parseInt(course.getHariAsString()) - 1;
-        System.out.println("idxHari: " + idxHari);
         boolean isHariIn = false;
-        System.out.println("abcd");
         if (room.getHariAtIdx(idxHari) && course.getHariAtIdx(idxHari)) {
             isHariIn = true;
         }
