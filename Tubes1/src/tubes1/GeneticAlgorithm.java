@@ -158,7 +158,7 @@ public class GeneticAlgorithm {
             //inisialisasi tabHariSama
             String[][] tabHariSama = new String [5][tabString.length];
             for (int x=0; x<5; x++){
-                for (int y=0; y<5; y++){
+                for (int y=0; y<tabString.length; y++){
                     tabHariSama[x][y] = "";
                 }
             }
@@ -172,7 +172,7 @@ public class GeneticAlgorithm {
                 for (int i=0; i< tabString.length; i++){
 
                     strtemp = tabString[i];
-                    if (strtemp.charAt(1) == idxHari){	//mengecek kelas pada hari yg sama
+                    if (strtemp.charAt(1) == idxHari){  //mengecek kelas pada hari yg sama
                         tabHariSama[idxBrsHariSama][idxKolHariSama] = strtemp;
                         idxKolHariSama++;
                     }
@@ -188,18 +188,22 @@ public class GeneticAlgorithm {
                 for(int idxb=0; idxb<tabString.length; idxb++){
                     strtemp = tabHariSama[idxa][idxb];
                     idxc=idxb+1;
-                    if (tabHariSama[idxa][idxb] == "") {
-                        break;
-                    }
-                    while (idxc<5 && tabHariSama[idxa][idxc] != ""){
+                 /*   if (tabHariSama[idxa][idxb] == "") {
+                        
+                    } */
+                    while (idxc<tabString.length && tabHariSama[idxa][idxc] != ""){
                         strtemp1 = tabHariSama[idxa][idxc];
-                        if ((	(strtemp.charAt(2)==strtemp1.charAt(2)) || 					//kedua kelas mulai pada jam sama
-                                    (strtemp.charAt(3)==strtemp1.charAt(3)) || 					//kedua kelas selesai pada jam sama
-                                    (strtemp.charAt(2)>strtemp1.charAt(2) && strtemp.charAt(2)<strtemp1.charAt(3)) || 	//kelas 1 mulai saat kelas 2 berlangsung
-                                    (strtemp.charAt(3)>strtemp1.charAt(2) && strtemp.charAt(3)<strtemp1.charAt(3))) 	//kelas 2 mulai saat kelas 1 berlangsung
+                        //System.out.println(strtemp + "-" + strtemp1);
+                        if (    ((strtemp.charAt(2)==strtemp1.charAt(2)) ||                     //kedua kelas mulai pada jam sama
+                                    (strtemp.charAt(3)==strtemp1.charAt(3))  ||                     //kedua kelas selesai pada jam sama
+                                    (cToI(strtemp.charAt(2))>cToI(strtemp1.charAt(2)) && cToI(strtemp.charAt(2))<=cToI(strtemp1.charAt(3))) ||  //kelas 1 mulai saat kelas 2 berlangsung
+                                    (cToI(strtemp.charAt(3))>=cToI(strtemp1.charAt(2)) && cToI(strtemp.charAt(3))<cToI(strtemp1.charAt(3))) ||   //kelas 2 mulai saat kelas 1 berlangsung
+                                    (cToI(strtemp.charAt(2))<cToI(strtemp1.charAt(2)) && cToI(strtemp.charAt(3))>cToI(strtemp1.charAt(3))) ||
+                                    (cToI(strtemp.charAt(2))>cToI(strtemp1.charAt(2)) && cToI(strtemp.charAt(3))<cToI(strtemp1.charAt(3)))  )
                                     && 
-                                    isSameRoom(strtemp,strtemp1)) {		//kedua kelas pada ruangan yang sama 
+                                    isSameRoom(strtemp,strtemp1)) {     //kedua kelas pada ruangan yang sama 
                             countBentrok++;
+                          //  System.out.println(strtemp + "-" + strtemp1);
                         }
                         idxc++;
                     }
@@ -207,8 +211,8 @@ public class GeneticAlgorithm {
             }
 
             //mengembalikan nilai fitness function yaitu 1/countBentrok
-            
-            if (countBentrok == 0){	//tidak ada yg bentrok, menghindari infinite
+          //  System.out.println("jumlah bentrok : " +countBentrok);
+            if (countBentrok == 0){ //tidak ada yg bentrok, menghindari infinite
                 return 999;
             } else {
                 return (1 / (float)countBentrok);
@@ -449,67 +453,71 @@ public class GeneticAlgorithm {
     }
 
     public void printJadwal(String str){
-        /* 	Prosedur berfungsi untuk mencetak matriks jadwal dengan baris menunjukkan jam dan kolom menunjukkan hari
+        /*  Prosedur berfungsi untuk mencetak matriks jadwal dengan baris menunjukkan jam dan kolom menunjukkan hari
                 dari tiap Ruangan (1 ruangan 1 matriks)
                 I.S : ruang, matkul, dan str terdefinisi
                 F.S : jadwal untuk tiap ruang tercetak ke layar
         */
 
         //kumpulan kamus lokal
-        int idxb;		//buat iterasi tabJadwal
-        int idxHari;	//buat iterasi hari
-        int idxJam;		//buat iterasi jam
-        int idxJamSelesai;	//batas iterasi jam
-        int sizeHari;	//panjang string hari
-        int valHari;	//nilai hari dalam angka
-        String strtemp = "";	//penyimpan sring utk convert jam ruangan
-        int x;	//iterasi baris
-        int y;	//iterasi kolom
-        int i;	//iterasi baris
-        int j;	//iterasi kolom
+        int idxb;       //buat iterasi tabJadwal
+        int idxHari;    //buat iterasi hari
+        int idxJam;     //buat iterasi jam
+        int idxJamSelesai;  //batas iterasi jam
+        int sizeHari;   //panjang string hari
+        int valHari;    //nilai hari dalam angka
+        String strtemp = "";    //penyimpan sring utk convert jam ruangan
+        int x;  //iterasi baris
+        int y;  //iterasi kolom
+        int i;  //iterasi baris
+        int j;  //iterasi kolom
 
         //membuat dan menginisialisasi matriks jadwal yang akan dicetak ke layar
         String[][] matriksjadwal = new String[11][5];
-        for (i = 0; i < 11; i++){
-            for (j = 0; j < 5; j++){
-                matriksjadwal[i][j] = "";
-            }
-        }
+        
 
         //mengassign string jadwal ke bentuk array of string
         String[] tabJadwal = pisahstring(str);
 
         //mengisi dan mencetak matriksjadwal
         //iterasi ruangan
-        for (int idxruang = 0; idxruang < ruang.size(); idxruang++){	
+        for (int idxruang = 0; idxruang < ruang.size(); idxruang++){    
             idxHari = 0;
             sizeHari = ((ruang.get(idxruang)).Hari).length();
+            for (i = 0; i < 11; i++){
+                for (j = 0; j < 5; j++){
+                    matriksjadwal[i][j] = "";
+                }
+            }
 
             //iterasi hari
-            while (idxHari < sizeHari){		
+            while (idxHari < sizeHari){     
                 valHari = Integer.parseInt(Character.toString(((ruang.get(idxruang)).Hari).charAt(idxHari)));
 
-                //mengisi idxJam dan idxJamSelesai dari ruang			
+                //mengisi idxJam dan idxJamSelesai dari ruang           
                 strtemp = Character.toString(((ruang.get(idxruang)).JamMulai).charAt(0)) + Character.toString(((ruang.get(idxruang)).JamMulai).charAt(1));
                 idxJam = Integer.parseInt(strtemp);
+                
                 strtemp = Character.toString(((ruang.get(idxruang)).JamSelesai).charAt(0)) + Character.toString(((ruang.get(idxruang)).JamSelesai).charAt(1));
                 idxJamSelesai = Integer.parseInt(strtemp);
 
                 //iterasi jam mulai - jam selesai
                 while (idxJam < idxJamSelesai){
-                    matriksjadwal[idxJam-7][idxHari] += "v";	//penanda jika slot tersedia
+                    
+                    matriksjadwal[idxJam-7][valHari-1] += "v";  //penanda jika slot tersedia
                     idxb = 0;
 
                     //searching digunakannya slot pada tabJadwal
-                    while (idxb < tabJadwal.length){	
-                        if (	(cToI((tabJadwal[idxb]).charAt(0)) == idxruang) && 		//ruangan sama
-                                    (Integer.parseInt(Character.toString((tabJadwal[idxb]).charAt(1))) == valHari) && 		//hari sama
-                                    (	(cToI((tabJadwal[idxb]).charAt(2)) == idxJam ) ||	//jam mulai sama
-                                            (cToI((tabJadwal[idxb]).charAt(3)) == idxJam + 1) ||	//jam selesai sama
-                                            ((cToI((tabJadwal[idxb]).charAt(2))) < idxJam && (cToI((tabJadwal[idxb]).charAt(3))) > idxJam) 	//jam berada di antara mulai dan selesai sebuah matkul
-                                    )
+                    while (idxb < tabJadwal.length){    
+                        if (    (cToI((tabJadwal[idxb]).charAt(0)) == idxruang) &&      //ruangan sama
+                                    (Integer.parseInt(Character.toString((tabJadwal[idxb]).charAt(1))) == valHari) &&       //hari sama
+                                        //(cToI((tabJadwal[idxb]).charAt(2)) == idxJam ) || //jam mulai sama
+                                          //  (cToI((tabJadwal[idxb]).charAt(3)) == idxJam + 1) ||  //jam selesai sama
+                                            ((cToI((tabJadwal[idxb]).charAt(2))) <= idxJam && (cToI((tabJadwal[idxb]).charAt(3))) >= idxJam)    //jam berada di antara mulai dan selesai sebuah matkul
+                                    
                             ){
-                                matriksjadwal[idxJam-7][idxHari] += " - " + (matkul.get(idxb)).NamaKegiatan;
+                                //System.out.println((matkul.get(idxb)).NamaKegiatan + "jam mulai : "+idxJam);
+                                matriksjadwal[idxJam-7][valHari-1] += " - " + (matkul.get(idxb)).NamaKegiatan;
                             }
                         idxb++;
                     }
@@ -521,19 +529,30 @@ public class GeneticAlgorithm {
             //pencetakan ke layar
             System.out.println("Jadwal Ruangan " + (ruang.get(idxruang)).Nama);
             System.out.print("|Jam▼ - Hari►|");
-            for (x = 0; x < 5; x++){
-                    System.out.print("    " + x +"    |");
+            System.out.println("             Senin             |             Selasa            |              Rabu             |             Kamis             |             Jumat             |");
+            for (int d = 0; d < 175; d++){
+                        System.out.print("_");
             }
             System.out.println();
+            int z;
             for (x = 0; x < 11; x++){
                     if ((x+7) < 10){
-                            System.out.print("  0" + (x+7) +".00    |");
+                            System.out.print("|  0" + (x+7) +".00      |");
                     } else {
-                            System.out.print("  " + (x+7) +".00    |");
+                            System.out.print("|  " + (x+7) +".00      |");
                     }
 
                     for (y = 0; y < 5; y++){
-                            System.out.print(" " + matriksjadwal[x][y] + "  ");
+                        System.out.print(matriksjadwal[x][y]);
+                        for (z = matriksjadwal[x][y].length(); z < 31; z++){
+                            System.out.print(" ");
+                        }
+                        System.out.print("|");
+                        
+                    }
+                    System.out.println();
+                    for (int d = 0; d < 175; d++){
+                        System.out.print("_");
                     }
                     System.out.println();
             }
