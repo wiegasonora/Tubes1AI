@@ -10,6 +10,7 @@ public class Schedule {
 		for (int i = 0; i < CourseManager.numberOfCourse(); i++) {
 			schedule.add(null);
 		}
+		conflict = 0;
 	}
 
 	public Schedule(ArrayList schedule, int conflict) {
@@ -26,13 +27,15 @@ public class Schedule {
 	}
 
 	public int getConflict() {
+		int temp = 0;
 		for (int i = 0; i < scheduleSize(); i++) {
 			for (int j = i+1; j < scheduleSize(); j++) {
 				if (isConflict(getCourse(i), getCourse(j))) {
-					conflict++;
+					temp++;
 				}
 			}
 		}
+		setConflict(temp);
 		return conflict;
 	}
 
@@ -59,12 +62,14 @@ public class Schedule {
 	}
 
 	public boolean isConflict(Jadwal a, Jadwal b) {
-		boolean isSameHari = a.getHari() == b.getHari();
+		boolean isSameHari = Arrays.equals(a.getHari(), b.getHari());
+		
 		boolean isSameJam = false;
-		if ((b.getJamMulai() >= a.getJamMulai())&&(b.getJamMulai() <= a.getJamSelesai())) {
+		if (((b.getJamMulai() >= a.getJamMulai())&&(b.getJamMulai() <= a.getJamSelesai())) || ((b.getJamSelesai() >= a.getJamMulai())&&(b.getJamSelesai() <= a.getJamSelesai()))) {
 			isSameJam = true;
 		}
-		boolean isSameRuang = a.getRuangan() == b.getRuangan();
+		
+		boolean isSameRuang = a.getRuangan().equals(b.getRuangan());
 
 		if (isSameHari && isSameJam && isSameRuang) {
 			return true;

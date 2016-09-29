@@ -29,7 +29,7 @@ public class Tubes1 {
         List<Ruangan> ruang = new ArrayList<>();
         List<Jadwal> jadwal = new ArrayList<>();
         JFileChooser fad = new JFileChooser();
-        File input = new File("../Testcase.txt");
+        File input = new File("../../Testcase.txt");
       //  File input = new File("/home/rezaramadhan/t2.txt");
 //        int rent = fad.showOpenDialog(fad);  
 //        input = fad.getSelectedFile();

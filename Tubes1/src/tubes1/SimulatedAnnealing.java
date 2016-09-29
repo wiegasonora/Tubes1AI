@@ -73,7 +73,9 @@ public class SimulatedAnnealing {
 
 		int currentConflict = currentSolution.getConflict();
 		int neighbourConflict = 0;
-
+		//System.out.println(currentSolution);
+		//System.out.println("Current conflict = " + currentSolution.getConflict());
+		
 		//System.out.println("Initial solution : ");
 		/*for (int i = 0; i < currentSolution.scheduleSize(); i++) {
 			System.out.println(currentSolution.getCourse(i));
@@ -83,7 +85,9 @@ public class SimulatedAnnealing {
 
 		// Sets to be best solution
 		Schedule bestSchedule = new Schedule(currentSolution.getSchedule(), currentSolution.getConflict());
-		
+		//System.out.println(bestSchedule);
+		//System.out.println("Conflict ater new = " + bestSchedule.getConflict());
+		//System.exit(0);
 		Random random = new Random();
 		int indexToRandom;
 
@@ -99,6 +103,7 @@ public class SimulatedAnnealing {
 			neighbourSolution.setCourseAtIdx(indexToRandom, tempCourse);
 			// Gets conflict of neighbourSolution
 			neighbourConflict = neighbourSolution.getConflict();
+			currentConflict = currentSolution.getConflict();
 
 			// Decides if we should accept the neighbour
 			if (acceptanceProbability(currentConflict, neighbourConflict, temperature) > random.nextDouble()) {
@@ -110,6 +115,8 @@ public class SimulatedAnnealing {
 			if (currentSolution.getConflict() < bestSchedule.getConflict()) {
 				bestSchedule.setSchedule(currentSolution.getSchedule());
 				bestSchedule.setConflict(currentSolution.getConflict());
+				//System.out.println(bestSchedule.getConflict());
+				//System.exit(0);
 			}
 
 			// Cooling system
