@@ -82,6 +82,6 @@ public class Tubes1 {
         SimulatedAnnealing sa = new SimulatedAnnealing(jadwal, ruang);
         sa.execute();
         System.out.println(sa.showSolution());
-        System.out.println(sa.showConflict());
+        System.out.println("Jumlah conflict: " + sa.showConflict());
     }
 }
