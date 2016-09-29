@@ -144,8 +144,15 @@ public class GeneticAlgorithm {
         }
         return tabJadwal;
     }
-
-    public float hitungFitnessFunction(String str){
+    
+    public float hitungFitnessFunction(String str) {
+        float tempValue;
+        float bentrok = hitungBentrok(str);
+        tempValue = (bentrok + hitungPersentasiIsi(str)*bentrok);
+        return tempValue;
+    }
+    
+    public float hitungBentrok(String str){
         /* Menghitung fitnessfunction dengan sebelumnya mengecek
          * terjadinya bentrok matkul pada hari dan jam yang sama
          * yaitu dengan mencatat matkul apa saja yang ada pada hari
