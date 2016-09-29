@@ -79,9 +79,9 @@ public class Tubes1 {
     
    
         //Debugging Simmulated Annealing
-//        SimulatedAnnealing sa = new SimulatedAnnealing(jadwal, ruang);
-//        sa.execute();
-//        System.out.println(sa.showSolution());
-
+        SimulatedAnnealing sa = new SimulatedAnnealing(jadwal, ruang);
+        sa.execute();
+        System.out.println(sa.showSolution());
+        System.out.println(sa.showConflict());
     }
 }

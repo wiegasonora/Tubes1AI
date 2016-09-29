@@ -126,4 +126,8 @@ public class SimulatedAnnealing {
 	public Schedule showSolution() {
 		return this.solution;
 	}
+
+	public int showConflict() {
+		return this.solution.getConflict();
+	}
 }
