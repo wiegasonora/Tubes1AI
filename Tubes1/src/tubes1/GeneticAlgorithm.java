@@ -17,12 +17,14 @@ public class GeneticAlgorithm {
     private List<Ruangan> ruang; //list ruangan yang tersedia
     private String[] population; //populasi tempat gen2 berkembang biak
     private int nPopulation;
+    private List<String> bestIndividu;
 
     public GeneticAlgorithm(List<Jadwal> k, List<Ruangan> r) { //konstruktor
             matkul = k;
             ruang = r;
             nPopulation = 100;
             population = new String[nPopulation];
+            bestIndividu = new ArrayList<>();
     }
 
     //generate String random, representasi satu individu
@@ -330,9 +332,17 @@ public class GeneticAlgorithm {
         float sum = 0;
         int itr;
 //        System.out.println("Fitnessfunction");
+        float best = 0;
         for (itr= 0; itr<nPopulation; itr++) {
             fitnessFunction[itr] = hitungFitnessFunction(population[itr]);
 //            System.out.println(fitnessFunction[itr]);
+            if (fitnessFunction[itr] >= best) {
+                if (fitnessFunction[itr] > best) { //best baru
+                    bestIndividu.clear();
+                    best = fitnessFunction[itr];
+                }
+                bestIndividu.add(population[itr]);
+            }
             if (fitnessFunction[itr] == 999) {
                 end = true;
                 System.out.println("break");
@@ -485,10 +495,26 @@ public class GeneticAlgorithm {
         }
 //        System.out.println(population.length);
 //        System.out.println(population[end]);            
-        
-        return population[end];
+        if (end != -1) {
+            return population[end];
+        } else {
+            return cariBest();
+        }
     }
 
+    public String cariBest() {
+        float max = -1;
+        String bestOne = "";
+        for (String s : bestIndividu) {
+            if (max < hitungPersentasiIsi(s)) {
+                max = hitungPersentasiIsi(s);
+                bestOne = s;
+            }
+        }
+        
+        return bestOne;
+    }
+    
     public void printJadwal(String str){
         /*  Prosedur berfungsi untuk mencetak matriks jadwal dengan baris menunjukkan jam dan kolom menunjukkan hari
                 dari tiap Ruangan (1 ruangan 1 matriks)

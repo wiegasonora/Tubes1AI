@@ -29,8 +29,8 @@ public class Tubes1 {
         List<Ruangan> ruang = new ArrayList<>();
         List<Jadwal> jadwal = new ArrayList<>();
         JFileChooser fad = new JFileChooser();
-        File input = new File("../Testcase.txt");
-      //  File input = new File("/home/rezaramadhan/t2.txt");
+//        File input = new File("../Testcase.txt");
+        File input = new File("/home/rezaramadhan/t2.txt");
 //        int rent = fad.showOpenDialog(fad);  
 //        input = fad.getSelectedFile();
         
@@ -81,9 +81,9 @@ public class Tubes1 {
     
    
         //Debugging Simmulated Annealing
-        SimulatedAnnealing sa = new SimulatedAnnealing(jadwal, ruang);
-        sa.execute();
-        System.out.println(sa.showSolution());
-        System.out.println("Jumlah conflict: " + sa.showConflict());
+//        SimulatedAnnealing sa = new SimulatedAnnealing(jadwal, ruang);
+//        sa.execute();
+//        System.out.println(sa.showSolution());
+//        System.out.println("Jumlah conflict: " + sa.showConflict());
     }
 }
