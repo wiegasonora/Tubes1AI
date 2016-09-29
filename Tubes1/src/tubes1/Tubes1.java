@@ -29,7 +29,7 @@ public class Tubes1 {
         List<Ruangan> ruang = new ArrayList<>();
         List<Jadwal> jadwal = new ArrayList<>();
         JFileChooser fad = new JFileChooser();
-        File input = new File("../../Testcase.txt");
+        File input = new File("../Testcase.txt");
       //  File input = new File("/home/rezaramadhan/t2.txt");
 //        int rent = fad.showOpenDialog(fad);  
 //        input = fad.getSelectedFile();
@@ -69,7 +69,7 @@ public class Tubes1 {
         long startTime = System.nanoTime(); 
         GeneticAlgorithm g = new GeneticAlgorithm(jadwal, ruang);
         String str1 = g.execute();
-       // String str1 = "a1hkd4kma3klc5jla3hib3jka4hid2kla5ila4lnc1klc2jla2hib5kla5jk";
+       // String str1 = "a2hkb3lna3klc5jla3hia3hia5hic4kla4hkb3lnc1klc5jla1hic4jka5mn";
         System.out.println("Str " + str1);
         System.out.println("len " + str1.length()/4);
         System.out.println("Persentase isi : " + g.hitungPersentasiIsi(str1)*100 + "%");

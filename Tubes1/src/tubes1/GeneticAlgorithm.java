@@ -21,7 +21,7 @@ public class GeneticAlgorithm {
     public GeneticAlgorithm(List<Jadwal> k, List<Ruangan> r) { //konstruktor
             matkul = k;
             ruang = r;
-            nPopulation = 4;
+            nPopulation = 100;
             population = new String[nPopulation];
     }
 
@@ -188,12 +188,12 @@ public class GeneticAlgorithm {
                 for(int idxb=0; idxb<tabString.length; idxb++){
                     strtemp = tabHariSama[idxa][idxb];
                     idxc=idxb+1;
-                 /*   if (tabHariSama[idxa][idxb] == "") {
-                        
-                    } */
+                    
                     while (idxc<tabString.length && tabHariSama[idxa][idxc] != ""){
                         strtemp1 = tabHariSama[idxa][idxc];
                         //System.out.println(strtemp + "-" + strtemp1);
+                        
+                        
                         if (    ((strtemp.charAt(2)==strtemp1.charAt(2)) ||                     //kedua kelas mulai pada jam sama
                                     (strtemp.charAt(3)==strtemp1.charAt(3))  ||                     //kedua kelas selesai pada jam sama
                                     (cToI(strtemp.charAt(2))>cToI(strtemp1.charAt(2)) && cToI(strtemp.charAt(2))<=cToI(strtemp1.charAt(3))) ||  //kelas 1 mulai saat kelas 2 berlangsung
@@ -202,9 +202,46 @@ public class GeneticAlgorithm {
                                     (cToI(strtemp.charAt(2))>cToI(strtemp1.charAt(2)) && cToI(strtemp.charAt(3))<cToI(strtemp1.charAt(3)))  )
                                     && 
                                     isSameRoom(strtemp,strtemp1)) {     //kedua kelas pada ruangan yang sama 
-                            countBentrok++;
-                          //  System.out.println(strtemp + "-" + strtemp1);
-                        }
+                           
+                                        //  System.out.println(strtemp + "-" + strtemp1);
+                                        if (strtemp.charAt(2)==strtemp1.charAt(2) && strtemp.charAt(3)<strtemp1.charAt(3)) {
+                                            countBentrok += (cToI(strtemp.charAt(3)) - cToI(strtemp.charAt(2)) + 1);
+                                            //System.out.println("1");
+                                        } else 
+                                        if (strtemp.charAt(2)==strtemp1.charAt(2) && strtemp.charAt(3)>strtemp1.charAt(3)) {
+                                            countBentrok += (cToI(strtemp1.charAt(3)) - cToI(strtemp1.charAt(2)) + 1);
+                                            //System.out.println("2");
+                                        } else 
+                                        if ((strtemp.charAt(2)==strtemp1.charAt(2)) && (strtemp.charAt(3)==strtemp1.charAt(3))) {
+                                            countBentrok += (cToI(strtemp.charAt(3)) - cToI(strtemp.charAt(2)) + 1);
+                                            //System.out.println("3");
+                                        } else 
+                                        if (strtemp.charAt(2)<strtemp1.charAt(2) && strtemp.charAt(3)==strtemp1.charAt(3)) {
+                                            countBentrok += (cToI(strtemp1.charAt(3)) - cToI(strtemp1.charAt(2)) + 1);
+                                            //System.out.println("4");
+                                        } else 
+                                        if (strtemp.charAt(2)>strtemp1.charAt(2) && strtemp.charAt(3)==strtemp1.charAt(3)) {
+                                            countBentrok += (cToI(strtemp.charAt(3)) - cToI(strtemp.charAt(2)) + 1);
+                                            //System.out.println("5");
+                                        } else 
+                                        if (strtemp.charAt(2)<strtemp1.charAt(2) && strtemp.charAt(3)<strtemp1.charAt(3)) {
+                                            countBentrok += (cToI(strtemp.charAt(3))+1 - cToI(strtemp1.charAt(2)));
+                                            //System.out.println("6");
+                                        } else 
+                                        if (strtemp.charAt(2)>strtemp1.charAt(2) && strtemp.charAt(3)>strtemp1.charAt(3)) {
+                                            countBentrok += (cToI(strtemp1.charAt(3)) + 1 - cToI(strtemp.charAt(2)));
+                                            //System.out.println("7");
+                                        } else 
+                                        if (strtemp.charAt(2)<strtemp1.charAt(2) && strtemp.charAt(3)>strtemp1.charAt(3)) {
+                                            countBentrok += (cToI(strtemp1.charAt(3)) - cToI(strtemp1.charAt(2)) + 1);
+                                            //System.out.println("8");
+                                        } else 
+                                        if (strtemp.charAt(2)>strtemp1.charAt(2) && strtemp.charAt(3)<strtemp1.charAt(3)) {
+                                            countBentrok += (cToI(strtemp.charAt(3)) - cToI(strtemp.charAt(2)) + 1);
+                                            //System.out.println("9");
+                                        }
+                          
+                                    } 
                         idxc++;
                     }
                 }
