@@ -14,7 +14,7 @@ import java.util.Random;
  * @author Ratna Dira
  */
 public class HillClimbing {
-    public static ArrayList<MatrixJadwal> HillClimbing(List<Ruangan> ruang,List<Jadwal> jadwal){
+    public static List<MatrixJadwal> HillClimbing(List<Ruangan> ruang,List<Jadwal> jadwal){
         int tess=0;
         int jam=0,jamakhir=0;
         String[][] semua = new String[5][11];
@@ -100,21 +100,21 @@ public class HillClimbing {
         tess=0;
         int benar=0,count=0;
         while(tess<jadwal.size()){
-            System.out.println(jadwal.get(tess).NamaKegiatan+"CHECKCHECK");
+            //Systemem.out.println(jadwal.get(tess).NamaKegiatan+"CHECKCHECK");
             String[] simpan=jadwal.get(tess).Hari.split(",");
             benar=0;
             count=0;
             int top=Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2))-7;
-            //System.out.println(jadwal.get(tess).NamaKegiatan);
+            ////Systemem.out.println(jadwal.get(tess).NamaKegiatan);
             while (benar==0 && count<30){
                 top=Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2))-7;
                 int idx = new Random().nextInt(simpan.length);
                 String random = (simpan[idx]);
-                //System.out.print(Integer.valueOf(random) +"++");
-                //System.out.print((Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2))-7)+"====");
+                ////Systemem.out.print(Integer.valueOf(random) +"++");
+                ////Systemem.out.print((Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2))-7)+"====");
                 while (top<=((Integer.valueOf(jadwal.get(tess).JamSelesai.substring(0, 2))-7))-Integer.valueOf(jadwal.get(tess).Durasi) && semua[Integer.valueOf(random)-1][top+Integer.valueOf(jadwal.get(tess).Durasi)]!=null && benar==0) {
                 if (semua[Integer.valueOf(random)-1][(Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2)))-7]!=null) {
-                //System.out.println(semua[Integer.valueOf(random)-1][(Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2)))-7]);
+                ////Systemem.out.println(semua[Integer.valueOf(random)-1][(Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2)))-7]);
                 boolean masukan=semua[Integer.valueOf(random)-1][top].contains("-,");
                 int cek=semua[Integer.valueOf(random)-1][top].lastIndexOf("-,");
                 String masuk="";
@@ -127,18 +127,18 @@ public class HillClimbing {
                     int tambah=top;
                     
                    
-                    //System.out.println(cek);
+                    ////Systemem.out.println(cek);
                     
-                    System.out.println("!!!!!"+masuk);
+                    //Systemem.out.println("!!!!!"+masuk);
                     while (tambah<(Integer.valueOf(jadwal.get(tess).Durasi)+top)) {
                         if (semua[Integer.valueOf(random)-1][tambah]!=null) {
                             if (semua[Integer.valueOf(random)-1][tambah].contains(masuk+"-,")){
                     semua[Integer.valueOf(random)-1][tambah]=semua[Integer.valueOf(random)-1][tambah].replaceFirst(masuk+"-,", (masuk+"-"+jadwal.get(tess).NamaKegiatan+"-=,"));
                             } else semua[Integer.valueOf(random)-1][tambah]=semua[Integer.valueOf(random)-1][tambah].replaceFirst(masuk+"-", (masuk+"-"+jadwal.get(tess).NamaKegiatan+"-="));
                     
-                    //System.out.println("INTERUPSI"+semua[Integer.valueOf(random)-1][tambah]);
+                    ////Systemem.out.println("INTERUPSI"+semua[Integer.valueOf(random)-1][tambah]);
                         } else {semua[Integer.valueOf(random)-1][tambah]=jadwal.get(tess).NamaKegiatan;
-                        System.out.println("PERNAHKAH INI TERJADI?");
+                        //Systemem.out.println("PERNAHKAH INI TERJADI?");
                         }
                         tambah++;
                     }
@@ -160,9 +160,9 @@ public class HillClimbing {
                             } else  semua[Integer.valueOf(random)-1][tambah]=semua[Integer.valueOf(random)-1][tambah].replaceFirst((consruang[inter]+"-"), (consruang[inter]+"-"+jadwal.get(tess).NamaKegiatan+"-="));
                     
                    
-                    //System.out.println("INTERUPSI1"+semua[Integer.valueOf(random)-1][tambah]);
+                    ////Systemem.out.println("INTERUPSI1"+semua[Integer.valueOf(random)-1][tambah]);
                         } else {semua[Integer.valueOf(random)-1][tambah]=jadwal.get(tess).NamaKegiatan;
-                        System.out.println("PERNAHKAH INI TERJADI?");
+                        //Systemem.out.println("PERNAHKAH INI TERJADI?");
                         
                         }
                         tambah++;
@@ -184,9 +184,9 @@ public class HillClimbing {
                             } else  semua[Integer.valueOf(random)-1][tambah]=semua[Integer.valueOf(random)-1][tambah].replaceFirst((jadwal.get(tess).Ruangan+"-"), (jadwal.get(tess).Ruangan+"-"+jadwal.get(tess).NamaKegiatan+"-="));
                     
                    
-                    //System.out.println("INTERUPSI1"+semua[Integer.valueOf(random)-1][tambah]);
+                    ////Systemem.out.println("INTERUPSI1"+semua[Integer.valueOf(random)-1][tambah]);
                         } else {semua[Integer.valueOf(random)-1][tambah]=jadwal.get(tess).NamaKegiatan;
-                        System.out.println("PERNAHKAH INI TERJADI?");
+                        //Systemem.out.println("PERNAHKAH INI TERJADI?");
                         
                         }
                         tambah++;
@@ -204,18 +204,18 @@ public class HillClimbing {
                 count++;
                 
             }
-            //System.out.println("GANTI");
-            System.out.println(benar+"CHECKCHECK!!");
+            ////Systemem.out.println("GANTI");
+            //Systemem.out.println(benar+"CHECKCHECK!!");
             top=Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2))-7;
             if (benar==0){
                 while (benar==0 ){
                     top=Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2))-7;
                 int idx = new Random().nextInt(simpan.length);
                 String random = (simpan[idx]);
-                //System.out.println(random);
-                //System.out.println(semua[Integer.valueOf(random)-1][Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2))-7]);
-                //System.out.println((jadwal.get(tess).Ruangan));
-                //System.out.println(jadwal.get(tess).NamaKegiatan);
+                ////Systemem.out.println(random);
+                ////Systemem.out.println(semua[Integer.valueOf(random)-1][Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2))-7]);
+                ////Systemem.out.println((jadwal.get(tess).Ruangan));
+                ////Systemem.out.println(jadwal.get(tess).NamaKegiatan);
                 while (top<=((Integer.valueOf(jadwal.get(tess).JamSelesai.substring(0, 2))-7))-Integer.valueOf(jadwal.get(tess).Durasi)&& semua[Integer.valueOf(random)-1][top+Integer.valueOf(jadwal.get(tess).Durasi)]!=null&&benar==0) {
                 
                     int cek=semua[Integer.valueOf(random)-1][top].indexOf("-");
@@ -235,9 +235,9 @@ public class HillClimbing {
                     
                        // semua[Integer.valueOf(random)-1][tambah] = semua[Integer.valueOf(random)-1][tambah].replaceFirst(",", ("-="+jadwal.get(tess).NamaKegiatan+","));
                     tambah++;
-                    //System.out.println("INTERUPSI1"+semua[Integer.valueOf(random)-1][tambah]);
+                    ////Systemem.out.println("INTERUPSI1"+semua[Integer.valueOf(random)-1][tambah]);
                     }
-                    //System.out.println("LOOP0");
+                    ////Systemem.out.println("LOOP0");
                     
                     benar=1;
                     
@@ -251,7 +251,7 @@ public class HillClimbing {
                     while (tambah<(Integer.valueOf(jadwal.get(tess).Durasi)+(top))) {
                     semua[Integer.valueOf(random)-1][tambah]=semua[Integer.valueOf(random)-1][tambah].replaceFirst((consruang[inter]+"-"), (consruang[inter]+"-"+jadwal.get(tess).NamaKegiatan+"-="));
                     tambah++;
-                    //System.out.println("LOOPPPP");
+                    ////Systemem.out.println("LOOPPPP");
                     }
                     benar=1;
                 }
@@ -265,13 +265,13 @@ public class HillClimbing {
                     while (tambah<(Integer.valueOf(jadwal.get(tess).Durasi)+(top))) {
                     semua[Integer.valueOf(random)-1][tambah]=semua[Integer.valueOf(random)-1][tambah].replaceFirst((jadwal.get(tess).Ruangan+"-"), (jadwal.get(tess).Ruangan+"-"+jadwal.get(tess).NamaKegiatan+"-="));
                     tambah++;
-                    //System.out.println("LOOPPPP");
+                    ////Systemem.out.println("LOOPPPP");
                     }
                     benar=1;
                 }
                 }
                 }
-               //System.out.println("LOOP1"); 
+               ////Systemem.out.println("LOOP1"); 
             top++;
                 }
                 }
@@ -304,14 +304,14 @@ public class HillClimbing {
                        int total=0;
                        String[] gg=cekpisah[0].split("-");
                        if (!yangcon.contains(gg[1])){
-                        yangcon.add(gg[1]);//System.out.println(gg[1]+" WOII! "+cekpisah.length);
+                        yangcon.add(gg[1]);////Systemem.out.println(gg[1]+" WOII! "+cekpisah.length);
                         lokasiyangcon.add(tess+","+cobas+"=");
                         hitungyangcon.add(cekpisah.length);
                        } else {
                            int fat=0;
                          while (fat<yangcon.size()){
                              if (yangcon.get(fat).equals(gg[1])){
-                                 //System.out.println(gg[1]+" WOII!! "+cekpisah.length);
+                                 ////Systemem.out.println(gg[1]+" WOII!! "+cekpisah.length);
                                  hitungyangcon.set(fat, (hitungyangcon.get(fat)+cekpisah.length));
                                  lokasiyangcon.set(fat, (lokasiyangcon.get(fat)+tess+","+cobas+"="));
                                  fat=yangcon.size();
@@ -322,14 +322,14 @@ public class HillClimbing {
                        while(k<hitungcon){
                            if (!yangcon.contains(cekpisah[k].substring(0, cekpisah[k].length()-1))){
                                yangcon.add(cekpisah[k].substring(0, cekpisah[k].length()-1));
-                               //System.out.println(cekpisah[k].substring(0, cekpisah[k].length()-1)+" WOII!!! "+cekpisah.length);
+                               ////Systemem.out.println(cekpisah[k].substring(0, cekpisah[k].length()-1)+" WOII!!! "+cekpisah.length);
                                hitungyangcon.add(cekpisah.length);
                                lokasiyangcon.add(tess+","+cobas+"=");
                            } else {
                                int fat=0;
                                 while (fat<yangcon.size()){
                                     if (yangcon.get(fat).equals(cekpisah[k].substring(0, cekpisah[k].length()-1))){
-                                        //System.out.println(cekpisah[k].substring(0, cekpisah[k].length()-1)+" WOII!!!! "+cekpisah.length);
+                                        ////Systemem.out.println(cekpisah[k].substring(0, cekpisah[k].length()-1)+" WOII!!!! "+cekpisah.length);
                               
                                         hitungyangcon.set(fat, (hitungyangcon.get(fat)+cekpisah.length));
                                         lokasiyangcon.set(fat, (lokasiyangcon.get(fat)+tess+","+cobas+"="));
@@ -361,7 +361,7 @@ public class HillClimbing {
         }
        tess=0;
         temp1=conflict;
-        System.out.println(temp1+"TEMP1");
+        //Systemem.out.println(temp1+"TEMP1");
         int keluar=0;
        temp=5;
        int iterasi=0;
@@ -370,7 +370,7 @@ public class HillClimbing {
        while(keluar<yangcon.size()){
                 iterasi=0;
                 while (iterasi<jadwal.size()){
-                    //System.out.println("TES");
+                    ////Systemem.out.println("TES");
                     if (jadwal.get(iterasi).NamaKegiatan.equals(yangcon.get(keluar))){
                         simpanget=iterasi;
                         iterasi=1000000;
@@ -386,15 +386,15 @@ public class HillClimbing {
             ArrayList<Integer> row=new  ArrayList<Integer>(); 
             ArrayList<Integer> col=new  ArrayList<Integer>(); 
             int terus=0;
-            //System.out.println("PERHATIKAN"+lokasiyangcon.get(keluar));
+            ////Systemem.out.println("PERHATIKAN"+lokasiyangcon.get(keluar));
             
             int filess=testing.length()-testing.replaceAll("=", "").length();
-            //System.out.println(filess);
+            ////Systemem.out.println(filess);
             while (terus<filess){
-                //System.out.println(kelassama[terus]);
+                ////Systemem.out.println(kelassama[terus]);
                 String[] rocol=kelassama[terus].split(",");
-                //System.out.println(rocol[0]+"MBAK");
-                //System.out.println(rocol[1]+"TESNYA");
+                ////Systemem.out.println(rocol[0]+"MBAK");
+                ////Systemem.out.println(rocol[1]+"TESNYA");
                 
                 row.add(Integer.valueOf(rocol[0]));
                 col.add(Integer.valueOf(rocol[1]));
@@ -457,7 +457,7 @@ public class HillClimbing {
                                 while (teruskan<cari.size()){
                                    temps=cari.get(teruskan);
                                    max=Math.min(max,temps);
-                                   //System.out.println(max+"???!");
+                                   ////Systemem.out.println(max+"???!");
                                    teruskan++;
                                 }
                                 int ditentukan=cari.indexOf(max);
@@ -465,10 +465,10 @@ public class HillClimbing {
                                 kelasyangkeluar=kelaskeluar.get(ditentukan);
                             } else 
                                 if (semua[Integer.valueOf(random)-1][top].contains(jadwal.get(simpanget).Ruangan)&&semua[Integer.valueOf(random)-1][top+Integer.valueOf(jadwal.get(simpanget).Durasi)].contains((jadwal.get(simpanget).Ruangan))) {
-                                //System.out.println(yangcon.get(keluar)+"LOVEE");
-                                //System.out.println(jadwal.get(simpanget).NamaKegiatan+"LOVE");
-                                //System.out.println("Hari :"+simpan[idx]);
-                                //System.out.println("JAM :"+top);
+                                ////Systemem.out.println(yangcon.get(keluar)+"LOVEE");
+                                ////Systemem.out.println(jadwal.get(simpanget).NamaKegiatan+"LOVE");
+                                ////Systemem.out.println("Hari :"+simpan[idx]);
+                                ////Systemem.out.println("JAM :"+top);
                                 ArrayList<String> pindahstring=new ArrayList<String>();
                                 String[] sip=semua[Integer.valueOf(random)-1][top].split(",");
                                 int pindah=0;
@@ -481,19 +481,19 @@ public class HillClimbing {
                                 }
                                 pindah=0;
                                 ArrayList<Integer> cari=new ArrayList<Integer>();
-                                //System.out.println(sip[pas]+"INI KELASNYA");
+                                ////Systemem.out.println(sip[pas]+"INI KELASNYA");
                                 if (row.contains(Integer.valueOf(random)-1) && col.contains(top)){
                                 cari.add((sip[pas].length() - sip[pas].replace("=", "").length()));
                                 
                                 } else
                                 cari.add(1+(sip[pas].length() - sip[pas].replace("=", "").length()));
                                 pindahstring.add((Integer.valueOf(random)-1)+","+top+"=");
-                                //System.out.println(cari.get(0)+"JUMLAH KELAS");
+                                ////Systemem.out.println(cari.get(0)+"JUMLAH KELAS");
                                 pindah=top+1;
-                                //System.out.println(top+" INI TOP");
+                                ////Systemem.out.println(top+" INI TOP");
                                 while (pindah<(top+Integer.valueOf(jadwal.get(simpanget).Durasi))) {
-                                //System.out.println(pindah+ "INI PINDAH");
-                                //System.out.println(Integer.valueOf(jadwal.get(simpanget).Durasi)+"SAMPAI");
+                                ////Systemem.out.println(pindah+ "INI PINDAH");
+                                ////Systemem.out.println(Integer.valueOf(jadwal.get(simpanget).Durasi)+"SAMPAI");
                                     int pars=0;
                                     
                                     String[] sipp=semua[Integer.valueOf(random)-1][pindah].split(",");
@@ -510,8 +510,8 @@ public class HillClimbing {
                                     cari.set(0, (1+(cari.get(0)+(sipp[pas].length() - sipp[pas].replace("=", "").length()))));
                                     pindahstring.set(0, pindahstring.get(0)+(Integer.valueOf(random)-1)+","+pindah+"=");
                                       
-                                    //System.out.println(sip[pas]+"INI KELASNYAA");
-                                    //System.out.println(cari.get(0)+"JUMLAH TAMBAH");
+                                    ////Systemem.out.println(sip[pas]+"INI KELASNYAA");
+                                    ////Systemem.out.println(cari.get(0)+"JUMLAH TAMBAH");
                                     pindah++;
                                 }
                                 int teruskan=1;
@@ -520,14 +520,14 @@ public class HillClimbing {
                                 while (teruskan<cari.size()){
                                    temps=cari.get(teruskan);
                                    max=Math.min(max,temps);
-                                   //System.out.println(max+"???!");
+                                   ////Systemem.out.println(max+"???!");
                                    teruskan++;
                                 }
                                 int ditentukan=cari.indexOf(max);
                                 simpanyangdiganti=pindahstring.get(ditentukan);
                                 //max=cari.indexOf(Collections.min(cari)); 
                                       
-                                //System.out.println(max+"???");
+                                ////Systemem.out.println(max+"???");
 
                             }
                             max1=Math.min(max,max1);
@@ -535,16 +535,16 @@ public class HillClimbing {
                                 simpanyangdiganti1=simpanyangdiganti;
                                 kelasyangkeluar1=kelasyangkeluar;
                             }
-                            //System.out.println(max1);
+                            ////Systemem.out.println(max1);
                             top++;
                             }
                     idx++;
                 }
             if (hitungyangcon.get(keluar)>max1){
-                //System.out.println("BISA DIPINDAH");
-                System.out.println("BISA DIPINDAH");
-                System.out.println(yangcon.get(keluar));
-                System.out.println(kelasyangkeluar1);
+                ////Systemem.out.println("BISA DIPINDAH");
+                //Systemem.out.println("BISA DIPINDAH");
+                //Systemem.out.println(yangcon.get(keluar));
+                //Systemem.out.println(kelasyangkeluar1);
                 terus=0;
                 while (terus<row.size()){
                     semua[(row.get(terus))][(col.get(terus))]= semua[(row.get(terus))][(col.get(terus))].replaceAll((yangcon.get(keluar)+"-="), "");
@@ -554,13 +554,13 @@ public class HillClimbing {
                 ArrayList<Integer> rows=new  ArrayList<Integer>(); 
                 ArrayList<Integer> cols=new  ArrayList<Integer>(); 
                 int teruss=0;
-                System.out.println("PERHATIKAN"+simpanyangdiganti1);
+                //Systemem.out.println("PERHATIKAN"+simpanyangdiganti1);
                 ArrayList<String> pindahstrings=new ArrayList<String>();
                 while (teruss<pindahkelas.length){
-                    ////System.out.println(kelassama[terus]);
+                    //////Systemem.out.println(kelassama[terus]);
                     String[] rocol=pindahkelas[teruss].split(",");
-                    System.out.println(rocol[0]+"MBAK");
-                    System.out.println(rocol[1]+"TESNYA");
+                    //Systemem.out.println(rocol[0]+"MBAK");
+                    //Systemem.out.println(rocol[1]+"TESNYA");
 
                     rows.add(Integer.valueOf(rocol[0]));
                     cols.add(Integer.valueOf(rocol[1]));
@@ -601,14 +601,14 @@ public class HillClimbing {
                        int total=0;
                        String[] gg=cekpisah[0].split("-");
                        if (!yangcon.contains(gg[1])){
-                        yangcon.add(gg[1]);//System.out.println(gg[1]+" WOII! "+cekpisah.length);
+                        yangcon.add(gg[1]);////Systemem.out.println(gg[1]+" WOII! "+cekpisah.length);
                         lokasiyangcon.add(tess+","+cobas+"=");
                         hitungyangcon.add(cekpisah.length);
                        } else {
                            int fat=0;
                          while (fat<yangcon.size()){
                              if (yangcon.get(fat).equals(gg[1])){
-                                 //System.out.println(gg[1]+" WOII!! "+cekpisah.length);
+                                 ////Systemem.out.println(gg[1]+" WOII!! "+cekpisah.length);
                                  hitungyangcon.set(fat, (hitungyangcon.get(fat)+cekpisah.length));
                                  lokasiyangcon.set(fat, (lokasiyangcon.get(fat)+tess+","+cobas+"="));
                                  fat=yangcon.size();
@@ -619,14 +619,14 @@ public class HillClimbing {
                        while(k<hitungcon){
                            if (!yangcon.contains(cekpisah[k].substring(0, cekpisah[k].length()-1))){
                                yangcon.add(cekpisah[k].substring(0, cekpisah[k].length()-1));
-                               //System.out.println(cekpisah[k].substring(0, cekpisah[k].length()-1)+" WOII!!! "+cekpisah.length);
+                               ////Systemem.out.println(cekpisah[k].substring(0, cekpisah[k].length()-1)+" WOII!!! "+cekpisah.length);
                                hitungyangcon.add(cekpisah.length);
                                lokasiyangcon.add(tess+","+cobas+"=");
                            } else {
                                int fat=0;
                                 while (fat<yangcon.size()){
                                     if (yangcon.get(fat).equals(cekpisah[k].substring(0, cekpisah[k].length()-1))){
-                                        //System.out.println(cekpisah[k].substring(0, cekpisah[k].length()-1)+" WOII!!!! "+cekpisah.length);
+                                        ////Systemem.out.println(cekpisah[k].substring(0, cekpisah[k].length()-1)+" WOII!!!! "+cekpisah.length);
                               
                                         hitungyangcon.set(fat, (hitungyangcon.get(fat)+cekpisah.length));
                                         lokasiyangcon.set(fat, (lokasiyangcon.get(fat)+tess+","+cobas+"="));
@@ -658,19 +658,19 @@ public class HillClimbing {
         }
        tess=0;
         temp=conflict;
-        System.out.println(temp+"TEMP");
+        //Systemem.out.println(temp+"TEMP");
         } while(temp<temp1);
        int vow=0;
        while (vow<yangcon.size()){
-           //System.out.println(yangcon.get(vow));
-           //System.out.println(hitungyangcon.get(vow));
-           //System.out.println(lokasiyangcon.get(vow));
+           ////Systemem.out.println(yangcon.get(vow));
+           ////Systemem.out.println(hitungyangcon.get(vow));
+           ////Systemem.out.println(lokasiyangcon.get(vow));
            vow++;
        }
        conflict=0;
        int jumlahjampakai=0;
        /***YANG DIMINTA REZA***/
-       ArrayList<MatrixJadwal> Reza = new ArrayList<MatrixJadwal>();
+       List<MatrixJadwal> Reza = new ArrayList<MatrixJadwal>();
        int wiega=0;
        tess=0;
        while(wiega<ruang.size()){
@@ -693,18 +693,18 @@ public class HillClimbing {
                                         int total=0;
                                         int v=0;
                                         while (v<hitungcon){
-                                           if (Tikong.elmt[tess][cobas].equals("")){
-                                               Tikong.elmt[tess][cobas]=cekpisah[v].substring(cekpisah[v].indexOf("-")+1, cekpisah[v].length()-1);
+                                           if (Tikong.elmt[cobas][tess].equals("")){
+                                               Tikong.elmt[cobas][tess]=cekpisah[v].substring(cekpisah[v].indexOf("-")+1, cekpisah[v].length()-1);
                                             } else {
-                                               Tikong.elmt[tess][cobas]=(Tikong.elmt[tess][cobas]+" - "+cekpisah[v].substring(0, cekpisah[v].length()-1));
+                                               Tikong.elmt[cobas][tess]=(Tikong.elmt[tess][cobas]+" - "+cekpisah[v].substring(0, cekpisah[v].length()-1));
                                             }
                                             v++; 
                                         }
                                     } else if (cekpisah.length==1){
-                                    if (Tikong.elmt[tess][cobas].equals("")){
-                                               Tikong.elmt[tess][cobas]=cekpisah[0].substring(cekpisah[0].indexOf("-")+1, cekpisah[0].length()-1);
+                                    if (Tikong.elmt[cobas][tess].equals("")){
+                                               Tikong.elmt[cobas][tess]=cekpisah[0].substring(cekpisah[0].indexOf("-")+1, cekpisah[0].length()-1);
                                             } else {
-                                               Tikong.elmt[tess][cobas]=(Tikong.elmt[tess][cobas]+" - "+cekpisah[0].substring(0, cekpisah[0].length()-1));
+                                               Tikong.elmt[cobas][tess]=(Tikong.elmt[cobas][tess]+" - "+cekpisah[0].substring(0, cekpisah[0].length()-1));
                                             }
                                     }
                                     
@@ -725,18 +725,18 @@ public class HillClimbing {
                                         int total=0;
                                         int v=0;
                                         while (v<hitungcon){
-                                           if (Tikong.elmt[tess][cobas].equals("")){
-                                               Tikong.elmt[tess][cobas]=cekpisah[v].substring(cekpisah[v].indexOf("-")+1, cekpisah[v].length()-1);
+                                           if (Tikong.elmt[cobas][tess].equals("")){
+                                               Tikong.elmt[cobas][tess]=cekpisah[v].substring(cekpisah[v].indexOf("-")+1, cekpisah[v].length()-1);
                                             } else {
-                                               Tikong.elmt[tess][cobas]=(Tikong.elmt[tess][cobas]+" - "+cekpisah[v].substring(0, cekpisah[v].length()-1));
+                                               Tikong.elmt[cobas][tess]=(Tikong.elmt[cobas][tess]+" - "+cekpisah[v].substring(0, cekpisah[v].length()-1));
                                             }
                                             v++; 
                                         }
                                     } else if (cekpisah.length==1){
-                                    if (Tikong.elmt[tess][cobas].equals("")){
-                                               Tikong.elmt[tess][cobas]=cekpisah[0].substring(cekpisah[0].indexOf("-")+1, cekpisah[0].length()-1);
+                                    if (Tikong.elmt[cobas][tess].equals("")){
+                                               Tikong.elmt[cobas][tess]=cekpisah[0].substring(cekpisah[0].indexOf("-")+1, cekpisah[0].length()-1);
                                             } else {
-                                               Tikong.elmt[tess][cobas]=(Tikong.elmt[tess][cobas]+" - "+cekpisah[0].substring(0, cekpisah[0].length()-1));
+                                               Tikong.elmt[cobas][tess]=(Tikong.elmt[cobas][tess]+" - "+cekpisah[0].substring(0, cekpisah[0].length()-1));
                                             }
                                     }
                                     

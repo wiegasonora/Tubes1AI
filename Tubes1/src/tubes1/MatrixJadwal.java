@@ -27,7 +27,7 @@ public class MatrixJadwal {
         }
     }
 
-    public static int HitungConflict(ArrayList<MatrixJadwal> A, List<Ruangan> b) {
+    public static int HitungConflict(List<MatrixJadwal> A, List<Ruangan> b) {
         int i=0,x=0,y=0;   
         String[] cekpisah=null;
         int conflictbaru=0;
@@ -36,8 +36,8 @@ public class MatrixJadwal {
            while (x<5){
             y=0;
                 while (y<11) {
-                    if (A.get(i).elmt[x][y].contains("-")){
-                        cekpisah=A.get(i).elmt[x][y].split("-");
+                    if (A.get(i).elmt[y][x].contains("-")){
+                        cekpisah=A.get(i).elmt[y][x].split("-");
                         int hitungcon=cekpisah.length;
                         int k=1;
                         int total=0;
@@ -57,7 +57,7 @@ public class MatrixJadwal {
         return conflictbaru;
     }
     
-    public static void PindahJadwal(String namakelas, String ruangpindah,int pindahx,int pindahy,ArrayList<MatrixJadwal> A,List<Ruangan> B, List<Jadwal> C){
+    public static void PindahJadwal(String namakelas, String ruangpindah,int pindahx,int pindahy,List<MatrixJadwal> A,List<Ruangan> B, List<Jadwal> C){
         int i=0,benar=0,x=0,y=0,simpanruang=0;
         while (i<C.size() && benar==0){
             if (C.get(i).NamaKegiatan.equals(namakelas)){
@@ -72,10 +72,10 @@ public class MatrixJadwal {
                 while (x<5 && benar<Integer.valueOf(C.get(simpanruang).Durasi)){
                  y=0;
                      while (y<11 && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
-                         if (A.get(i).elmt[x][y].equals(namakelas)){
-                             A.get(i).elmt[x][y]=A.get(i).elmt[x][y].replace(namakelas, "");
+                         if (A.get(i).elmt[y][x].equals(namakelas)){
+                             A.get(i).elmt[y][x]=A.get(i).elmt[y][x].replace(namakelas, "");
                              benar++;
-                             System.out.println(A.get(i).elmt[x][y]);
+                             System.out.println(A.get(i).elmt[y][x]);
                          }
                      y++;
                      }
@@ -101,7 +101,7 @@ public class MatrixJadwal {
                     int keluar=0;
                     while (cariruang<B.size() && keluar==0){
                         if (B.get(cariruang).Nama.equals(ruangmulti[v])){
-                            keluar++;
+                            keluar=1;
                         }
                         cariruang++;
                     }
@@ -109,8 +109,8 @@ public class MatrixJadwal {
                     while (x<5 && benar<Integer.valueOf(C.get(simpanruang).Durasi)){
                         y=0;
                             while (y<11 && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
-                                if (A.get(cariruang-1).elmt[x][y].equals(namakelas)){
-                                    A.get(cariruang-1).elmt[x][y]=A.get(cariruang-1).elmt[x][y].replace(namakelas, "");
+                                if (A.get(cariruang-1).elmt[y][x].equals(namakelas)){
+                                    A.get(cariruang-1).elmt[y][x]=A.get(cariruang-1).elmt[y][x].replace(namakelas, "");
                                     benar++;
                                     //System.out.println(A.get(i).elmt[x][y]);
                                 }
@@ -130,15 +130,18 @@ public class MatrixJadwal {
                     if (C.get(simpanruang).Ruangan.equals(ruangpindah)) {
                         while (cariruang<B.size() && keluar==0){
                         if (B.get(cariruang).Nama.equals(C.get(simpanruang).Ruangan)){
-                            keluar++;
+                            keluar=1;
                         }
                         cariruang++;
-                    }
+                        }
+                        x=0;
                     while (x<5 && benar<Integer.valueOf(C.get(simpanruang).Durasi)){
                         y=0;
                             while (y<11 && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
-                                if (A.get(cariruang-1).elmt[x][y].equals(namakelas)){
-                                    A.get(cariruang-1).elmt[x][y]=A.get(cariruang-1).elmt[x][y].replace(namakelas, "");
+                                System.out.println(x+"  TES   "+y);
+                                System.out.println(A.get(cariruang-1).elmt[y][x]+"    HIDUP");
+                                if (A.get(cariruang-1).elmt[y][x].equals(namakelas)){
+                                    A.get(cariruang-1).elmt[y][x]=A.get(cariruang-1).elmt[y][x].replace(namakelas, "");
                                     benar++;
                                     //System.out.println(A.get(i).elmt[x][y]);
                                 }
@@ -165,18 +168,19 @@ public class MatrixJadwal {
             simpannoruang++;
         }
         while (i<Integer.valueOf(C.get(simpanruang).Durasi)){
-            if (A.get(ruangsimpan).elmt[x][y].equals("")){
-                A.get(ruangsimpan).elmt[x][y]=namakelas;
+            if (A.get(ruangsimpan).elmt[y][x].equals("")){
+                A.get(ruangsimpan).elmt[y][x]=namakelas;
             } else {
-                A.get(ruangsimpan).elmt[x][y]= A.get(ruangsimpan).elmt[x][y]+" - "+namakelas;
+                A.get(ruangsimpan).elmt[y][x]= A.get(ruangsimpan).elmt[y][x]+" - "+namakelas;
             }
+            y++;
             i++;
         }
         
         
     }
     
-    public static float HitungPersen(ArrayList<MatrixJadwal> A, List<Ruangan> b){
+    public static float HitungPersen(List<MatrixJadwal> A, List<Ruangan> b){
         int i=0;
         int jam=0,jamakhir=0;
         int jamtotal=0,jam1=0,jumlahjpakai=0;
@@ -242,7 +246,7 @@ public class MatrixJadwal {
            while (x<5){
             y=0;
                 while (y<11) {
-                    if (!A.get(i).elmt[x][y].equals("")){
+                    if (!A.get(i).elmt[y][x].equals("")){
                         jumlahjpakai++;
                     }
                 y++;

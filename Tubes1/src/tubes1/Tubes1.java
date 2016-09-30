@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
+import static tubes1.HillClimbing.HillClimbing;
 //import com.csvreader.CsvWriter;
 //import com.csvreader.CsvReader;
 
@@ -66,6 +67,7 @@ public class Tubes1 {
        in.close();
     
         List<MatrixJadwal> lMJ = new ArrayList<>();
+        List<MatrixJadwal> Testing = new ArrayList<>();
         
 
        long startTime = System.nanoTime(); 
@@ -78,7 +80,10 @@ public class Tubes1 {
        System.out.println("Persentase isi : " + g.hitungPersentasiIsi(str1)*100 + "%");
        System.out.println("fitnessfunction " + g.hitungFitnessFunction(str1));
        g.printMatrixJadwal(lMJ);
-
+       //MatrixJadwal.PindahJadwal("IF2110","7603",0,0,lMJ,ruang,jadwal);
+       //g.printMatrixJadwal(lMJ);
+       Testing = HillClimbing(ruang, jadwal);
+       g.printMatrixJadwal(Testing);
        long estimatedTime = System.nanoTime() - startTime;
        System.out.println(estimatedTime/1000000 + "ms");
     
