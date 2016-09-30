@@ -80,10 +80,10 @@ public class Tubes1 {
         System.out.println(estimatedTime/1000000 + "ms");
     
    
-        //Debugging Simmulated Annealing
-//        SimulatedAnnealing sa = new SimulatedAnnealing(jadwal, ruang);
-//        sa.execute();
-//        System.out.println(sa.showSolution());
-//        System.out.println("Jumlah conflict: " + sa.showConflict());
+       // Debugging Simmulated Annealing
+       // SimulatedAnnealing sa = new SimulatedAnnealing(jadwal, ruang);
+       // sa.execute();
+       // System.out.println(sa.showSolution());
+       // System.out.println("Jumlah conflict: " + sa.showConflict());
     }
 }
