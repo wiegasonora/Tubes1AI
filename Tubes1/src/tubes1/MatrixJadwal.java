@@ -57,6 +57,125 @@ public class MatrixJadwal {
         return conflictbaru;
     }
     
+    public static void PindahJadwal(String namakelas, String ruangpindah,int pindahx,int pindahy,ArrayList<MatrixJadwal> A,List<Ruangan> B, List<Jadwal> C){
+        int i=0,benar=0,x=0,y=0,simpanruang=0;
+        while (i<C.size() && benar==0){
+            if (C.get(i).NamaKegiatan.equals(namakelas)){
+                simpanruang=i;
+                benar=1;
+            }
+            i++;
+        }
+        benar=0;
+        if (C.get(simpanruang).Ruangan.equals("-")){
+            while (i<B.size() && benar<Integer.valueOf(C.get(simpanruang).Durasi)){
+                while (x<5 && benar<Integer.valueOf(C.get(simpanruang).Durasi)){
+                 y=0;
+                     while (y<11 && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
+                         if (A.get(i).elmt[x][y].equals(namakelas)){
+                             A.get(i).elmt[x][y]=A.get(i).elmt[x][y].replace(namakelas, "");
+                             benar++;
+                             System.out.println(A.get(i).elmt[x][y]);
+                         }
+                     y++;
+                     }
+                x++;
+                }      
+                i++;
+            }
+        
+        } else {
+            if (C.get(simpanruang).Ruangan.contains(",")){
+                String[] ruangmulti=C.get(simpanruang).Ruangan.split(",");
+                int v=0,tidakbisa=0;
+                while (v<ruangmulti.length){
+                    if (!ruangpindah.equals(ruangmulti[v])){
+                        tidakbisa=1;
+                    }
+                    v++;
+                }
+                v=0;
+                if (tidakbisa==0){
+                    while (v<ruangmulti.length && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
+                    int cariruang=0;
+                    int keluar=0;
+                    while (cariruang<B.size() && keluar==0){
+                        if (B.get(cariruang).Nama.equals(ruangmulti[v])){
+                            keluar++;
+                        }
+                        cariruang++;
+                    }
+                    x=0; benar=0;
+                    while (x<5 && benar<Integer.valueOf(C.get(simpanruang).Durasi)){
+                        y=0;
+                            while (y<11 && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
+                                if (A.get(cariruang-1).elmt[x][y].equals(namakelas)){
+                                    A.get(cariruang-1).elmt[x][y]=A.get(cariruang-1).elmt[x][y].replace(namakelas, "");
+                                    benar++;
+                                    //System.out.println(A.get(i).elmt[x][y]);
+                                }
+                            y++;
+                            }
+                       x++;
+                       } 
+                    v++;
+                    }
+                } else {
+                    System.out.println("TIDAK BISA DIPINDAH KE RUANGAN TERSEBUT, RUANGAN HANYA BISA DIPINDAH KE "+C.get(simpanruang).Ruangan);
+                }
+                
+            } else {
+                int cariruang=0;
+                    int keluar=0;
+                    if (C.get(simpanruang).Ruangan.equals(ruangpindah)) {
+                        while (cariruang<B.size() && keluar==0){
+                        if (B.get(cariruang).Nama.equals(C.get(simpanruang).Ruangan)){
+                            keluar++;
+                        }
+                        cariruang++;
+                    }
+                    while (x<5 && benar<Integer.valueOf(C.get(simpanruang).Durasi)){
+                        y=0;
+                            while (y<11 && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
+                                if (A.get(cariruang-1).elmt[x][y].equals(namakelas)){
+                                    A.get(cariruang-1).elmt[x][y]=A.get(cariruang-1).elmt[x][y].replace(namakelas, "");
+                                    benar++;
+                                    //System.out.println(A.get(i).elmt[x][y]);
+                                }
+                            y++;
+                            }
+                       x++;
+                    }
+                    } else {
+                        System.out.println("TIDAK BISA DIPINDAH KE RUANGAN TERSEBUT, RUANGAN HANYA BISA DIPINDAH KE "+C.get(simpanruang).Ruangan);
+                    }
+                    
+            }
+            
+        }
+        i=0;
+        x=pindahx;
+        y=pindahy;
+        int simpannoruang=0,ruangsimpan=0;
+        while (simpannoruang<B.size()){
+            if (B.get(simpannoruang).Nama.equals(ruangpindah)){
+                ruangsimpan=simpannoruang;
+                simpannoruang=B.size();
+            }
+            simpannoruang++;
+        }
+        while (i<Integer.valueOf(C.get(simpanruang).Durasi)){
+            if (A.get(ruangsimpan).elmt[x][y].equals("")){
+                A.get(ruangsimpan).elmt[x][y]=namakelas;
+            } else {
+                A.get(ruangsimpan).elmt[x][y]= A.get(ruangsimpan).elmt[x][y]+" - "+namakelas;
+            }
+            i++;
+        }
+        
+        
+    }
+    
     public static float HitungPersen(ArrayList<MatrixJadwal> A, List<Ruangan> b){
         int i=0;
         int jam=0,jamakhir=0;
