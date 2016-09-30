@@ -148,8 +148,8 @@ public class GeneticAlgorithm {
     public float hitungFitnessFunction(String str) {
         float tempValue;
         float bentrok = hitungBentrok(str);
-        tempValue = (bentrok + hitungPersentasiIsi(str)*bentrok);
-        return tempValue;
+//        tempValue = (bentrok + hitungPersentasiIsi(str)*bentrok);
+        return bentrok;
     }
     
     public float hitungBentrok(String str){
@@ -350,7 +350,7 @@ public class GeneticAlgorithm {
                 }
                 bestIndividu.add(population[itr]);
             }
-            if (fitnessFunction[itr] == 999) {
+            if (fitnessFunction[itr] >= 999) {
                 end = true;
                 System.out.println("break");
                 break;
