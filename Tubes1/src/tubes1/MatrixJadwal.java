@@ -19,9 +19,9 @@ public class MatrixJadwal {
     public MatrixJadwal() {
         nHari = 5;
         nJam = 11;
-        elmt = new String[nHari][nJam];
-        for (int i = 0; i < nHari; i++) {
-            for (int j = 0; j<nJam; j++) {
+        elmt = new String[nJam][nHari];
+        for (int i = 0; i < nJam; i++) {
+            for (int j = 0; j<nHari; j++) {
                 elmt[i][j] = "";
             }
         }
