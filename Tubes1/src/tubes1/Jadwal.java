@@ -107,6 +107,16 @@ public class Jadwal {
     	boolean[] temp = getHari();
         return temp[idx];
     }
+
+    public int getHariTrue() {
+        boolean[] tempHari = getHari();
+        for (int i = 0; i < 5; i++) {
+            if (tempHari[i]) {
+                return i;
+            }
+        }
+        return 0;
+    }
     
     // Sets Nama to nm
     public void setNamaKegiatan(String nm) {

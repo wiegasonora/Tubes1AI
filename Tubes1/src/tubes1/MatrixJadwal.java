@@ -10,17 +10,36 @@ package tubes1;
  * @author rezaramadhan
  */
 public class MatrixJadwal {
-    String[][] elmt;
-    int nHari;
-    int nJam;
+    public String[][] elmt;
+    public int nHari;
+    public int nJam;
     public MatrixJadwal() {
         nHari = 5;
         nJam = 11;
-        elmt = new String[nHari][nJam];
-        for (int i = 0; i < nHari; i++) {
-            for (int j = 0; j<nJam; j++) {
+        elmt = new String[nJam][nHari];
+        for (int i = 0; i < nJam; i++) {
+            for (int j = 0; j < nHari; j++) {
                 elmt[i][j] = "";
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        String out = "";
+        for (int i = 0; i < nJam; i++) {
+            for (int j = 0; j < nHari; j++) {
+                if (elmt[i][j] == "") {
+                    out += "      " + "   |   ";
+                } else if (elmt[i][j] == "X") {
+                    out += "  " + elmt[i][j] + "   " + "   |   ";
+                } else {
+                    out += elmt[i][j] + "   |   ";
+                }
+            }
+            out += "\n";
+        }
+        out += "\n\n\n";
+        return out;
     }
 }
