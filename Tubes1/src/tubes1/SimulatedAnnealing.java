@@ -33,6 +33,8 @@ public class SimulatedAnnealing {
 			tempRuangan.setJamSelesai(ruangan.get(i).getJamSelesai());
 			tempRuangan.setHari(ruangan.get(i).getHariAsString());
 			listOfRoom.addRoom(tempRuangan);
+			
+			// System.out.println(listOfRoom.getRoom(i));
 		}
 
 		this.solution = new Schedule();
@@ -53,7 +55,8 @@ public class SimulatedAnnealing {
 		// Initialize initial solution
 		Schedule currentSolution = new Schedule();
 		currentSolution.randomAllSchedule();
-
+		// System.out.println(currentSolution);
+		// System.exit(0);
 		int currentConflict = currentSolution.getConflict();
 		int neighbourConflict = 0;
 
@@ -66,7 +69,7 @@ public class SimulatedAnnealing {
 		while (temperature > 1) {
 			// Creates new neighbour course
 			Schedule neighbourSolution = new Schedule(currentSolution.getSchedule(), currentSolution.getConflict());
-
+			
 			// Picks a random course to be rescheduled
 			indexToRandom = random.nextInt(listOfCourse.numberOfCourse());
 			// Random course in indexToRandom at courseManager
@@ -88,7 +91,7 @@ public class SimulatedAnnealing {
 				bestSchedule.setSchedule(currentSolution.getSchedule());
 				bestSchedule.setConflict(currentSolution.getConflict());
 			}
-
+			//System.out.println(temperature);
 			// Cooling system
 			temperature *= 1 - coolingRate;
 		}

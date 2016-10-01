@@ -7,7 +7,11 @@ package tubes1;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import javax.swing.JFileChooser;
 //import com.csvreader.CsvWriter;
 //import com.csvreader.CsvReader;
 
@@ -25,11 +29,11 @@ public class Tubes1 {
 //        List<Ruangan> ruang = new ArrayList<>();
 //        List<Jadwal> jadwal = new ArrayList<>();
 //        JFileChooser fad = new JFileChooser();
-//        File input = new File("../Testcase.txt");
-////        File input = new File("/home/rezaramadhan/t2.txt");
-////        int rent = fad.showOpenDialog(fad);  
-////        input = fad.getSelectedFile();
-//        
+//        File input = new File("../../Testcase - dira.txt");
+//        File input = new File("/home/rezaramadhan/t2.txt");
+//        int rent = fad.showOpenDialog(fad);  
+//        input = fad.getSelectedFile();
+       
 //        Scanner in = new Scanner(input);
 //        String nextLine = in.nextLine();
 //        String[] tes;
@@ -61,7 +65,6 @@ public class Tubes1 {
 //       }
 //       in.close();
 //    
-//    
 ////        long startTime = System.nanoTime(); 
 //////        GeneticAlgorithm g = new GeneticAlgorithm(jadwal, ruang);
 //////        String str1 = g.execute();
@@ -86,7 +89,7 @@ public class Tubes1 {
 //        UI x = new UI();
 //        x.tes();
         
-        UIHandler y = new UIHandler();
+         UIHandler y = new UIHandler();
        // y.display();
     }
 }

@@ -5,6 +5,9 @@
  */
 package tubes1;
 
+import java.util.*;
+import java.io.*;
+
 /**
  *
  * @author rezaramadhan
@@ -96,4 +99,10 @@ public class Ruangan {
 	public void setHari(String Hari) {
 		this.Hari = Hari;
 	}
+
+	@Override
+    public String toString() {
+        return getNama() + "; " + getJamMulai() + "; " + getJamSelesai() + "; " 
+        + Arrays.toString(getHari());
+    }
 }

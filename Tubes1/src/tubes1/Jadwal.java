@@ -174,19 +174,23 @@ public class Jadwal {
 
     public Jadwal randomJadwal() {
         Random rnd = new Random();
-        Jadwal temp = new Jadwal(this);
+        Jadwal temp;
+        //System.out.println(temp);
+        int x;
         do {
-            int x;
+            temp = new Jadwal(this);
             // Random Hari correct
             do {
                 x = rnd.nextInt(5);
+                //System.out.println("random = " + x);
             } while (temp.getHariAtIdx(x) == false);
             temp.setHari(Integer.toString(x+1));
-
+            //System.out.println("SET HARI = " + x);
             // Random jam kuliah correct
             x = rnd.nextInt(getJamSelesai() - getDurasi() - getJamMulai() + 1) + getJamMulai();
             temp.setJamMulai(x);
             temp.setJamSelesai(x + getDurasi());
+            //System.out.println("SET JAM KULIAH = " + x);
             
             // Random Ruangan
             if (getRuangan().equals("-")) {
@@ -202,10 +206,13 @@ public class Jadwal {
 
     public boolean isInDomain(Jadwal course, Ruangan room) {
         int idxHari = Integer.parseInt(course.getHariAsString()) - 1;
+        //System.out.println("Hasil index hari = " + idxHari);
         boolean isHariIn = false;
         if (room.getHariAtIdx(idxHari) && course.getHariAtIdx(idxHari)) {
+            //System.out.println("RUANG SAMA");
             isHariIn = true;
         }
+        
         boolean isJamIn = false;
         if ((course.getJamMulai() >= room.getJamMulai()) && (course.getJamMulai() <= (room.getJamSelesai()-course.getDurasi()))) {
             isJamIn = true;
