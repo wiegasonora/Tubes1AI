@@ -46,13 +46,11 @@ public class UIHandler  extends JFrame {
         setVisible(true);
         
         
-        
         //data handling
         ruangList = new ArrayList<>();
         jadwalList = new ArrayList<>();
         matrixJadwalList = new ArrayList<>();
     }
-   
     private void initComponent() {
         
         
@@ -173,6 +171,24 @@ public class UIHandler  extends JFrame {
         refreshUI();
     }
     
+    //set slot ruangan yg ga bisa dipake jadi "X", refresh buat setiap ruangan
+    private void setUnusableSlot() {
+        String nama = ruangComboBox.getSelectedItem().toString();
+        int idx = searchNamaRuang(nama);
+        
+        for (int iJam = 1; iJam <= nJam; iJam ++) {
+            for (int iHari = 1; iHari <= nHari; iHari ++) {
+                int mulai = ruangList.get(idx).getJamMulai();
+                int selesai = ruangList.get(idx).getJamSelesai();
+                if (!ruangList.get(idx).Hari.contains(Integer.toString(iHari)) ||
+                        (iJam + 6 < mulai) || iJam + 6 >= selesai) {
+//                    tabel[iJam][iHari].setText("X");
+                    tabel[iJam][iHari].setBackground(Color.black);
+                }
+            }
+        }
+    }
+    
     //ketika combo box terubah
     private void comboBoxChanged(java.awt.event.ActionEvent evt){
         refreshTable();
@@ -184,6 +200,7 @@ public class UIHandler  extends JFrame {
             System.out.println("Matrix kosong");
         } else {
             String namaRuang = ruangComboBox.getSelectedItem().toString();
+            
             
             //cari nama ruang di list ruangan, pasti ketemu
             int idx = searchNamaRuang(namaRuang);
@@ -197,9 +214,14 @@ public class UIHandler  extends JFrame {
                         System.out.println("i" +i + " j" + j);
                     }
                     //SET WARNA TABEL DISINI~
-                    //tabel[i][j].setBackground(Color.red);
+                    tabel[i][j].setBackground(Color.white);
                 }
             }
+            
+            //set unusable
+            setUnusableSlot();
+            
+            
         }
     }
     
@@ -289,13 +311,16 @@ public class UIHandler  extends JFrame {
         if (GARButton.isSelected()) {
             GeneticAlgorithm g = new GeneticAlgorithm(jadwalList, ruangList);
             String s = g.execute();
+            matrixJadwalList.clear();
             matrixJadwalList = g.isiMatrixJadwal(s);
             
         } else if (HCRButton.isSelected()) {
+            matrixJadwalList.clear();
             matrixJadwalList = HillClimbing.HillClimbing(ruangList, jadwalList);
         } else if (SARButton.isSelected()) {
             SimulatedAnnealing sa = new SimulatedAnnealing(jadwalList, ruangList);
             sa.execute();
+            matrixJadwalList.clear();
             matrixJadwalList = sa.scheduleWorld;
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "Please select any of the provided Algorithm");

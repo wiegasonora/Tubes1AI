@@ -138,12 +138,12 @@ public class SimulatedAnnealing {
 						if ((k >= (listOfRoom.getRoom(i).getJamMulai()-7))&&(k <= listOfRoom.getRoom(i).getJamSelesai()-7)) {
 
 						} else {
-							m.elmt[k][j] = "X";
+							m.elmt[k][j] = "";
 						}
 					}
 				} else {
 					for (int k = 0; k < 11; k++) {
-						m.elmt[k][j] = "X";
+						m.elmt[k][j] = "";
 					}
 				}
 			}

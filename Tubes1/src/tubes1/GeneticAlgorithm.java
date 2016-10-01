@@ -659,7 +659,7 @@ public class GeneticAlgorithm {
             //menginisalisasi matrixjadwal
             for (int x = 0; x < 11; x++){
                 for (int y = 0; y < 5; y++){
-                    m.elmt[x][y]="X";
+                    m.elmt[x][y]="";
                 }
             }
             
