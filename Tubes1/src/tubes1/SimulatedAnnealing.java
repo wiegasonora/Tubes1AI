@@ -7,6 +7,7 @@ public class SimulatedAnnealing {
 	private Schedule solution;
 	private double temperature;	// Sets initial temperature
 	private double coolingRate; // Sets cooling rate
+	private List<MatrixJadwal> scheduleWorld;
 
 	public SimulatedAnnealing(List<Jadwal> jadwal, List<Ruangan> ruangan) {
 		this.listOfCourse = new CourseManager();
@@ -35,25 +36,7 @@ public class SimulatedAnnealing {
 		}
 
 		this.solution = new Schedule();
-
-/*		for (int i = 0; i < jadwal.size(); i++) {
-			this.jadwal.get(i).setNamaKegiatan(jadwal.get(i).getNamaKegiatan());
-			this.jadwal.get(i).setRuangan(jadwal.get(i).getRuangan());
-			this.jadwal.get(i).setJamMulai(jadwal.get(i).getJamMulai());
-			this.jadwal.get(i).setJamSelesai(jadwal.get(i).getJamSelesai());
-			this.jadwal.get(i).setDurasi(jadwal.get(i).getDurasi());
-			this.jadwal.get(i).setHari(jadwal.get(i).getHariAsString());
-			CourseManager.addCourse(this.jadwal.get(i));
-		}
-
-		for(int i = 0; i < ruangan.size(); i++) {
-			this.ruangan.get(i).setNama(ruangan.get(i).getNama());
-			this.ruangan.get(i).setJamMulai(ruangan.get(i).getJamMulai());
-			this.ruangan.get(i).setJamSelesai(ruangan.get(i).getJamSelesai());
-			this.ruangan.get(i).setHari(ruangan.get(i).getHariAsString());
-			RoomManager.addRoom(this.ruangan.get(i));
-
-		} */
+		scheduleWorld = new ArrayList<MatrixJadwal>(ruangan.size());
 	}
 
 	// Calculate the acceptance probability
@@ -73,21 +56,10 @@ public class SimulatedAnnealing {
 
 		int currentConflict = currentSolution.getConflict();
 		int neighbourConflict = 0;
-		//System.out.println(currentSolution);
-		//System.out.println("Current conflict = " + currentSolution.getConflict());
-		
-		//System.out.println("Initial solution : ");
-		/*for (int i = 0; i < currentSolution.scheduleSize(); i++) {
-			System.out.println(currentSolution.getCourse(i));
-		}*/
-		//System.out.println("Total conflict : " + currentConflict);
-		//System.out.println();
 
 		// Sets to be best solution
 		Schedule bestSchedule = new Schedule(currentSolution.getSchedule(), currentSolution.getConflict());
-		//System.out.println(bestSchedule);
-		//System.out.println("Conflict ater new = " + bestSchedule.getConflict());
-		//System.exit(0);
+		
 		Random random = new Random();
 		int indexToRandom;
 
@@ -115,8 +87,6 @@ public class SimulatedAnnealing {
 			if (currentSolution.getConflict() < bestSchedule.getConflict()) {
 				bestSchedule.setSchedule(currentSolution.getSchedule());
 				bestSchedule.setConflict(currentSolution.getConflict());
-				//System.out.println(bestSchedule.getConflict());
-				//System.exit(0);
 			}
 
 			// Cooling system
@@ -125,9 +95,8 @@ public class SimulatedAnnealing {
 
 		solution.setSchedule(bestSchedule.getSchedule());
 		solution.setConflict(bestSchedule.getConflict());
-		//System.out.println("Final solution schedule : ");
-		//System.out.println(bestSchedule);
-		//System.out.println(bestSchedule.getConflict());
+
+		setScheduleWorld(solution);
 	}
 
 	public Schedule showSolution() {
@@ -137,4 +106,61 @@ public class SimulatedAnnealing {
 	public int showConflict() {
 		return this.solution.getConflict();
 	}
+
+	public void setScheduleWorld(Schedule solution) {
+		String tempRuang;
+		int hari;
+		int jamAwal, durasi;
+
+		for (int i = 0; i < listOfRoom.numberOfRoom(); i++) {
+			MatrixJadwal m = new MatrixJadwal();
+			tempRuang = listOfRoom.getRoom(i).getNama();
+
+			for (int j = 0; j < solution.scheduleSize(); j++) {
+				if (solution.getScheduleAtIdx(j).getRuangan().equals(tempRuang)) {
+					hari = solution.getScheduleAtIdx(j).getHariTrue();
+					jamAwal = solution.getScheduleAtIdx(j).getJamMulai();
+					durasi = solution.getScheduleAtIdx(j).getDurasi();
+					for (int k = 0; k < durasi; k++) {
+						if (m.elmt[(jamAwal-7+k)][hari].equals("")) {
+							m.elmt[(jamAwal-7+k)][hari] = solution.getScheduleAtIdx(j).getNamaKegiatan();
+						}	 else {
+							m.elmt[(jamAwal-7+k)][hari] += " - " + solution.getScheduleAtIdx(j).getNamaKegiatan();
+						}
+					}
+				}
+			}
+
+
+			for (int j = 0; j < 5; j++) {
+				if (listOfRoom.getRoom(i).getHariAtIdx(j)) {
+					for (int k = 0; k < 11; k++) {
+						if ((k >= (listOfRoom.getRoom(i).getJamMulai()-7))&&(k <= listOfRoom.getRoom(i).getJamSelesai()-7)) {
+
+						} else {
+							m.elmt[k][j] = "X";
+						}
+					}
+				} else {
+					for (int k = 0; k < 11; k++) {
+						m.elmt[k][j] = "X";
+					}
+				}
+			}
+
+			this.scheduleWorld.add(m);
+		}
+	}
+
+	@Override
+	public String toString() {
+		String out = "";
+		for (int i = 0; i < scheduleWorld.size(); i++) {
+			out += "Ruangan: " + listOfRoom.getRoom(i).getNama() + "\n";
+			out += "";
+			out += scheduleWorld.get(i);
+		}
+		return out;
+	}
+
 }

@@ -55,9 +55,21 @@ public class Jadwal {
         return this.NamaKegiatan;
     }
     
-    // Gets course's room
     public String getRuangan() {
         return this.Ruangan;
+    }
+
+    // Gets course's room
+    public String[] getRuanganInArray() {
+        String[] temp = this.Ruangan.split(",");
+        
+        return temp;
+    }
+
+    public String getRuanganAtIdx(int x) {
+        String[] temp = getRuanganInArray();
+
+        return temp[x];
     }
 
     // Gets course's starting time
@@ -106,6 +118,16 @@ public class Jadwal {
     public boolean getHariAtIdx(int idx) {
     	boolean[] temp = getHari();
         return temp[idx];
+    }
+
+    public int getHariTrue() {
+        boolean[] tempHari = getHari();
+        for (int i = 0; i < 5; i++) {
+            if (tempHari[i]) {
+                return i;
+            }
+        }
+        return 0;
     }
     
     // Sets Nama to nm
@@ -171,21 +193,9 @@ public class Jadwal {
                 x = rnd.nextInt(RoomManager.numberOfRoom());
                 temp.setRuangan(RoomManager.getRoom(x).getNama());
             } else {
-                temp.setRuangan(this.getRuangan());
+                x = rnd.nextInt(getRuanganInArray().length);
+                temp.setRuangan(this.getRuanganAtIdx(x));
             }
-/*            System.out.println("Hasil random:");
-            System.out.println(temp.getNamaKegiatan());
-            System.out.println(temp.getJamMulai());
-            System.out.println(temp.getJamSelesai());
-            System.out.println(temp.getRuangan());
-            System.out.println(temp.getHariAsString());
-            Ruangan tempRuangan = RoomManager.getRoomByRuang(temp.getRuangan());
-            System.out.println("Info ttg ruangan hasil random:");
-            System.out.println(tempRuangan.getNama());
-            System.out.println(tempRuangan.getJamMulai());
-            System.out.println(tempRuangan.getJamSelesai());
-            System.out.println(tempRuangan.getHariAsString());
-            System.out.println(); */
         } while (!isInDomain(temp, RoomManager.getRoomByRuang(temp.getRuangan())));
         return temp;
     }

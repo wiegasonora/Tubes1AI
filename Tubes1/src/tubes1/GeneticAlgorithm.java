@@ -633,4 +633,137 @@ public class GeneticAlgorithm {
         }
     }
     
+    public List<MatrixJadwal> isiMatrixJadwal(String str){
+        List<MatrixJadwal> lMJ = new ArrayList<>();
+        int idxruang;
+        int idxHari;
+        int sizeHari;
+        int valHari;
+        String strtemp;
+        int idxJam;
+        int idxJamSelesai;
+        int i;
+        int j;
+        int idxb;
+        
+        String[] tabJadwal = pisahstring(str);
+        
+        
+        for (idxruang = 0; idxruang < ruang.size(); idxruang++){    
+        
+            MatrixJadwal m = new MatrixJadwal();
+            
+            idxHari = 0;
+            sizeHari = ((ruang.get(idxruang)).Hari).length();
+            
+            //menginisalisasi matrixjadwal
+            for (int x = 0; x < 11; x++){
+                for (int y = 0; y < 5; y++){
+                    m.elmt[x][y]="X";
+                }
+            }
+            
+
+            //iterasi hari
+            while (idxHari < sizeHari){     
+                valHari = Integer.parseInt(Character.toString(((ruang.get(idxruang)).Hari).charAt(idxHari)));
+
+                //mengisi idxJam dan idxJamSelesai dari ruang           
+                strtemp = Character.toString(((ruang.get(idxruang)).JamMulai).charAt(0)) + Character.toString(((ruang.get(idxruang)).JamMulai).charAt(1));
+                idxJam = Integer.parseInt(strtemp);
+                
+                strtemp = Character.toString(((ruang.get(idxruang)).JamSelesai).charAt(0)) + Character.toString(((ruang.get(idxruang)).JamSelesai).charAt(1));
+                idxJamSelesai = Integer.parseInt(strtemp);
+
+                //iterasi jam mulai - jam selesai
+                while (idxJam < idxJamSelesai){
+                    idxb = 0;
+
+                    m.elmt[idxJam-7][valHari-1] = "";
+                    //searching digunakannya slot pada tabJadwal
+                    while (idxb < tabJadwal.length){    
+                        if (    (cToI((tabJadwal[idxb]).charAt(0)) == idxruang) &&      //ruangan sama
+                                    (Integer.parseInt(Character.toString((tabJadwal[idxb]).charAt(1))) == valHari) &&       //hari sama
+                                        //(cToI((tabJadwal[idxb]).charAt(2)) == idxJam ) || //jam mulai sama
+                                          //  (cToI((tabJadwal[idxb]).charAt(3)) == idxJam + 1) ||  //jam selesai sama
+                                            ((cToI((tabJadwal[idxb]).charAt(2))) <= idxJam && (cToI((tabJadwal[idxb]).charAt(3))) >= idxJam)    //jam berada di antara mulai dan selesai sebuah matkul
+                                    
+                            ){
+                                if ((m.elmt[idxJam-7][valHari-1]).length() == 0){
+                                    m.elmt[idxJam-7][valHari-1] = (matkul.get(idxb)).NamaKegiatan;
+                                } else {
+                                    m.elmt[idxJam-7][valHari-1] += " - " + (matkul.get(idxb)).NamaKegiatan;   
+                                }
+                            }
+                        idxb++;
+                    }
+                    idxJam++;
+                }
+                idxHari = idxHari + 2;
+            }
+            lMJ.add(m);
+        } 
+            
+       return lMJ; 
+    }
+    
+    
+    public void printMatrixJadwal(List<MatrixJadwal> lMJ){
+        /*  Prosedur berfungsi untuk mencetak matriks jadwal dengan baris menunjukkan jam dan kolom menunjukkan hari
+                dari tiap Ruangan (1 ruangan 1 matriks)
+                I.S : ruang, matkul, dan str terdefinisi
+                F.S : jadwal untuk tiap ruang tercetak ke layar
+        */
+
+        //kumpulan kamus lokal
+        int idxb;       //buat iterasi tabJadwal
+        int idxHari;    //buat iterasi hari
+        int idxJam;     //buat iterasi jam
+        int idxJamSelesai;  //batas iterasi jam
+        int sizeHari;   //panjang string hari
+        int valHari;    //nilai hari dalam angka
+        String strtemp = "";    //penyimpan sring utk convert jam ruangan
+        int x;  //iterasi baris
+        int y;  //iterasi kolom
+        int i;  //iterasi baris
+        int j;  //iterasi kolom
+        
+
+        for (int idxruang = 0; idxruang < lMJ.size(); idxruang++){
+            //pencetakan ke layar
+            System.out.println("Jadwal Ruangan " + (ruang.get(idxruang)).Nama);
+            System.out.print("|Jam▼ - Hari►|");
+            System.out.println("             Senin             |             Selasa            |              Rabu             |             Kamis             |             Jumat             |");
+            for (int d = 0; d < 175; d++){
+                        System.out.print("_");
+            }
+            System.out.println();
+            int z;
+            for (x = 0; x < 11; x++){
+                    if ((x+7) < 10){
+                            System.out.print("|  0" + (x+7) +".00      |");
+                    } else {
+                            System.out.print("|  " + (x+7) +".00      |");
+                    }
+
+                    for (y = 0; y < 5; y++){
+                        System.out.print((lMJ.get(idxruang)).elmt[x][y]);
+                        for (z = (lMJ.get(idxruang)).elmt[x][y].length(); z < 31; z++){
+                            System.out.print(" ");
+                        }
+                        System.out.print("|");
+                        
+                    }
+                    System.out.println();
+                    for (int d = 0; d < 175; d++){
+                        System.out.print("_");
+                    }
+                    System.out.println();
+            }
+            System.out.println("Keterangan : 'X' menunjukkan ruangan pada slot waktu tersebut tidak tersedia");
+            System.out.println();
+            System.out.println();
+
+        }
+    }
 }
