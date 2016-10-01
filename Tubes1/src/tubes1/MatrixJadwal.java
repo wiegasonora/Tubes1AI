@@ -75,7 +75,7 @@ public class MatrixJadwal {
                 while (x<5 && benar<Integer.valueOf(C.get(simpanruang).Durasi)){
                  y=0;
                      while (y<11 && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
-                         if (A.get(i).elmt[y][x].equals(namakelas)){
+                         if (A.get(i).elmt[y][x].contains(namakelas)){
                              A.get(i).elmt[y][x]=A.get(i).elmt[y][x].replace(namakelas, "");
                              benar++;
                              System.out.println(A.get(i).elmt[y][x]);
@@ -112,7 +112,7 @@ public class MatrixJadwal {
                     while (x<5 && benar<Integer.valueOf(C.get(simpanruang).Durasi)){
                         y=0;
                             while (y<11 && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
-                                if (A.get(cariruang-1).elmt[y][x].equals(namakelas)){
+                                if (A.get(cariruang-1).elmt[y][x].contains(namakelas)){
                                     A.get(cariruang-1).elmt[y][x]=A.get(cariruang-1).elmt[y][x].replace(namakelas, "");
                                     benar++;
                                     //System.out.println(A.get(i).elmt[x][y]);
@@ -141,12 +141,9 @@ public class MatrixJadwal {
                     while (x<5 && benar<Integer.valueOf(C.get(simpanruang).Durasi)){
                         y=0;
                             while (y<11 && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
-                                System.out.println(x+"  TES   "+y);
-                                System.out.println(A.get(cariruang-1).elmt[y][x]+"    HIDUP");
-                                if (A.get(cariruang-1).elmt[y][x].equals(namakelas)){
+                                if (A.get(cariruang-1).elmt[y][x].contains(namakelas)){
                                     A.get(cariruang-1).elmt[y][x]=A.get(cariruang-1).elmt[y][x].replace(namakelas, "");
                                     benar++;
-                                    //System.out.println(A.get(i).elmt[x][y]);
                                 }
                             y++;
                             }
