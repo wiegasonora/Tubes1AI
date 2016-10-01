@@ -62,7 +62,6 @@ public class MatrixJadwal {
     
     public static void PindahJadwal(String namakelas, String ruangpindah,int pindahx,int pindahy,List<MatrixJadwal> A,List<Ruangan> B, List<Jadwal> C){
        int i=0,benar=0,x=0,y=0,simpanruang=0;
-       System.out.println("HARI: "+pindahx+"  JAM:"+pindahy);
         while (i<C.size() && benar==0){
             if (C.get(i).NamaKegiatan.equals(namakelas)){
                 simpanruang=i;
@@ -70,7 +69,59 @@ public class MatrixJadwal {
             }
             i++;
         }
+        int benarhari=0;
+        if (C.get(simpanruang).Hari.contains(",")){
+            String[] hariboleh = C.get(simpanruang).Hari.split(",");
+            int iterasi=0;
+            while (iterasi<hariboleh.length){
+                if (hariboleh[iterasi].equals(String.valueOf(pindahx+1))){
+                    benarhari++;
+                }
+                iterasi++;
+            }
+        } else {
+            String hariboleh=C.get(simpanruang).Hari;
+            if (hariboleh.equals(String.valueOf(pindahx+1))){
+                    benarhari++;
+            }
+        }
+        int benarjam=0;
+        if (pindahy>=(Integer.valueOf(C.get(simpanruang).JamMulai.substring(0, 2))-7) && pindahy<=(Integer.valueOf(C.get(simpanruang).JamSelesai.substring(0, 2))-7-Integer.valueOf(C.get(simpanruang).Durasi))){
+            benarjam++;
+        }
         benar=0;
+        int ruangtersediahari=0,ruangtersediajam=0;
+        int iterasi=0;
+        while (iterasi<B.size() && benar==0){
+                        if (B.get(iterasi).Nama.equals(C.get(simpanruang).Ruangan)){
+                            benar=1;
+                        }
+                        iterasi++;
+        }
+        iterasi--;
+        if (B.get(iterasi).Hari.contains(",")){
+            String[] hariboleh = B.get(iterasi).Hari.split(",");
+            int iter=0;
+            while (iter<hariboleh.length){
+                if (hariboleh[iter].equals(String.valueOf(pindahx+1))){
+                    ruangtersediahari++;
+                }
+                iter++;
+            }
+        } else {
+            String hariboleh=B.get(iterasi).Hari;
+            if (hariboleh.equals(String.valueOf(pindahx+1))){
+                    ruangtersediahari++;
+            }
+        }
+        if (pindahy>=(Integer.valueOf(B.get(iterasi).JamMulai.substring(0, 2))-7) && pindahy<=(Integer.valueOf(B.get(iterasi).JamSelesai.substring(0, 2))-7-Integer.valueOf(C.get(simpanruang).Durasi))){
+            ruangtersediajam++;
+        }
+        
+        benar=0;
+        if (ruangtersediahari>0 &&ruangtersediajam>0){
+            if (benarhari>0 && benarjam>0){
+            
         if (C.get(simpanruang).Ruangan.equals("-")){
             while (i<B.size() && benar<Integer.valueOf(C.get(simpanruang).Durasi)){
                 while (x<5 && benar<Integer.valueOf(C.get(simpanruang).Durasi)){
@@ -145,7 +196,7 @@ public class MatrixJadwal {
                     v++;
                     }
                 } else {
-                    JOptionPane.showMessageDialog(new JFrame(), "TIDAK BISA DIPINDAH KE RUANGAN TERSEBUT, RUANGAN HANYA BISA DIPINDAH KE "+C.get(simpanruang).Ruangan);
+                    JOptionPane.showMessageDialog(new JFrame(), "TIDAK BISA DIPINDAH KE RUANGAN TERSEBUT, KELAS HANYA BISA DIPINDAH KE "+C.get(simpanruang).Ruangan);
                 }
                 
             } else {
@@ -181,7 +232,7 @@ public class MatrixJadwal {
                        x++;
                     }
                     } else {
-                        JOptionPane.showMessageDialog(new JFrame(), "TIDAK BISA DIPINDAH KE RUANGAN TERSEBUT, RUANGAN HANYA BISA DIPINDAH KE "+C.get(simpanruang).Ruangan);
+                        JOptionPane.showMessageDialog(new JFrame(), "TIDAK BISA DIPINDAH KE RUANGAN TERSEBUT, KELAS HANYA BISA DIPINDAH KE "+C.get(simpanruang).Ruangan);
                     }
                     
             }
@@ -207,6 +258,15 @@ public class MatrixJadwal {
             y++;
             i++;
         }
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "TIDAK BISA DIPINDAH KE HARI/JAM TERSEBUT, KELAS MEMILIKI CONSTRAINT HARI: "+C.get(simpanruang).Hari+" DAN JAM: "+C.get(simpanruang).JamMulai+" HINGGA "+C.get(simpanruang).JamSelesai);
+                
+        }
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "RUANGAN "+ruangpindah+" TIDAK BUKA PADA HARI/JAM TERSEBUT");
+             
+        }
+        
         
         
     }
