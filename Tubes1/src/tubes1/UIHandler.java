@@ -187,10 +187,36 @@ public class UIHandler  extends JFrame {
                     hariPindah = 5;
                 } 
             }
-
-            MatrixJadwal.PindahJadwal(kelas, ruangPindah, jamPindah, hariPindah, matrixJadwalList, ruangList, jadwalList);
-            refreshUI();
+            if (!isKelasExist(kelas)) {
+                JOptionPane.showMessageDialog(new JFrame(), "Tidak ada kelas bernama " + kelas + "!");
+            } else if (!isRuangExist(ruangPindah)) {
+                JOptionPane.showMessageDialog(new JFrame(), "Tidak ada ruangan bernama " + ruangPindah + "!");
+            } else {
+                MatrixJadwal.PindahJadwal(kelas, ruangPindah, jamPindah - 7, hariPindah - 1, matrixJadwalList, ruangList, jadwalList);
+                refreshUI();
+            }
         }
+    }
+    
+    private boolean isKelasExist(String s) {
+        boolean found = false;
+        for (Jadwal r : jadwalList) {
+            found = r.NamaKegiatan.equals(s);
+            if (found)
+                break;
+        }
+        return found;
+    }
+    
+    private boolean isRuangExist(String s) {
+        boolean found = false;
+        for (Ruangan r : ruangList) {
+            found = r.Nama.equals(s);
+            if (found)
+                break;
+        }
+        return found;
+        
     }
     
     //set slot ruangan yg ga bisa dipake jadi "X", refresh buat setiap ruangan
