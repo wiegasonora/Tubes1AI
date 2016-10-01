@@ -19,6 +19,7 @@ public class Jadwal {
     public String JamSelesai;
     public String Durasi;
     public String Hari;
+    
 
     // Constructs an intial course
     public Jadwal() {

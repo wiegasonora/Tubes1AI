@@ -14,6 +14,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import java.util.Random;
 import static tubes1.HillClimbing.HillClimbing;
 /**
  *
@@ -263,7 +264,19 @@ public class UIHandler  extends JFrame {
                         System.out.println("i" +i + " j" + j);
                     }
                     //SET WARNA TABEL DISINI~
-                    tabel[i][j].setBackground(Color.white);
+                    if (tabel[i][j].getText() != "") {
+                        if (tabel[i][j].getText() == tabel[i-1][j].getText()) {
+                            tabel[i][j].setBackground(tabel[i-1][j].getBackground());
+                        } else {
+                            do {
+                                int r = (int)(Math.random()*256);
+                                int g = (int)(Math.random()*256);
+                                int b = (int)(Math.random()*256);
+                                Color randomColor = new Color(r, g, b);
+                                tabel[i][j].setBackground(randomColor);
+                            } while (isColorSameWithNeighbours(tabel, i, j));
+                        }
+                    }
                 }
             }
             
@@ -273,8 +286,33 @@ public class UIHandler  extends JFrame {
             
         }
     }
-    
-      
+
+    public boolean isColorSameWithNeighbours(JLabel[][] table, int row, int col) {
+        boolean left = false;
+        boolean up = false;
+        boolean right = false;
+        boolean down = false;
+        if (table[row][col].getBackground().getRGB() == table[row][col-1].getBackground().getRGB()) {
+            left = true;
+        }
+        if ((table[row][col].getText().equals(table[row-1][col])) &&
+            (table[row][col].getBackground().getRGB() == table[row-1][col].getBackground().getRGB())) {
+            up = true;
+        }
+        if (col < nHari) {
+            if (table[row][col].getBackground().getRGB() == table[row-1][col].getBackground().getRGB()) {
+                right = true;
+            }
+        }
+        if (row < nJam) {
+            if ((table[row][col].getText().equals(table[row+1][col])) &&
+                (table[row][col].getBackground().getRGB() == table[row+1][col].getBackground().getRGB())) {
+                down = true;
+            }
+        }
+        return (left && up && right && down);
+    }
+
     //refresh table sama statistics pake data yg baru diubah
     private void refreshUI() {
         refreshTable();
