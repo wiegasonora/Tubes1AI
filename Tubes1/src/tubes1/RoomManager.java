@@ -3,7 +3,11 @@ package tubes1;
 import java.util.*;
 
 public class RoomManager {
-	private static ArrayList listOfRoom = new ArrayList<Ruangan>();
+	private static ArrayList listOfRoom;
+
+	public RoomManager() {
+		this.listOfRoom = new ArrayList<Ruangan>();
+	}
 
 	public static void addRoom(Ruangan room) {
 		listOfRoom.add(room);

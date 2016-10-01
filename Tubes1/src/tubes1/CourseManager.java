@@ -8,7 +8,11 @@ import java.util.ArrayList;
 public class CourseManager {
     
 	// Holds the courses
-	private static ArrayList<Jadwal> listOfCourse = new ArrayList<Jadwal>();
+	private static ArrayList<Jadwal> listOfCourse;
+
+    public CourseManager() {
+        this.listOfCourse = new ArrayList<Jadwal>();
+    }
 
     // Adds a course into list
     public static void addCourse(Jadwal course) {
