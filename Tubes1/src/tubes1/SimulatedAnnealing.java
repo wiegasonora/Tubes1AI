@@ -7,7 +7,7 @@ public class SimulatedAnnealing {
 	private Schedule solution;
 	private double temperature;	// Sets initial temperature
 	private double coolingRate; // Sets cooling rate
-	private List<MatrixJadwal> scheduleWorld;
+	public List<MatrixJadwal> scheduleWorld;
 
 	public SimulatedAnnealing(List<Jadwal> jadwal, List<Ruangan> ruangan) {
 		this.listOfCourse = new CourseManager();
