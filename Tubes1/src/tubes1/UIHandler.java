@@ -190,8 +190,12 @@ public class UIHandler  extends JFrame {
             
             for (int i = 1; i <= nJam; i++) {
                 for (int j = 1; j <= nHari; j++) {
-                    tabel[i][j].setText(matrixJadwalList.get(idx).elmt[i][j]);
-                    
+                    try {
+                        tabel[i][j].setText(matrixJadwalList.get(idx).elmt[i-1][j-1]);
+                    } catch (Exception e) {
+                        System.out.println("refresh table fucked");
+                        System.out.println("i" +i + " j" + j);
+                    }
                     //SET WARNA TABEL DISINI~
                     //tabel[i][j].setBackground(Color.red);
                 }
