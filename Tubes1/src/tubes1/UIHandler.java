@@ -14,6 +14,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import static tubes1.HillClimbing.HillClimbing;
 /**
  *
  * @author rezaramadhan
@@ -365,7 +366,7 @@ public class UIHandler  extends JFrame {
             
         } else if (HCRButton.isSelected()) {
             matrixJadwalList.clear();
-            matrixJadwalList = HillClimbing.HillClimbing(ruangList, jadwalList);
+            matrixJadwalList = HillClimbing(ruangList, jadwalList);
         } else if (SARButton.isSelected()) {
             SimulatedAnnealing sa = new SimulatedAnnealing(jadwalList, ruangList);
             sa.execute();

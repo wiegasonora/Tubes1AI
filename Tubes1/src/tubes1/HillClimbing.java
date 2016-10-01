@@ -676,17 +676,19 @@ public class HillClimbing {
        while(wiega<ruang.size()){
            MatrixJadwal Tikong=new MatrixJadwal();
            tess=0;
+           System.out.println(ruang.get(wiega).Nama);
        while (tess<5){
             cobas=0;
             while (cobas<11) {
                  if (semua[tess][cobas]!=null){
                 if (semua[tess][cobas].contains(ruang.get(wiega).Nama)){
+                    System.out.println("HARI: "+(tess+1)+"  JAM :"+(cobas+7)+" "+semua[tess][cobas]);
                     if (semua[tess][cobas].contains(",")){
                         pisah=semua[tess][cobas].split(",");
                         while (hitung<pisah.length){
                             if (pisah[hitung].contains(ruang.get(wiega).Nama)){
-                                if (pisah[hitung].contains("=")){
-                                    cekpisah=pisah[hitung].split("=");
+                                if (pisah[hitung].contains("-=")){
+                                    cekpisah=pisah[hitung].split("-=");
                                     if (cekpisah.length!=1){
                                         int hitungcon=cekpisah.length;
                                         int k=1;
@@ -694,18 +696,36 @@ public class HillClimbing {
                                         int v=0;
                                         while (v<hitungcon){
                                            if (Tikong.elmt[cobas][tess].equals("")){
-                                               Tikong.elmt[cobas][tess]=cekpisah[v].substring(cekpisah[v].indexOf("-")+1, cekpisah[v].length()-1);
-                                            } else {
-                                               Tikong.elmt[cobas][tess]=(Tikong.elmt[tess][cobas]+" - "+cekpisah[v].substring(0, cekpisah[v].length()-1));
+                                               if (cekpisah[v].contains(ruang.get(wiega).Nama+"-")){
+                                                    Tikong.elmt[cobas][tess]=cekpisah[v].substring(cekpisah[v].indexOf("-")+1, cekpisah[v].length());
+                                                } else {
+                                                   Tikong.elmt[cobas][tess]=cekpisah[v].substring(0, cekpisah[v].length());
+                                                 }
+                                           } else {
+                                               if (cekpisah[v].contains(ruang.get(wiega).Nama+"-")){
+                                                    Tikong.elmt[cobas][tess]=(Tikong.elmt[cobas][tess]+" - "+cekpisah[v].substring(cekpisah[v].indexOf("-")+1, cekpisah[v].length()));
+                                           
+                                                } else {
+                                                  Tikong.elmt[cobas][tess]=(Tikong.elmt[cobas][tess]+" - "+cekpisah[v].substring(0, cekpisah[v].length()));
+                                                }
                                             }
                                             v++; 
                                         }
                                     } else if (cekpisah.length==1){
                                     if (Tikong.elmt[cobas][tess].equals("")){
-                                               Tikong.elmt[cobas][tess]=cekpisah[0].substring(cekpisah[0].indexOf("-")+1, cekpisah[0].length()-1);
-                                            } else {
-                                               Tikong.elmt[cobas][tess]=(Tikong.elmt[cobas][tess]+" - "+cekpisah[0].substring(0, cekpisah[0].length()-1));
-                                            }
+                                                if (cekpisah[0].contains(ruang.get(wiega).Nama+"-")){
+                                                    Tikong.elmt[cobas][tess]=cekpisah[0].substring(cekpisah[0].indexOf("-")+1, cekpisah[0].length());
+                                                } else {
+                                                   Tikong.elmt[cobas][tess]=cekpisah[0].substring(0, cekpisah[0].length()-1);
+                                                 }
+                                        } else {
+                                            if (cekpisah[0].contains(ruang.get(wiega).Nama+"-")){
+                                                    Tikong.elmt[cobas][tess]=(Tikong.elmt[cobas][tess]+" - "+cekpisah[0].substring(cekpisah[0].indexOf("-")+1, cekpisah[0].length()));
+                                           
+                                                } else {
+                                                  Tikong.elmt[cobas][tess]=(Tikong.elmt[cobas][tess]+" - "+cekpisah[0].substring(0, cekpisah[0].length()));
+                                                }
+                                    }
                                     }
                                     
                                 }
@@ -717,8 +737,8 @@ public class HillClimbing {
                 }
                 hitung=0;
                 } else {
-                        if (semua[tess][cobas].contains("=")){
-                                    cekpisah=semua[tess][cobas].split("=");
+                        if (semua[tess][cobas].contains("-=")){
+                                    cekpisah=semua[tess][cobas].split("-=");
                                     if (cekpisah.length!=1){
                                         int hitungcon=cekpisah.length;
                                         int k=1;
@@ -726,18 +746,35 @@ public class HillClimbing {
                                         int v=0;
                                         while (v<hitungcon){
                                            if (Tikong.elmt[cobas][tess].equals("")){
-                                               Tikong.elmt[cobas][tess]=cekpisah[v].substring(cekpisah[v].indexOf("-")+1, cekpisah[v].length()-1);
+                                               if (cekpisah[v].contains(ruang.get(wiega).Nama+"-")){
+                                                    Tikong.elmt[cobas][tess]=cekpisah[v].substring(cekpisah[v].indexOf("-")+1, cekpisah[v].length());
+                                                } else {
+                                                   Tikong.elmt[cobas][tess]=cekpisah[v].substring(0, cekpisah[v].length()-1);
+                                                 }
                                             } else {
-                                               Tikong.elmt[cobas][tess]=(Tikong.elmt[cobas][tess]+" - "+cekpisah[v].substring(0, cekpisah[v].length()-1));
-                                            }
+                                                if (cekpisah[v].contains(ruang.get(wiega).Nama+"-")){
+                                                    Tikong.elmt[cobas][tess]=(Tikong.elmt[cobas][tess]+" - "+cekpisah[v].substring(cekpisah[v].indexOf("-")+1, cekpisah[v].length()));
+                                           
+                                                } else {
+                                                  Tikong.elmt[cobas][tess]=(Tikong.elmt[cobas][tess]+" - "+cekpisah[v].substring(0, cekpisah[v].length()));
+                                                }
+                                           }
                                             v++; 
                                         }
                                     } else if (cekpisah.length==1){
                                     if (Tikong.elmt[cobas][tess].equals("")){
-                                               Tikong.elmt[cobas][tess]=cekpisah[0].substring(cekpisah[0].indexOf("-")+1, cekpisah[0].length()-1);
+                                               if (cekpisah[0].contains(ruang.get(wiega).Nama+"-")){
+                                                    Tikong.elmt[cobas][tess]=cekpisah[0].substring(cekpisah[0].indexOf("-")+1, cekpisah[0].length());
+                                                } else {
+                                                   Tikong.elmt[cobas][tess]=cekpisah[0].substring(0, cekpisah[0].length()-1);
+                                                 }
                                             } else {
-                                               Tikong.elmt[cobas][tess]=(Tikong.elmt[cobas][tess]+" - "+cekpisah[0].substring(0, cekpisah[0].length()-1));
-                                            }
+                                                if (cekpisah[0].contains(ruang.get(wiega).Nama+"-")){
+                                                    Tikong.elmt[cobas][tess]=(Tikong.elmt[cobas][tess]+" - "+cekpisah[0].substring(cekpisah[0].indexOf("-")+1, cekpisah[0].length()));
+                                           
+                                                } else {
+                                                  Tikong.elmt[cobas][tess]=(Tikong.elmt[cobas][tess]+" - "+cekpisah[0].substring(0, cekpisah[0].length()));
+                                                }}
                                     }
                                     
                                 }
@@ -754,6 +791,23 @@ public class HillClimbing {
        Reza.add(Tikong);
         wiega++;   
        }
+       tess=0;
+       cobas=0;
+       int i=0;
+       while (i<Reza.size()){
+           System.out.println(ruang.get(i).Nama);
+           tess=0;
+           while (tess<5){
+                cobas=0;
+                while (cobas<11){
+                    System.out.println("HARINYA ::"+(tess+1)+" JAMNYA   ::"+(cobas+7)+" "+Reza.get(i).elmt[cobas][tess]);
+                    cobas++;
+                }
+                tess++;
+            }
+           i++;
+       }
+       
        return Reza;
     }
     
