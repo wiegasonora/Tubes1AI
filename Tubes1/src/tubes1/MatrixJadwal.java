@@ -61,7 +61,8 @@ public class MatrixJadwal {
     }
     
     public static void PindahJadwal(String namakelas, String ruangpindah,int pindahx,int pindahy,List<MatrixJadwal> A,List<Ruangan> B, List<Jadwal> C){
-        int i=0,benar=0,x=0,y=0,simpanruang=0;
+       int i=0,benar=0,x=0,y=0,simpanruang=0;
+       System.out.println("HARI: "+pindahx+"  JAM:"+pindahy);
         while (i<C.size() && benar==0){
             if (C.get(i).NamaKegiatan.equals(namakelas)){
                 simpanruang=i;
@@ -76,7 +77,17 @@ public class MatrixJadwal {
                  y=0;
                      while (y<11 && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
                          if (A.get(i).elmt[y][x].contains(namakelas)){
-                             A.get(i).elmt[y][x]=A.get(i).elmt[y][x].replace(namakelas, "");
+                             if (A.get(i).elmt[y][x].contains(namakelas+" - ")){
+                                        if (A.get(i).elmt[y][x].contains(" - "+namakelas+" - ")){
+                                             A.get(i).elmt[y][x]=A.get(i).elmt[y][x].replace(" - "+namakelas+" - ", "");
+                                        } else {
+                                            A.get(i).elmt[y][x]=A.get(i).elmt[y][x].replace(namakelas+" - ", "");
+                                        }
+                                    } else if (A.get(i).elmt[y][x].contains(" - "+namakelas)) {
+                                        A.get(i).elmt[y][x]=A.get(i).elmt[y][x].replace(" - "+namakelas, "");
+                                    } else {
+                                        A.get(i).elmt[y][x]=A.get(i).elmt[y][x].replace(namakelas, "");
+                                    }
                              benar++;
                              System.out.println(A.get(i).elmt[y][x]);
                          }
@@ -113,7 +124,17 @@ public class MatrixJadwal {
                         y=0;
                             while (y<11 && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
                                 if (A.get(cariruang-1).elmt[y][x].contains(namakelas)){
-                                    A.get(cariruang-1).elmt[y][x]=A.get(cariruang-1).elmt[y][x].replace(namakelas, "");
+                                    if (A.get(cariruang-1).elmt[y][x].contains(namakelas+" - ")){
+                                        if (A.get(cariruang-1).elmt[y][x].contains(" - "+namakelas+" - ")){
+                                             A.get(cariruang-1).elmt[y][x]=A.get(cariruang-1).elmt[y][x].replace(" - "+namakelas+" - ", "");
+                                        } else {
+                                            A.get(cariruang-1).elmt[y][x]=A.get(cariruang-1).elmt[y][x].replace(namakelas+" - ", "");
+                                        }
+                                    } else if (A.get(cariruang-1).elmt[y][x].contains(" - "+namakelas)) {
+                                        A.get(cariruang-1).elmt[y][x]=A.get(cariruang-1).elmt[y][x].replace(" - "+namakelas, "");
+                                    } else {
+                                        A.get(cariruang-1).elmt[y][x]=A.get(cariruang-1).elmt[y][x].replace(namakelas, "");
+                                    }
                                     benar++;
                                     //System.out.println(A.get(i).elmt[x][y]);
                                 }
@@ -142,7 +163,17 @@ public class MatrixJadwal {
                         y=0;
                             while (y<11 && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
                                 if (A.get(cariruang-1).elmt[y][x].contains(namakelas)){
-                                    A.get(cariruang-1).elmt[y][x]=A.get(cariruang-1).elmt[y][x].replace(namakelas, "");
+                                    if (A.get(cariruang-1).elmt[y][x].contains(namakelas+" - ")){
+                                        if (A.get(cariruang-1).elmt[y][x].contains(" - "+namakelas+" - ")){
+                                             A.get(cariruang-1).elmt[y][x]=A.get(cariruang-1).elmt[y][x].replace(" - "+namakelas+" - ", "");
+                                        } else {
+                                            A.get(cariruang-1).elmt[y][x]=A.get(cariruang-1).elmt[y][x].replace(namakelas+" - ", "");
+                                        }
+                                    } else if (A.get(cariruang-1).elmt[y][x].contains(" - "+namakelas)) {
+                                        A.get(cariruang-1).elmt[y][x]=A.get(cariruang-1).elmt[y][x].replace(" - "+namakelas, "");
+                                    } else {
+                                        A.get(cariruang-1).elmt[y][x]=A.get(cariruang-1).elmt[y][x].replace(namakelas, "");
+                                    }
                                     benar++;
                                 }
                             y++;

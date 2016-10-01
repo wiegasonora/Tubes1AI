@@ -173,8 +173,8 @@ public class UIHandler  extends JFrame {
         String tmp2 = JOptionPane.showInputDialog("Masukkan jam pindah: ");
         if (!"".equals(tmp1) && !"".equals(tmp2) && !"".equals(kelas) && !"".equals(ruangPindah)) {
             try {
-                hariPindah = Integer.parseInt(tmp1);
                 jamPindah = Integer.parseInt(tmp2);
+                hariPindah = Integer.parseInt(tmp1);
             }
             catch( NumberFormatException e ) {
                 if (tmp1.equalsIgnoreCase("senin")) {
@@ -189,12 +189,13 @@ public class UIHandler  extends JFrame {
                     hariPindah = 5;
                 } 
             }
+            
             if (!isKelasExist(kelas)) {
                 JOptionPane.showMessageDialog(new JFrame(), "Tidak ada kelas bernama " + kelas + "!");
             } else if (!isRuangExist(ruangPindah)) {
                 JOptionPane.showMessageDialog(new JFrame(), "Tidak ada ruangan bernama " + ruangPindah + "!");
             } else {
-                MatrixJadwal.PindahJadwal(kelas, ruangPindah, jamPindah - 7, hariPindah - 1, matrixJadwalList, ruangList, jadwalList);
+                MatrixJadwal.PindahJadwal(kelas, ruangPindah, hariPindah - 1,jamPindah - 7, matrixJadwalList, ruangList, jadwalList);
                 refreshUI();
             }
         }
