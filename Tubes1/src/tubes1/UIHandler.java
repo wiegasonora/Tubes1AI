@@ -165,10 +165,32 @@ public class UIHandler  extends JFrame {
     private void changeKelas(java.awt.event.ActionEvent ect) {
         String kelas = JOptionPane.showInputDialog("Masukkan kelas: ");
         String ruangPindah = JOptionPane.showInputDialog("Masukkan ruangan pindah: ");
-        int hariPindah = Integer.parseInt(JOptionPane.showInputDialog("Masukkan hari pindah: "));
-        int jamPindah = Integer.parseInt(JOptionPane.showInputDialog("Masukkan jam pindah: "));
-        MatrixJadwal.PindahJadwal(kelas, ruangPindah, jamPindah, hariPindah, matrixJadwalList, ruangList, jadwalList);
-        refreshUI();
+        
+        int hariPindah = 0, jamPindah = 0;
+        String tmp1 = JOptionPane.showInputDialog("Masukkan hari pindah: ");
+        String tmp2 = JOptionPane.showInputDialog("Masukkan jam pindah: ");
+        if (!"".equals(tmp1) && !"".equals(tmp2) && !"".equals(kelas) && !"".equals(ruangPindah)) {
+            try {
+                hariPindah = Integer.parseInt(tmp1);
+                jamPindah = Integer.parseInt(tmp2);
+            }
+            catch( NumberFormatException e ) {
+                if (tmp1.equalsIgnoreCase("senin")) {
+                    hariPindah = 1;
+                } else if (tmp1.equalsIgnoreCase("selasa")) {
+                    hariPindah = 2;
+                } else if (tmp1.equalsIgnoreCase("rabu")) {
+                    hariPindah = 3;
+                } else if (tmp1.equalsIgnoreCase("kamis")) {
+                    hariPindah = 4;
+                } else if (tmp1.equalsIgnoreCase("jumat")) {
+                    hariPindah = 5;
+                } 
+            }
+
+            MatrixJadwal.PindahJadwal(kelas, ruangPindah, jamPindah, hariPindah, matrixJadwalList, ruangList, jadwalList);
+            refreshUI();
+        }
     }
     
     //set slot ruangan yg ga bisa dipake jadi "X", refresh buat setiap ruangan
@@ -269,6 +291,7 @@ public class UIHandler  extends JFrame {
             String[] tes;
             Ruangan B = new Ruangan();
             nextLine = in.nextLine();
+            ruangComboBox.removeAllItems();
             while(!nextLine.equals("")) {
                 tes = nextLine.split(";");
                 B.Nama=tes[0];

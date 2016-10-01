@@ -7,6 +7,8 @@ package tubes1;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -122,7 +124,7 @@ public class MatrixJadwal {
                     v++;
                     }
                 } else {
-                    System.out.println("TIDAK BISA DIPINDAH KE RUANGAN TERSEBUT, RUANGAN HANYA BISA DIPINDAH KE "+C.get(simpanruang).Ruangan);
+                    JOptionPane.showMessageDialog(new JFrame(), "TIDAK BISA DIPINDAH KE RUANGAN TERSEBUT, RUANGAN HANYA BISA DIPINDAH KE "+C.get(simpanruang).Ruangan);
                 }
                 
             } else {
@@ -151,7 +153,7 @@ public class MatrixJadwal {
                        x++;
                     }
                     } else {
-                        System.out.println("TIDAK BISA DIPINDAH KE RUANGAN TERSEBUT, RUANGAN HANYA BISA DIPINDAH KE "+C.get(simpanruang).Ruangan);
+                        JOptionPane.showMessageDialog(new JFrame(), "TIDAK BISA DIPINDAH KE RUANGAN TERSEBUT, RUANGAN HANYA BISA DIPINDAH KE "+C.get(simpanruang).Ruangan);
                     }
                     
             }
