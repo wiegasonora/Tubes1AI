@@ -265,8 +265,8 @@ public class UIHandler  extends JFrame {
                         System.out.println("i" +i + " j" + j);
                     }
                     //SET WARNA TABEL DISINI~
-                    if (tabel[i][j].getText() != "") {
-                        if (tabel[i][j].getText() == tabel[i-1][j].getText()) {
+                    if (!"".equals(tabel[i][j].getText()) && !" ".equals(tabel[i][j].getText())) {
+                        if (tabel[i][j].getText().equals(tabel[i-1][j].getText())) {
                             tabel[i][j].setBackground(tabel[i-1][j].getBackground());
                         } else {
                             do {
@@ -277,6 +277,8 @@ public class UIHandler  extends JFrame {
                                 tabel[i][j].setBackground(randomColor);
                             } while (isColorSameWithNeighbours(tabel, i, j));
                         }
+                    } else {
+                        tabel[i][j].setBackground(Color.pink);
                     }
                 }
             }
