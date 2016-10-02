@@ -93,7 +93,7 @@ public class MatrixJadwal {
         int ruangtersediahari=0,ruangtersediajam=0;
         int iterasi=0;
         while (iterasi<B.size() && benar==0){
-                        if (B.get(iterasi).Nama.equals(C.get(simpanruang).Ruangan)){
+                        if (B.get(iterasi).Nama.equals(ruangpindah)){
                             benar=1;
                         }
                         iterasi++;
