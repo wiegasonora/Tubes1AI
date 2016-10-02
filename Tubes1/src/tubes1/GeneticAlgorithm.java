@@ -30,7 +30,6 @@ public class GeneticAlgorithm {
     //generate String random, representasi satu individu
     public String generateRandom() {
         int totalGenerate = matkul.size();
-//        System.out.println(totalGenerate);
         String str = "";
 
          //format: <idxruang><Hari><mulai><selesai>
@@ -148,8 +147,8 @@ public class GeneticAlgorithm {
     public float hitungFitnessFunction(String str) {
         float tempValue;
         float bentrok = hitungBentrok(str);
-//        tempValue = (bentrok + hitungPersentasiIsi(str)*bentrok);
-        return bentrok;
+        tempValue = (bentrok + hitungPersentasiIsi(str)*bentrok);
+        return tempValue;
     }
     
     public float hitungBentrok(String str){
@@ -200,7 +199,6 @@ public class GeneticAlgorithm {
                     
                     while (idxc<tabString.length && tabHariSama[idxa][idxc] != ""){
                         strtemp1 = tabHariSama[idxa][idxc];
-                        //System.out.println(strtemp + "-" + strtemp1);
                         
                         
                         if (    ((strtemp.charAt(2)==strtemp1.charAt(2)) ||                     //kedua kelas mulai pada jam sama
@@ -212,42 +210,32 @@ public class GeneticAlgorithm {
                                     && 
                                     isSameRoom(strtemp,strtemp1)) {     //kedua kelas pada ruangan yang sama 
                            
-                                        //  System.out.println(strtemp + "-" + strtemp1);
                                         if (strtemp.charAt(2)==strtemp1.charAt(2) && strtemp.charAt(3)<strtemp1.charAt(3)) {
                                             countBentrok += (cToI(strtemp.charAt(3)) - cToI(strtemp.charAt(2)) + 1);
-                                            //System.out.println("1");
                                         } else 
                                         if (strtemp.charAt(2)==strtemp1.charAt(2) && strtemp.charAt(3)>strtemp1.charAt(3)) {
                                             countBentrok += (cToI(strtemp1.charAt(3)) - cToI(strtemp1.charAt(2)) + 1);
-                                            //System.out.println("2");
                                         } else 
                                         if ((strtemp.charAt(2)==strtemp1.charAt(2)) && (strtemp.charAt(3)==strtemp1.charAt(3))) {
                                             countBentrok += (cToI(strtemp.charAt(3)) - cToI(strtemp.charAt(2)) + 1);
-                                            //System.out.println("3");
                                         } else 
                                         if (strtemp.charAt(2)<strtemp1.charAt(2) && strtemp.charAt(3)==strtemp1.charAt(3)) {
                                             countBentrok += (cToI(strtemp1.charAt(3)) - cToI(strtemp1.charAt(2)) + 1);
-                                            //System.out.println("4");
                                         } else 
                                         if (strtemp.charAt(2)>strtemp1.charAt(2) && strtemp.charAt(3)==strtemp1.charAt(3)) {
                                             countBentrok += (cToI(strtemp.charAt(3)) - cToI(strtemp.charAt(2)) + 1);
-                                            //System.out.println("5");
                                         } else 
                                         if (strtemp.charAt(2)<strtemp1.charAt(2) && strtemp.charAt(3)<strtemp1.charAt(3)) {
                                             countBentrok += (cToI(strtemp.charAt(3))+1 - cToI(strtemp1.charAt(2)));
-                                            //System.out.println("6");
                                         } else 
                                         if (strtemp.charAt(2)>strtemp1.charAt(2) && strtemp.charAt(3)>strtemp1.charAt(3)) {
                                             countBentrok += (cToI(strtemp1.charAt(3)) + 1 - cToI(strtemp.charAt(2)));
-                                            //System.out.println("7");
                                         } else 
                                         if (strtemp.charAt(2)<strtemp1.charAt(2) && strtemp.charAt(3)>strtemp1.charAt(3)) {
                                             countBentrok += (cToI(strtemp1.charAt(3)) - cToI(strtemp1.charAt(2)) + 1);
-                                            //System.out.println("8");
                                         } else 
                                         if (strtemp.charAt(2)>strtemp1.charAt(2) && strtemp.charAt(3)<strtemp1.charAt(3)) {
                                             countBentrok += (cToI(strtemp.charAt(3)) - cToI(strtemp.charAt(2)) + 1);
-                                            //System.out.println("9");
                                         }
                           
                                     } 
@@ -338,11 +326,9 @@ public class GeneticAlgorithm {
         //hitung fitness function buat setiap individu
         float sum = 0;
         int itr;
-//        System.out.println("Fitnessfunction");
         float best = 0;
         for (itr= 0; itr<nPopulation; itr++) {
             fitnessFunction[itr] = hitungFitnessFunction(population[itr]);
-//            System.out.println(fitnessFunction[itr]);
             if (fitnessFunction[itr] >= best) {
                 if (fitnessFunction[itr] > best) { //best baru
                     bestIndividu.clear();
@@ -359,29 +345,21 @@ public class GeneticAlgorithm {
         }
         if (!end) {
             //hitung persentasi setiap individu
-//            System.out.println("Persentasi");
             for (int i= 0; i<nPopulation; i++) {
                 fitnessFunction[i] = fitnessFunction[i]/sum;
-//                System.out.println(fitnessFunction[i]);
             }
             sum = 0;
-//            System.out.println("Adjusted");
             for (int i= 0; i<nPopulation; i++) {
                 sum = sum + fitnessFunction[i];
                 fitnessFunction[i] = sum*100;
-//                System.out.println(fitnessFunction[i]);
             }
 
 
             Random rand = new Random();
             float randomNum = rand.nextFloat() * 100;
-//            System.out.println("rnd "+randomNum);
-//            System.out.println("psn "+fitnessFunction[selected]);
             while (randomNum > fitnessFunction[selected]) {
-//                System.out.println("lo");
                 selected++;
             }
-//            System.out.println("selected" + selected);
             return population[selected];
         } else {
             String endselected = "=" + itr;
@@ -464,24 +442,13 @@ public class GeneticAlgorithm {
         String[] crossoverRetval;
         
         
-//        parent1 = selection();
-//        return parent1;
         while (itr < maxIteration && end == -1) {
-            //select generasi baru, loop sebanyak populasi/2
-//            System.out.println("lo" + itr);
+            //select generasi baru, loop sebanyak populasi
             for (int i = 0; i< nPopulation; i+=2) {
                 //select parent1 & parent2
-//                System.out.println(nPopulation);
-//                for (int j = 0; j<nPopulation; j++) {
-//                    System.out.println(population[j]);
-//                }
                 parent1 = selection();
                 if (parent1.charAt(0) == '=') {
-//                    System.out.println("breakexecution");
-//                    System.out.println(parent1);
                     end = Integer.parseInt(parent1.substring(1));
-//                    System.out.println(end);
-//                    System.out.println(population[end]);
                     break;
                 }
                 parent2 = selection();
@@ -500,8 +467,6 @@ public class GeneticAlgorithm {
                 itr++;
             }
         }
-//        System.out.println(population.length);
-//        System.out.println(population[end]);            
         if (end != -1) {
             return population[end];
         } else {
@@ -581,12 +546,9 @@ public class GeneticAlgorithm {
                     while (idxb < tabJadwal.length){    
                         if (    (cToI((tabJadwal[idxb]).charAt(0)) == idxruang) &&      //ruangan sama
                                     (Integer.parseInt(Character.toString((tabJadwal[idxb]).charAt(1))) == valHari) &&       //hari sama
-                                        //(cToI((tabJadwal[idxb]).charAt(2)) == idxJam ) || //jam mulai sama
-                                          //  (cToI((tabJadwal[idxb]).charAt(3)) == idxJam + 1) ||  //jam selesai sama
                                             ((cToI((tabJadwal[idxb]).charAt(2))) <= idxJam && (cToI((tabJadwal[idxb]).charAt(3))) >= idxJam)    //jam berada di antara mulai dan selesai sebuah matkul
                                     
                             ){
-                                //System.out.println((matkul.get(idxb)).NamaKegiatan + "jam mulai : "+idxJam);
                                 matriksjadwal[idxJam-7][valHari-1] += " - " + (matkul.get(idxb)).NamaKegiatan;
                             }
                         idxb++;
@@ -684,8 +646,6 @@ public class GeneticAlgorithm {
                     while (idxb < tabJadwal.length){    
                         if (    (cToI((tabJadwal[idxb]).charAt(0)) == idxruang) &&      //ruangan sama
                                     (Integer.parseInt(Character.toString((tabJadwal[idxb]).charAt(1))) == valHari) &&       //hari sama
-                                        //(cToI((tabJadwal[idxb]).charAt(2)) == idxJam ) || //jam mulai sama
-                                          //  (cToI((tabJadwal[idxb]).charAt(3)) == idxJam + 1) ||  //jam selesai sama
                                             ((cToI((tabJadwal[idxb]).charAt(2))) <= idxJam && (cToI((tabJadwal[idxb]).charAt(3))) >= idxJam)    //jam berada di antara mulai dan selesai sebuah matkul
                                     
                             ){

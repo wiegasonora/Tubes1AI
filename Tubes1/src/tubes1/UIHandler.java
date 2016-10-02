@@ -61,12 +61,13 @@ public class UIHandler  extends JFrame {
         JLabel title = new JLabel("Appa Yipyip Scheduler");
         
         title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 32));
+        title.setHorizontalTextPosition(SwingConstants.CENTER);
         this.setLayout(new BorderLayout());
         getContentPane().add(headContainer, BorderLayout.PAGE_START);
         getContentPane().add(tableContainer, BorderLayout.PAGE_END);
         
         JPanel head = new JPanel();
-        head.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+//        head.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
         //add title
         headContainer.setLayout(new BoxLayout(headContainer, BoxLayout.PAGE_AXIS));
         headContainer.add(title);
@@ -109,8 +110,8 @@ public class UIHandler  extends JFrame {
         
         chooseRuangContainer.setLayout(new BoxLayout(chooseRuangContainer, BoxLayout.PAGE_AXIS));
         chooseFileContainer.setLayout(new BoxLayout(chooseFileContainer, BoxLayout.PAGE_AXIS));
-        chooseRuangContainer.setBorder(BorderFactory.createLineBorder(Color.RED));
-        chooseFileContainer.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+//        chooseRuangContainer.setBorder(BorderFactory.createLineBorder(Color.RED));
+//        chooseFileContainer.setBorder(BorderFactory.createLineBorder(Color.GREEN));
         
         //add pilihan ruangan
         JLabel ruangLabel = new JLabel("Ruangan:");
@@ -149,6 +150,7 @@ public class UIHandler  extends JFrame {
                 tabel[i][k].setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 tabel[i][k].setBackground(Color.PINK);
                 tabel[i][k].setOpaque(true);
+                tabel[i][k].setHorizontalAlignment(SwingConstants.CENTER);
                 tableContainer.add(tabel[i][k]);
             }
         }
