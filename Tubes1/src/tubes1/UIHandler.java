@@ -163,7 +163,7 @@ public class UIHandler  extends JFrame {
         tabel[0][3].setText("Rabu");
         tabel[0][4].setText("Kamis");
         tabel[0][5].setText("Jumat");
-        
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("appa.png")));
     }
     
     private void changeKelas(java.awt.event.ActionEvent ect) {
@@ -349,6 +349,25 @@ public class UIHandler  extends JFrame {
     //pilih input file
     private void chooseFileClicked(java.awt.event.ActionEvent evt){                                         
         System.out.println("Clicked");
+        matrixJadwalList.clear();
+        for (int i = 0; i<nJam+1; i++) {
+            for (int k = 0; k < nHari+1; k++) {
+                tabel[i][k].setText(null);
+                tabel[i][k].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                tabel[i][k].setBackground(Color.PINK);
+                tabel[i][k].setOpaque(true);
+                tabel[i][k].setHorizontalAlignment(SwingConstants.CENTER);
+            }
+        }
+        for (int i = 1; i < nJam+1; i++) {
+            tabel[i][0].setText(Integer.toString(i+6) + ".00");
+        }
+        tabel[0][0].setText("Jam\\Hari");
+        tabel[0][1].setText("Senin");
+        tabel[0][2].setText("Selasa");
+        tabel[0][3].setText("Rabu");
+        tabel[0][4].setText("Kamis");
+        tabel[0][5].setText("Jumat");
         try {
             ruangList.clear();
             jadwalList.clear();
