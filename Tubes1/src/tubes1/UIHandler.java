@@ -257,7 +257,7 @@ public class UIHandler  extends JFrame {
             
             //cari nama ruang di list ruangan, pasti ketemu
             int idx = searchNamaRuang(namaRuang);
-            
+            int treshold = 60;
             for (int i = 1; i <= nJam; i++) {
                 for (int j = 1; j <= nHari; j++) {
                     try {
@@ -270,6 +270,7 @@ public class UIHandler  extends JFrame {
                     if (!"".equals(tabel[i][j].getText()) && !" ".equals(tabel[i][j].getText())) {
                         if (tabel[i][j].getText().equals(tabel[i-1][j].getText())) {
                             tabel[i][j].setBackground(tabel[i-1][j].getBackground());
+                            tabel[i][j].setForeground(tabel[i-1][j].getForeground());
                         } else {
                             do {
                                 int r = (int)(Math.random()*256);
@@ -277,6 +278,9 @@ public class UIHandler  extends JFrame {
                                 int b = (int)(Math.random()*256);
                                 Color randomColor = new Color(r, g, b);
                                 tabel[i][j].setBackground(randomColor);
+                                if (r < treshold || g < treshold || b < treshold) {
+                                    tabel[i][j].setForeground(Color.white);
+                                }
                             } while (isColorSameWithNeighbours(tabel, i, j));
                         }
                     } else {
