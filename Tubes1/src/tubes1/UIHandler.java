@@ -26,7 +26,7 @@ public class UIHandler  extends JFrame {
     private List<Ruangan> ruangList;
     private List<Jadwal> jadwalList;
     private final int nHari = 5;
-    private final int nJam = 11;
+    private final int nJam = 12;
     
     //UI Element
     private JLabel[][] tabel;
@@ -226,8 +226,9 @@ public class UIHandler  extends JFrame {
     
     //set slot ruangan yg ga bisa dipake jadi "X", refresh buat setiap ruangan
     private void setUnusableSlot() {
-        String nama = ruangComboBox.getSelectedItem().toString();
-        int idx = searchNamaRuang(nama);
+//        String nama = ruangComboBox.getSelectedItem().toString();
+        int idx = ruangComboBox.getSelectedIndex();
+//        JOptionPane.showMessageDialog(new JFrame(), idx);
         
         for (int iJam = 1; iJam <= nJam; iJam ++) {
             for (int iHari = 1; iHari <= nHari; iHari ++) {
@@ -256,7 +257,9 @@ public class UIHandler  extends JFrame {
             
             
             //cari nama ruang di list ruangan, pasti ketemu
-            int idx = searchNamaRuang(namaRuang);
+            int idx = ruangComboBox.getSelectedIndex();
+//            JOptionPane.showMessageDialog(new JFrame(), idx);
+            
             int treshold = 60;
             for (int i = 1; i <= nJam; i++) {
                 for (int j = 1; j <= nHari; j++) {
@@ -385,24 +388,54 @@ public class UIHandler  extends JFrame {
             Ruangan B = new Ruangan();
             nextLine = in.nextLine();
             ruangComboBox.removeAllItems();
+            int i = 0;
+            String prev = "";
+            String tmp = "";
             while(!nextLine.equals("")) {
+                tmp = "";
                 tes = nextLine.split(";");
                 B.Nama=tes[0];
-                ruangComboBox.addItem(B.Nama);
+                if (prev.equals(B.Nama)) {
+                    tmp = B.Nama + Integer.toString(i);
+                    System.out.println(i);
+                    i++;
+                } else {
+                    tmp = B.Nama;
+                    i = 0;
+                }
+                prev = B.Nama;
+                System.out.println(tmp);
+//                ruangComboBox.addItem(B.Nama);
+                ruangComboBox.addItem(tmp);
+                B.Nama = tmp;
                 B.JamMulai=tes[1];
                 B.JamSelesai=tes[2];
                 B.Hari=tes[3];
                 ruangList.add(B);
                 nextLine = in.nextLine();
                 B = new Ruangan();
+                
             }
 
             nextLine = in.nextLine();
             Jadwal A = new Jadwal();
+            i = 0;
             while(in.hasNext()) {
+                tmp = "";
                 nextLine = in.nextLine();
                 tes = nextLine.split(";");
                 A.NamaKegiatan=tes[0];
+                
+                if (prev.equals(A.NamaKegiatan)) {
+                    tmp = A.NamaKegiatan + Integer.toString(i);
+                    System.out.println(i);
+                    i++;
+                } else {
+                    tmp = A.NamaKegiatan;
+                    i = 0;
+                }
+                prev = A.NamaKegiatan;
+                A.NamaKegiatan = tmp;
                 A.Ruangan=tes[1];
                 A.JamMulai=tes[2];
                 A.JamSelesai=tes[3];
@@ -428,14 +461,17 @@ public class UIHandler  extends JFrame {
             GeneticAlgorithm g = new GeneticAlgorithm(jadwalList, ruangList);
             String s = g.execute();
             matrixJadwalList.clear();
+            System.out.println("GAUDAH");
             matrixJadwalList = g.isiMatrixJadwal(s);
             
         } else if (HCRButton.isSelected()) {
             matrixJadwalList.clear();
+            System.out.println("HCUDAH");            
             matrixJadwalList = HillClimbing(ruangList, jadwalList);
         } else if (SARButton.isSelected()) {
             SimulatedAnnealing sa = new SimulatedAnnealing(jadwalList, ruangList);
             sa.execute();
+            System.out.println("SAUDAH");
             matrixJadwalList.clear();
             matrixJadwalList = sa.scheduleWorld;
         } else {

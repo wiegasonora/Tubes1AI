@@ -17,7 +17,7 @@ public class HillClimbing {
     public static List<MatrixJadwal> HillClimbing(List<Ruangan> ruang,List<Jadwal> jadwal){
         int tess=0;
         int jam=0,jamakhir=0;
-        String[][] semua = new String[5][11];
+        String[][] semua = new String[5][12];
         int hitung=0;
         String[] pisah;
         String[] cekpisah;
@@ -187,7 +187,7 @@ public class HillClimbing {
                     top=Integer.valueOf(jadwal.get(tess).JamMulai.substring(0, 2))-7;
                 int idx = new Random().nextInt(simpan.length);
                 String random = (simpan[idx]);
-                while (top<=((Integer.valueOf(jadwal.get(tess).JamSelesai.substring(0, 2))-7))-Integer.valueOf(jadwal.get(tess).Durasi)&& semua[Integer.valueOf(random)-1][top+Integer.valueOf(jadwal.get(tess).Durasi)]!=null&&benar==0) {
+                while (semua[Integer.valueOf(random)-1][top]!=null && top<=((Integer.valueOf(jadwal.get(tess).JamSelesai.substring(0, 2))-7))-Integer.valueOf(jadwal.get(tess).Durasi)&& semua[Integer.valueOf(random)-1][top+Integer.valueOf(jadwal.get(tess).Durasi)]!=null&&benar==0) {
                 
                     int cek=semua[Integer.valueOf(random)-1][top].indexOf("-");
                 String masuk="";
@@ -254,7 +254,9 @@ public class HillClimbing {
             hitungyangcon=new ArrayList<Integer>();
             while (tess<5){
             cobas=0;
-            while (cobas<11) {
+            while (cobas<12) {
+                System.out.print(tess+"HARI" + cobas+" JAAM SEHINGGA: ");
+                System.out.println(semua[tess][cobas]);
                 if (semua[tess][cobas]!=null){
                 if (semua[tess][cobas].contains(",")){
                 pisah=semua[tess][cobas].split(",");
@@ -513,7 +515,7 @@ public class HillClimbing {
        conflict=0;
        while (tess<5){
             cobas=0;
-            while (cobas<11) {
+            while (cobas<12) {
                 if (semua[tess][cobas]!=null){
                 if (semua[tess][cobas].contains(",")){
                 pisah=semua[tess][cobas].split(",");
@@ -591,7 +593,7 @@ public class HillClimbing {
            tess=0;
        while (tess<5){
             cobas=0;
-            while (cobas<11) {
+            while (cobas<12) {
                  if (semua[tess][cobas]!=null){
                 if (semua[tess][cobas].contains(ruang.get(wiega).Nama)){
                     if (semua[tess][cobas].contains(",")){
@@ -702,6 +704,30 @@ public class HillClimbing {
        Reza.add(Tikong);
         wiega++;   
        }
+       
+       wiega=0;
+       tess=0;
+       System.out.println ("CEEEKK");
+       while(wiega<ruang.size()){
+           
+             System.out.println(wiega+"NIH KELAAS");
+           tess=0;
+       while (tess<5){
+            cobas=0;
+            while (cobas<12) {
+             
+             if (!Reza.get(wiega).elmt[cobas][tess].equals("")){
+                 System.out.print(tess+"HARI" + cobas+" JAAM SEHINGGA: ");
+                 System.out.println(Reza.get(wiega).elmt[cobas][tess]);
+             }
+                cobas++;
+            }
+           
+            tess++;
+        }
+       wiega++;
+       
+    }
        return Reza;
     }
     

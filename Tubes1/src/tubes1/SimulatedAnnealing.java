@@ -34,7 +34,7 @@ public class SimulatedAnnealing {
 			tempRuangan.setHari(ruangan.get(i).getHariAsString());
 			listOfRoom.addRoom(tempRuangan);
 			
-			// System.out.println(listOfRoom.getRoom(i));
+			System.out.println(listOfRoom.getRoom(i));
 		}
 
 		this.solution = new Schedule();

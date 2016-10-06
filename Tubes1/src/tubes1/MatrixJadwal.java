@@ -20,7 +20,7 @@ public class MatrixJadwal {
     public int nJam;
     public MatrixJadwal() {
         nHari = 5;
-        nJam = 11;
+        nJam = 12;
         elmt = new String[nJam][nHari];
         for (int i = 0; i < nJam; i++) {
             for (int j = 0; j<nHari; j++) {
@@ -38,7 +38,7 @@ public class MatrixJadwal {
            x=0;
            while (x<5){
             y=0;
-                while (y<11) {
+                while (y<12) {
                     if (A.get(i).elmt[y][x].contains("-")){
                         cekpisah=A.get(i).elmt[y][x].split("-");
                         int hitungcon=cekpisah.length;
@@ -126,7 +126,7 @@ public class MatrixJadwal {
             while (i<B.size() && benar<Integer.valueOf(C.get(simpanruang).Durasi)){
                 while (x<5 && benar<Integer.valueOf(C.get(simpanruang).Durasi)){
                  y=0;
-                     while (y<11 && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
+                     while (y<12 && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
                          if (A.get(i).elmt[y][x].contains(namakelas)){
                              if (A.get(i).elmt[y][x].contains(namakelas+" - ")){
                                         if (A.get(i).elmt[y][x].contains(" - "+namakelas+" - ")){
@@ -173,7 +173,7 @@ public class MatrixJadwal {
                     x=0; benar=0;
                     while (x<5 && benar<Integer.valueOf(C.get(simpanruang).Durasi)){
                         y=0;
-                            while (y<11 && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
+                            while (y<12 && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
                                 if (A.get(cariruang-1).elmt[y][x].contains(namakelas)){
                                     if (A.get(cariruang-1).elmt[y][x].contains(namakelas+" - ")){
                                         if (A.get(cariruang-1).elmt[y][x].contains(" - "+namakelas+" - ")){
@@ -212,7 +212,7 @@ public class MatrixJadwal {
                         x=0;
                     while (x<5 && benar<Integer.valueOf(C.get(simpanruang).Durasi)){
                         y=0;
-                            while (y<11 && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
+                            while (y<12 && benar<Integer.valueOf(C.get(simpanruang).Durasi)) {
                                 if (A.get(cariruang-1).elmt[y][x].contains(namakelas)){
                                     if (A.get(cariruang-1).elmt[y][x].contains(namakelas+" - ")){
                                         if (A.get(cariruang-1).elmt[y][x].contains(" - "+namakelas+" - ")){
@@ -336,7 +336,7 @@ public class MatrixJadwal {
            x=0;
            while (x<5){
             y=0;
-                while (y<11) {
+                while (y<12) {
                     if (!A.get(i).elmt[y][x].equals("")){
                         jumlahjpakai++;
                     }

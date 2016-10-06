@@ -25,6 +25,13 @@ public class Ruangan {
 		Hari = "";
 	}
 
+	public Ruangan(Ruangan room) {
+		this.Nama = room.Nama;
+		this.JamMulai = room.JamMulai;
+		this.JamSelesai = room.JamSelesai;
+		this.Hari = room.Hari;
+	}
+
 	public Ruangan(String Nama, String JamMulai, String JamSelesai, String Hari) {
 		this.Nama = Nama;
 		this.JamMulai = JamMulai;

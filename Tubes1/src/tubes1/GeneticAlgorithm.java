@@ -100,7 +100,6 @@ public class GeneticAlgorithm {
 
         return tmp;
     } 
-
     public String[] pisahstring(String str){
         /* Memisahkan string panjang yang berisi daftar kelas beserta
          * hari, jam mulai, selesai menjadi array yang berisi string
