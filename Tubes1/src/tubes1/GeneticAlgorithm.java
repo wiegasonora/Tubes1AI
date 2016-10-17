@@ -16,13 +16,13 @@ public class GeneticAlgorithm {
     private List<Jadwal> matkul; //list jadwal yg perlu diisi
     private List<Ruangan> ruang; //list ruangan yang tersedia
     private String[] population; //populasi tempat gen2 berkembang biak
-    private int nPopulation;
+    private final int nPopulation = 100;
     private List<String> bestIndividu;
+    private final int maxIteration = 128;
 
     public GeneticAlgorithm(List<Jadwal> k, List<Ruangan> r) { //konstruktor
             matkul = k;
             ruang = r;
-            nPopulation = 100;
             population = new String[nPopulation];
             bestIndividu = new ArrayList<>();
     }
@@ -81,7 +81,7 @@ public class GeneticAlgorithm {
             ruangSelesai = Integer.parseInt(ruang.get(idx).JamSelesai.substring(0, 2));
             min = Math.max(matkulMulai, ruangMulai);
             max = Math.min(matkulSelesai, ruangSelesai) - Integer.parseInt(matkul.get(idxMatkul).Durasi);
-            exit = !listHari.isEmpty() && min <= max && ("-".equals(daftarRuang) || daftarRuang.contains(ruang.get(idx).Nama));
+            exit = !listHari.isEmpty() && min <= max && ("-".equals(daftarRuang) || (daftarRuang.contains(ruang.get(idx).Nama) || ruang.get(idx).Nama.contains(daftarRuang)));
         }
         tmp = tmp+iToC(idx);
 
@@ -100,6 +100,7 @@ public class GeneticAlgorithm {
 
         return tmp;
     } 
+    
     public String[] pisahstring(String str){
         /* Memisahkan string panjang yang berisi daftar kelas beserta
          * hari, jam mulai, selesai menjadi array yang berisi string
@@ -432,7 +433,6 @@ public class GeneticAlgorithm {
         }
         //loop sampe puas -> ??????
         int itr = 0;
-        int maxIteration = 128;
         int end = -1;
         
         String parent1;
